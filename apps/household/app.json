@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "Kabadiwala",
+    "slug": "kabadiwala-household",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#4CAF50"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.kabadiwala.household"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#4CAF50"
+      },
+      "package": "com.kabadiwala.household"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "kabadiwala-household"
+      }
+    },
+    "scheme": "kabadiwala"
+  }
+}

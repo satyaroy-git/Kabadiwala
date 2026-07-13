@@ -17,21 +17,5 @@
     "node": ">=18.0.0",
     "pnpm": ">=8.0.0"
   },
-  "packageManager": "pnpm@9.1.0",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://us-east-1.gateway.connections.autonomous-agents.kiro.dev/satyaroy-git/Kabadiwala.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "@supabase/supabase-js": "^2.110.2",
-    "pg": "^8.22.0"
-  }
+  "packageManager": "pnpm@9.1.0"
 }
