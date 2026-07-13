@@ -28,6 +28,7 @@
         "projectId": "kabadiwala-household"
       }
     },
-    "scheme": "kabadiwala"
+    "scheme": "kabadiwala",
+    "newArchEnabled": true
   }
 }

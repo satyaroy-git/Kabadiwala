@@ -28,6 +28,7 @@
         "projectId": "kabadiwala-partner"
       }
     },
-    "scheme": "kabadiwala-partner"
+    "scheme": "kabadiwala-partner",
+    "newArchEnabled": true
   }
 }
