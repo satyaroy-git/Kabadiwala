@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button, Input, colors, spacing, typography } from '@kabadiwala/ui';
-import { isValidPhone } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
-import { signInWithPhone } from '../../services/api';
+import { signInWithEmail } from '../../services/api';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 export function LoginScreen({ navigation }: Props) {
-  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  function isValidEmail(e: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.trim());
+  }
 
   async function handleSendOTP() {
     setError('');
 
-    if (!isValidPhone(phone)) {
-      setError('Please enter a valid 10-digit mobile number');
+    if (!isValidEmail(email)) {
+      setError('Please enter a valid email address');
       return;
     }
 
     setLoading(true);
     try {
-      await signInWithPhone(phone);
-      navigation.navigate('OTP', { phone });
+      await signInWithEmail(email.trim().toLowerCase());
+      navigation.navigate('OTP', { phone: email.trim().toLowerCase() });
     } catch (err: any) {
       setError(err.message || 'Failed to send OTP. Please try again.');
     } finally {
@@ -47,27 +50,27 @@ export function LoginScreen({ navigation }: Props) {
           </Text>
         </View>
 
-        {/* Phone Input */}
+        {/* Email Input */}
         <View style={styles.form}>
           <Input
-            label="Mobile Number"
-            placeholder="Enter 10-digit number"
-            keyboardType="phone-pad"
-            maxLength={10}
-            value={phone}
+            label="Email Address"
+            placeholder="Enter your email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={email}
             onChangeText={(text) => {
-              setPhone(text.replace(/\D/g, ''));
+              setEmail(text);
               setError('');
             }}
             error={error}
-            leftIcon={<Text style={styles.prefix}>+91</Text>}
+            leftIcon={<Text style={styles.prefix}>✉️</Text>}
           />
 
           <Button
             title="Get OTP"
             onPress={handleSendOTP}
             loading={loading}
-            disabled={phone.length !== 10}
+            disabled={!isValidEmail(email)}
             fullWidth
             size="large"
           />
@@ -117,9 +120,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing['3xl'],
   },
   prefix: {
-    ...typography.bodyLarge,
-    color: colors.text.primary,
-    fontWeight: '500',
+    fontSize: 18,
   },
   terms: {
     ...typography.bodySmall,

@@ -10,19 +10,19 @@ import {
 
 // ========== Auth ==========
 
-export async function signInWithPhone(phone: string) {
+export async function signInWithEmail(email: string) {
   const { data, error } = await supabase.auth.signInWithOtp({
-    phone: `+91${phone}`,
+    email,
   });
   if (error) throw error;
   return data;
 }
 
-export async function verifyOTP(phone: string, otp: string) {
+export async function verifyOTP(email: string, otp: string) {
   const { data, error } = await supabase.auth.verifyOtp({
-    phone: `+91${phone}`,
+    email,
     token: otp,
-    type: 'sms',
+    type: 'email',
   });
   if (error) throw error;
   return data;

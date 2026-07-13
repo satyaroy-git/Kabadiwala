@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button, Input, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatPhoneNumber } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
-import { verifyOTP, signInWithPhone } from '../../services/api';
+import { verifyOTP, signInWithEmail } from '../../services/api';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'OTP'>;
 
 export function OTPScreen({ route, navigation }: Props) {
-  const { phone } = route.params;
+  const { phone: email } = route.params; // Using 'phone' param to pass email
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -31,7 +30,7 @@ export function OTPScreen({ route, navigation }: Props) {
 
     setLoading(true);
     try {
-      await verifyOTP(phone, otp);
+      await verifyOTP(email, otp);
       // Auth state change will handle navigation
     } catch (err: any) {
       setError(err.message || 'Invalid OTP. Please try again.');
@@ -43,7 +42,7 @@ export function OTPScreen({ route, navigation }: Props) {
   async function handleResendOTP() {
     setResendTimer(30);
     try {
-      await signInWithPhone(phone);
+      await signInWithEmail(email);
     } catch (err) {
       setError('Failed to resend OTP. Please try again.');
     }
@@ -55,7 +54,11 @@ export function OTPScreen({ route, navigation }: Props) {
         <Text style={styles.title}>Verify OTP</Text>
         <Text style={styles.subtitle}>
           Enter the 6-digit code sent to{'\n'}
-          <Text style={styles.phone}>+91 {formatPhoneNumber(phone)}</Text>
+          <Text style={styles.email}>{email}</Text>
+        </Text>
+
+        <Text style={styles.checkSpam}>
+          💡 Check your spam/junk folder if you don't see the email
         </Text>
 
         <Input
@@ -92,7 +95,7 @@ export function OTPScreen({ route, navigation }: Props) {
         </View>
 
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.changeNumber}>Change phone number</Text>
+          <Text style={styles.changeEmail}>Change email address</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -117,11 +120,20 @@ const styles = StyleSheet.create({
   subtitle: {
     ...typography.body,
     color: colors.text.secondary,
-    marginBottom: spacing['3xl'],
+    marginBottom: spacing.lg,
   },
-  phone: {
+  email: {
     fontWeight: '600',
     color: colors.text.primary,
+  },
+  checkSpam: {
+    ...typography.bodySmall,
+    color: colors.secondary[700],
+    backgroundColor: colors.secondary[50],
+    padding: spacing.md,
+    borderRadius: 8,
+    marginBottom: spacing['3xl'],
+    textAlign: 'center',
   },
   resendContainer: {
     alignItems: 'center',
@@ -135,7 +147,7 @@ const styles = StyleSheet.create({
     ...typography.label,
     color: colors.primary[500],
   },
-  changeNumber: {
+  changeEmail: {
     ...typography.body,
     color: colors.text.link,
     textAlign: 'center',
