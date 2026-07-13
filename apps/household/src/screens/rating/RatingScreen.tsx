@@ -1,0 +1,77 @@
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Button, Rating, colors, spacing, typography } from '@kabadiwala/ui';
+import { RootStackParamList } from '../../navigation/RootNavigator';
+import { rateKabadiwala } from '../../services/api';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+type RouteType = RouteProp<RootStackParamList, 'Rating'>;
+
+export function RatingScreen() {
+  const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteType>();
+  const { bookingId, kabadiwalaName } = route.params;
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit() {
+    if (rating === 0) {
+      Alert.alert('Please select a rating');
+      return;
+    }
+    setLoading(true);
+    try {
+      await rateKabadiwala(bookingId, rating, comment);
+      Alert.alert('Thank you!', 'Your rating has been submitted.', [
+        { text: 'OK', onPress: () => navigation.navigate('MainTabs') },
+      ]);
+    } catch (err: any) {
+      Alert.alert('Error', err.message || 'Failed to submit rating');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.emoji}>⭐</Text>
+      <Text style={styles.title}>Rate {kabadiwalaName}</Text>
+      <Text style={styles.subtitle}>How was your pickup experience?</Text>
+
+      <View style={styles.ratingContainer}>
+        <Rating value={rating} onChange={setRating} size="large" />
+      </View>
+
+      <TextInput
+        style={styles.commentInput}
+        placeholder="Leave a comment (optional)"
+        placeholderTextColor={colors.neutral[400]}
+        value={comment}
+        onChangeText={setComment}
+        multiline
+        numberOfLines={3}
+      />
+
+      <Button
+        title="Submit Rating"
+        onPress={handleSubmit}
+        loading={loading}
+        disabled={rating === 0}
+        fullWidth
+        size="large"
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: colors.background.primary, padding: spacing['3xl'], justifyContent: 'center', alignItems: 'center' },
+  emoji: { fontSize: 48, marginBottom: spacing.lg },
+  title: { ...typography.h2, color: colors.text.primary, textAlign: 'center' },
+  subtitle: { ...typography.body, color: colors.text.secondary, textAlign: 'center', marginTop: spacing.sm, marginBottom: spacing['3xl'] },
+  ratingContainer: { marginBottom: spacing['3xl'] },
+  commentInput: { width: '100%', borderWidth: 1, borderColor: colors.neutral[300], borderRadius: 12, padding: spacing.lg, ...typography.body, color: colors.text.primary, minHeight: 80, textAlignVertical: 'top', marginBottom: spacing['3xl'] },
+});

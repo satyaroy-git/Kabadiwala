@@ -1,0 +1,21 @@
+{
+  "name": "kabadiwala",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Kabadiwala - Two-sided marketplace connecting households to verified scrap dealers",
+  "scripts": {
+    "household": "pnpm --filter @kabadiwala/household",
+    "dealer": "pnpm --filter @kabadiwala/dealer",
+    "shared": "pnpm --filter @kabadiwala/shared",
+    "ui": "pnpm --filter @kabadiwala/ui",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@9.1.0"
+}
