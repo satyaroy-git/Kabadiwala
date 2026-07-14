@@ -63,12 +63,13 @@ export function ProfileScreen() {
 
       {/* Menu Items */}
       <Card>
+        <MenuItem icon="🔄" title="Recurring Pickups" onPress={() => navigation.navigate('Recurring' as never)} />
+        <MenuItem icon="🌍" title="My Green Impact" onPress={() => navigation.navigate('Impact' as never)} />
+        <MenuItem icon="🎮" title="Rewards & Badges" onPress={() => navigation.navigate('Gamification' as never)} />
+        <MenuItem icon="🎁" title="Refer & Earn" onPress={() => navigation.navigate('Referral' as never)} />
         <MenuItem icon="📍" title="Saved Addresses" onPress={() => handleMenuPress('Saved Addresses')} />
         <MenuItem icon="📄" title="Transaction History" onPress={() => handleMenuPress('Transaction History')} />
-        <MenuItem icon="🔔" title="Notifications" onPress={() => handleMenuPress('Notifications')} />
         <MenuItem icon="❓" title="Help & Support" onPress={() => handleMenuPress('Help & Support')} />
-        <MenuItem icon="📋" title="Terms & Conditions" onPress={() => handleMenuPress('Terms & Conditions')} />
-        <MenuItem icon="🔒" title="Privacy Policy" onPress={() => handleMenuPress('Privacy Policy')} />
       </Card>
 
       {/* Sign Out */}
