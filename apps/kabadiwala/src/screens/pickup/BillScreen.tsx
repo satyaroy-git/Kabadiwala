@@ -5,6 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, colors, spacing, typography } from '@kabadiwala/ui';
 import { formatCurrency, PLATFORM_CONFIG } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
+import { supabase } from '../../services/supabase';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 type RouteType = RouteProp<RootStackParamList, 'Bill'>;
@@ -12,11 +13,32 @@ type RouteType = RouteProp<RootStackParamList, 'Bill'>;
 export function BillScreen() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteType>();
-  const { transaction } = route.params;
+  const { bookingId, transaction } = route.params;
 
   const totalAmount = transaction?.total_amount || 0;
   const commission = transaction?.commission_amount || 0;
-  const payout = transaction?.kabadiwala_payout || 0;
+  const totalPaid = totalAmount + commission;
+
+  async function handleDone() {
+    try {
+      // Mark booking as completed
+      await supabase
+        .from('bookings')
+        .update({ status: 'completed', completed_at: new Date().toISOString() })
+        .eq('id', bookingId);
+
+      // Mark transaction as completed
+      if (transaction?.transaction_id) {
+        await supabase
+          .from('transactions')
+          .update({ payment_status: 'completed', completed_at: new Date().toISOString() })
+          .eq('id', transaction.transaction_id);
+      }
+    } catch (err) {
+      console.error('Error completing booking:', err);
+    }
+    navigation.navigate('MainTabs');
+  }
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -59,16 +81,16 @@ export function BillScreen() {
         </View>
       </Card>
 
-      {/* Household Payment */}
+      {/* Total Cost to Kabadiwala */}
       <Card variant="filled">
         <Text style={styles.paymentNote}>
-          💰 Household will receive {formatCurrency(totalAmount)} via UPI immediately.
+          💰 You paid {formatCurrency(totalAmount)} to the household + {formatCurrency(commission)} platform fee = {formatCurrency(totalPaid)} total.
         </Text>
       </Card>
 
       <Button
-        title="Done - Back to Dashboard"
-        onPress={() => navigation.navigate('MainTabs')}
+        title="✅ Done - Mark as Complete"
+        onPress={handleDone}
         fullWidth
         size="large"
       />
