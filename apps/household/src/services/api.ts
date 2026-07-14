@@ -137,15 +137,56 @@ export async function createBooking(request: CreateBookingRequest): Promise<Book
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
+  // Get current rates for the selected items
+  const { data: rates } = await supabase
+    .from('rate_cards')
+    .select('*')
+    .eq('is_active', true);
+
+  // Build scrap items with locked rates
+  const scrapItems = request.scrap_items.map((item) => {
+    const rate = rates?.find((r: any) => r.category_id === item.category_id);
+    const ratePerKg = rate?.rate_per_kg || 0;
+    return {
+      category_id: item.category_id,
+      category_name: rate?.category_name || item.category_id,
+      estimated_weight_kg: item.estimated_weight_kg,
+      actual_weight_kg: null,
+      locked_rate_per_kg: ratePerKg,
+      estimated_amount: item.estimated_weight_kg * ratePerKg,
+      actual_amount: null,
+    };
+  });
+
+  const totalEstimated = scrapItems.reduce((sum, item) => sum + item.estimated_amount, 0);
+
+  const timeSlotMap: Record<string, any> = {
+    '09:00': { start: '09:00', end: '12:00', label: 'Morning (9 AM - 12 PM)' },
+    '12:00': { start: '12:00', end: '15:00', label: 'Afternoon (12 PM - 3 PM)' },
+    '15:00': { start: '15:00', end: '18:00', label: 'Evening (3 PM - 6 PM)' },
+    '18:00': { start: '18:00', end: '20:00', label: 'Late Evening (6 PM - 8 PM)' },
+  };
+
   const { data, error } = await supabase
-    .rpc('create_booking', {
-      p_household_id: user.id,
-      p_scrap_items: request.scrap_items,
-      p_address_id: request.address_id,
-      p_scheduled_date: request.scheduled_date,
-      p_time_slot_id: request.time_slot_id,
-      p_notes: request.notes || null,
-    });
+    .from('bookings')
+    .insert({
+      household_id: user.id,
+      status: 'pending',
+      scrap_items: scrapItems,
+      address_id: request.address_id,
+      scheduled_date: request.scheduled_date,
+      time_slot: timeSlotMap[request.time_slot_id] || timeSlotMap['09:00'],
+      locked_rates: scrapItems.map((i) => ({
+        category_id: i.category_id,
+        category_name: i.category_name,
+        rate_per_kg: i.locked_rate_per_kg,
+        locked_at: new Date().toISOString(),
+      })),
+      total_estimated_amount: totalEstimated,
+      notes: request.notes || null,
+    })
+    .select()
+    .single();
 
   if (error) throw error;
   return data;
