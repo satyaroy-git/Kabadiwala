@@ -33,6 +33,7 @@ export function EarningsScreen() {
   // Calculate totals from transactions
   const totalScrapCollected = transactions.reduce((sum, t) => sum + (t.total_amount || 0), 0);
   const totalPlatformFees = transactions.reduce((sum, t) => sum + (t.commission_amount || 0), 0);
+  const totalCostToKabadiwala = totalScrapCollected + totalPlatformFees;
   const totalPickups = transactions.length;
 
   return (
@@ -43,14 +44,14 @@ export function EarningsScreen() {
     >
       <Text style={styles.title}>Transactions</Text>
 
-      {/* Summary - Total Scrap Collected */}
+      {/* Summary - Your Total Spend */}
       <Card>
-        <Text style={styles.cardLabel}>Total Scrap Collected (Value)</Text>
-        <Text style={styles.bigNumber}>{formatCurrency(totalScrapCollected)}</Text>
+        <Text style={styles.cardLabel}>Your Total Spend</Text>
+        <Text style={styles.bigNumber}>{formatCurrency(totalCostToKabadiwala)}</Text>
         <Text style={styles.pickupsText}>{totalPickups} pickups completed</Text>
       </Card>
 
-      {/* Platform Fees */}
+      {/* Breakdown */}
       <View style={styles.row}>
         <Card style={styles.halfCard}>
           <Text style={styles.smallLabel}>Paid to Households</Text>
@@ -85,8 +86,8 @@ export function EarningsScreen() {
               <Text style={styles.txnScrap}>Scrap Value: {formatCurrency(txn.total_amount)}</Text>
             </View>
             <View style={styles.txnRight}>
-              <Text style={styles.txnPaid}>Paid to household</Text>
-              <Text style={styles.txnFee}>Platform fee: {formatCurrency(txn.commission_amount)}</Text>
+              <Text style={styles.txnTotal}>Total Paid: {formatCurrency(txn.total_amount + txn.commission_amount)}</Text>
+              <Text style={styles.txnFee}>Incl. platform fee: {formatCurrency(txn.commission_amount)}</Text>
             </View>
           </View>
         </Card>
@@ -132,8 +133,8 @@ const styles = StyleSheet.create({
   txnDate: { ...typography.bodySmall, color: colors.text.secondary },
   txnScrap: { ...typography.label, color: colors.text.primary, marginTop: 2 },
   txnRight: { alignItems: 'flex-end' },
-  txnPaid: { ...typography.bodySmall, color: colors.text.secondary },
-  txnFee: { ...typography.caption, color: colors.error, marginTop: 2 },
+  txnTotal: { ...typography.label, color: colors.secondary[700] },
+  txnFee: { ...typography.caption, color: colors.text.tertiary, marginTop: 2 },
   noTxns: { ...typography.body, color: colors.text.secondary, textAlign: 'center' },
   tipTitle: { ...typography.label, color: colors.text.primary, marginBottom: spacing.sm },
   tipText: { ...typography.bodySmall, color: colors.text.secondary, lineHeight: 22 },
