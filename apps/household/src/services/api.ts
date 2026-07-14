@@ -260,11 +260,7 @@ export async function getTransactions(): Promise<Transaction[]> {
 
   const { data, error } = await supabase
     .from('transactions')
-    .select(`
-      *,
-      transaction_items (*),
-      booking:bookings (scheduled_date, address)
-    `)
+    .select('*')
     .eq('household_id', user.id)
     .order('created_at', { ascending: false });
 
