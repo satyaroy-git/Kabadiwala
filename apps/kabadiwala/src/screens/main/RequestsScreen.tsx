@@ -34,7 +34,9 @@ export function RequestsScreen() {
   async function handleAccept(bookingId: string) {
     try {
       await acceptPickup(bookingId);
-      Alert.alert('Pickup Accepted!', 'Navigate to the household.');
+      Alert.alert('Pickup Accepted! ✅', 'You can now navigate to the household.', [
+        { text: 'View Pickup', onPress: () => navigation.navigate('PickupDetail', { bookingId }) },
+      ]);
       await loadRequests();
     } catch (err: any) {
       Alert.alert('Error', err.message);

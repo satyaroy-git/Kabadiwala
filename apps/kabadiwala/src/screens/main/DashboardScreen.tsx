@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, Switch } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
 import { formatCurrency, Booking, EarningsSummary } from '@kabadiwala/shared';
@@ -20,6 +20,13 @@ export function DashboardScreen() {
   useEffect(() => {
     loadData();
   }, []);
+
+  // Refresh when screen comes into focus (e.g., after accepting a pickup)
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+    }, [])
+  );
 
   async function loadData() {
     try {
