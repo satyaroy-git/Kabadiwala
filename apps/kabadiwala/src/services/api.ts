@@ -151,25 +151,43 @@ export async function getPickupRequests(): Promise<Booking[]> {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return [];
 
-  // Get profile to check service pincodes
-  const profile = await getKabadiwalaProfile();
-  if (!profile) return [];
-
-  const { data, error } = await supabase
+  // Get pending bookings
+  const { data: bookings, error } = await supabase
     .from('bookings')
     .select('*')
     .in('status', ['pending', 'assigned'])
     .order('created_at', { ascending: false });
 
   if (error) throw error;
-  return data || [];
+  if (!bookings || bookings.length === 0) return [];
+
+  // Fetch addresses for these bookings
+  const addressIds = bookings.map((b: any) => b.address_id).filter(Boolean);
+  let addressMap: Record<string, any> = {};
+  
+  if (addressIds.length > 0) {
+    const { data: addresses } = await supabase
+      .from('addresses')
+      .select('*')
+      .in('id', addressIds);
+    
+    if (addresses) {
+      addresses.forEach((addr: any) => { addressMap[addr.id] = addr; });
+    }
+  }
+
+  // Attach address to each booking
+  return bookings.map((b: any) => ({
+    ...b,
+    address: addressMap[b.address_id] || null,
+  }));
 }
 
 export async function getMyActivePickups(): Promise<Booking[]> {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
-  const { data, error } = await supabase
+  const { data: bookings, error } = await supabase
     .from('bookings')
     .select('*')
     .eq('kabadiwala_id', user.id)
@@ -177,7 +195,27 @@ export async function getMyActivePickups(): Promise<Booking[]> {
     .order('scheduled_date', { ascending: true });
 
   if (error) throw error;
-  return data || [];
+  if (!bookings || bookings.length === 0) return [];
+
+  // Fetch addresses
+  const addressIds = bookings.map((b: any) => b.address_id).filter(Boolean);
+  let addressMap: Record<string, any> = {};
+
+  if (addressIds.length > 0) {
+    const { data: addresses } = await supabase
+      .from('addresses')
+      .select('*')
+      .in('id', addressIds);
+
+    if (addresses) {
+      addresses.forEach((addr: any) => { addressMap[addr.id] = addr; });
+    }
+  }
+
+  return bookings.map((b: any) => ({
+    ...b,
+    address: addressMap[b.address_id] || null,
+  }));
 }
 
 export async function acceptPickup(bookingId: string) {

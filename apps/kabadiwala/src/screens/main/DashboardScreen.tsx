@@ -90,7 +90,9 @@ export function DashboardScreen() {
             <Card key={pickup.id} onPress={() => navigation.navigate('PickupDetail', { bookingId: pickup.id })}>
               <View style={styles.pickupRow}>
                 <View style={styles.pickupInfo}>
-                  <Text style={styles.pickupName}>{(pickup as any).household?.name}</Text>
+                  <Text style={styles.pickupName}>
+                    📍 {(pickup as any).address?.full_address || 'Pickup'}
+                  </Text>
                   <Text style={styles.pickupItems}>
                     {pickup.scrap_items.map((i) => i.category_name).join(', ')}
                   </Text>
