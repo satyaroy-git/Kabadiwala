@@ -53,10 +53,6 @@ export function BookingDetailScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Text style={styles.backText}>← Back</Text>
-      </TouchableOpacity>
-
       <View style={styles.header}>
         <Text style={styles.title}>Pickup Details</Text>
         <Badge
