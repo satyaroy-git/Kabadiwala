@@ -25,6 +25,12 @@ import { BookingDetailScreen } from '../screens/booking/BookingDetailScreen';
 // Rating
 import { RatingScreen } from '../screens/rating/RatingScreen';
 
+// Phase 2 screens
+import { ImpactScreen } from '../screens/main/ImpactScreen';
+import { ReferralScreen } from '../screens/main/ReferralScreen';
+import { RecurringScreen } from '../screens/main/RecurringScreen';
+import { GamificationScreen } from '../screens/main/GamificationScreen';
+
 export type RootStackParamList = {
   Login: undefined;
   ProfileSetup: undefined;
@@ -36,6 +42,10 @@ export type RootStackParamList = {
   Tracking: { bookingId: string };
   BookingDetail: { bookingId: string };
   Rating: { bookingId: string; kabadiwalaName: string };
+  Impact: undefined;
+  Referral: undefined;
+  Recurring: undefined;
+  Gamification: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -72,6 +82,10 @@ export function RootNavigator() {
           />
           <Stack.Screen name="BookingDetail" component={BookingDetailScreen} />
           <Stack.Screen name="Rating" component={RatingScreen} />
+          <Stack.Screen name="Impact" component={ImpactScreen} />
+          <Stack.Screen name="Referral" component={ReferralScreen} />
+          <Stack.Screen name="Recurring" component={RecurringScreen} />
+          <Stack.Screen name="Gamification" component={GamificationScreen} />
         </>
       )}
     </Stack.Navigator>

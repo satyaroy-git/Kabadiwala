@@ -138,6 +138,29 @@ export function HomeScreen() {
         </Card>
       </View>
 
+      {/* Phase 2: Quick Access */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Explore</Text>
+        <View style={styles.quickGrid}>
+          <Card style={styles.quickCard} onPress={() => navigation.navigate('Impact')}>
+            <Text style={styles.quickEmoji}>🌍</Text>
+            <Text style={styles.quickLabel}>My Impact</Text>
+          </Card>
+          <Card style={styles.quickCard} onPress={() => navigation.navigate('Gamification')}>
+            <Text style={styles.quickEmoji}>🎮</Text>
+            <Text style={styles.quickLabel}>Rewards</Text>
+          </Card>
+          <Card style={styles.quickCard} onPress={() => navigation.navigate('Referral')}>
+            <Text style={styles.quickEmoji}>🎁</Text>
+            <Text style={styles.quickLabel}>Refer & Earn</Text>
+          </Card>
+          <Card style={styles.quickCard} onPress={() => navigation.navigate('Recurring')}>
+            <Text style={styles.quickEmoji}>🔄</Text>
+            <Text style={styles.quickLabel}>Auto Pickup</Text>
+          </Card>
+        </View>
+      </View>
+
       {/* Info Section */}
       <Card variant="filled">
         <Text style={styles.infoTitle}>🌱 Why Kabadiwala?</Text>
@@ -238,5 +261,24 @@ const styles = StyleSheet.create({
     ...typography.body,
     color: colors.text.secondary,
     lineHeight: 24,
+  },
+  quickGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+  },
+  quickCard: {
+    width: '47%',
+    alignItems: 'center',
+    padding: spacing.lg,
+  },
+  quickEmoji: {
+    fontSize: 28,
+    marginBottom: spacing.sm,
+  },
+  quickLabel: {
+    ...typography.label,
+    color: colors.text.primary,
+    textAlign: 'center',
   },
 });
