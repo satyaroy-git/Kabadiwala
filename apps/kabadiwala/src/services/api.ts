@@ -157,11 +157,7 @@ export async function getPickupRequests(): Promise<Booking[]> {
 
   const { data, error } = await supabase
     .from('bookings')
-    .select(`
-      *,
-      household:household_profiles (name, phone),
-      address:addresses (*)
-    `)
+    .select('*')
     .in('status', ['pending', 'assigned'])
     .order('created_at', { ascending: false });
 
@@ -175,11 +171,7 @@ export async function getMyActivePickups(): Promise<Booking[]> {
 
   const { data, error } = await supabase
     .from('bookings')
-    .select(`
-      *,
-      household:household_profiles (name, phone),
-      address:addresses (*)
-    `)
+    .select('*')
     .eq('kabadiwala_id', user.id)
     .in('status', ['accepted', 'en_route', 'arrived', 'weighing'])
     .order('scheduled_date', { ascending: true });
@@ -301,11 +293,7 @@ export async function getTransactionHistory(): Promise<Transaction[]> {
 
   const { data, error } = await supabase
     .from('transactions')
-    .select(`
-      *,
-      transaction_items (*),
-      booking:bookings (scheduled_date, address)
-    `)
+    .select('*')
     .eq('kabadiwala_id', user.id)
     .order('created_at', { ascending: false });
 
