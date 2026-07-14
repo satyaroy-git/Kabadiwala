@@ -61,7 +61,11 @@ export function PincodeScreen({ navigation }: Props) {
       });
       await refreshProfile();
     } catch (err: any) {
-      setError(err.message || 'Registration failed');
+      const msg = err.message || 'Registration failed';
+      // Ignore React Native internal errors that aren't user-facing
+      if (!msg.includes('Cannot load') && !msg.includes('empty url')) {
+        setError(msg);
+      }
     } finally {
       setLoading(false);
     }
@@ -85,7 +89,7 @@ export function PincodeScreen({ navigation }: Props) {
         {/* Pincode Input Row */}
         <View style={styles.inputRow}>
           <TextInput
-            style={[styles.textInput, error ? styles.textInputError : null]}
+            style={[styles.textInput, (error ? styles.textInputError : null)]}
             placeholder="Enter pincode"
             keyboardType="number-pad"
             maxLength={6}

@@ -95,6 +95,11 @@ export async function createKabadiwalaProfile(
 }
 
 async function uploadFile(uri: string, path: string): Promise<string> {
+  // Skip upload if URI is empty (demo/testing mode)
+  if (!uri || uri === 'placeholder' || uri === '') {
+    return '';
+  }
+
   const response = await fetch(uri);
   const blob = await response.blob();
 
