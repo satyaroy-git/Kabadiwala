@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Button, Card, colors, spacing, typography } from '@kabadiwala/ui';
-import { BOOKING_TIME_SLOTS, formatDate } from '@kabadiwala/shared';
+import { Button, Card, Input, colors, spacing, typography } from '@kabadiwala/ui';
+import { BOOKING_TIME_SLOTS } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
-import { getAddresses } from '../../services/api';
+import { getAddresses, addAddress } from '../../services/api';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 type RouteType = RouteProp<RootStackParamList, 'SelectSlot'>;
@@ -19,6 +19,18 @@ export function SelectSlotScreen() {
   const [selectedSlot, setSelectedSlot] = useState<string>('');
   const [addresses, setAddresses] = useState<any[]>([]);
   const [selectedAddress, setSelectedAddress] = useState<string>('');
+
+  // New address form
+  const [showAddressForm, setShowAddressForm] = useState(false);
+  const [newAddress, setNewAddress] = useState({
+    label: 'Home',
+    full_address: '',
+    landmark: '',
+    pincode: '',
+    city: '',
+    state: '',
+  });
+  const [savingAddress, setSavingAddress] = useState(false);
 
   // Generate next 7 days
   const dates = Array.from({ length: 7 }, (_, i) => {
@@ -35,9 +47,46 @@ export function SelectSlotScreen() {
     try {
       const data = await getAddresses();
       setAddresses(data);
-      if (data.length > 0) setSelectedAddress(data[0].id);
+      if (data.length > 0) {
+        setSelectedAddress(data[0].id);
+      } else {
+        setShowAddressForm(true);
+      }
     } catch (error) {
       console.error('Error loading addresses:', error);
+      setShowAddressForm(true);
+    }
+  }
+
+  async function handleSaveAddress() {
+    if (!newAddress.full_address.trim()) {
+      Alert.alert('Error', 'Please enter your full address');
+      return;
+    }
+    if (!newAddress.pincode.trim() || newAddress.pincode.length !== 6) {
+      Alert.alert('Error', 'Please enter a valid 6-digit pincode');
+      return;
+    }
+
+    setSavingAddress(true);
+    try {
+      const saved = await addAddress({
+        label: newAddress.label || 'Home',
+        full_address: newAddress.full_address.trim(),
+        landmark: newAddress.landmark.trim() || null,
+        pincode: newAddress.pincode.trim(),
+        city: newAddress.city.trim() || 'City',
+        state: newAddress.state.trim() || 'State',
+        lat: 19.0760, // Default Mumbai coordinates
+        lng: 72.8777,
+      });
+      setAddresses([saved, ...addresses]);
+      setSelectedAddress(saved.id);
+      setShowAddressForm(false);
+    } catch (error: any) {
+      Alert.alert('Error', error.message || 'Failed to save address');
+    } finally {
+      setSavingAddress(false);
     }
   }
 
@@ -109,8 +158,10 @@ export function SelectSlotScreen() {
           })}
         </View>
 
-        {/* Address Selection */}
+        {/* Address Section */}
         <Text style={styles.sectionTitle}>Pickup Address</Text>
+
+        {/* Existing addresses */}
         {addresses.map((addr) => (
           <Card
             key={addr.id}
@@ -118,17 +169,78 @@ export function SelectSlotScreen() {
             onPress={() => setSelectedAddress(addr.id)}
           >
             <View style={styles.addressRow}>
-              <Text style={styles.addressLabel}>{addr.label}</Text>
+              <Text style={styles.addressLabel}>📍 {addr.label}</Text>
               <Text style={styles.addressText}>{addr.full_address}</Text>
+              <Text style={styles.addressPincode}>{addr.pincode}</Text>
             </View>
           </Card>
         ))}
-        {addresses.length === 0 && (
-          <Card variant="filled">
-            <Text style={styles.noAddress}>
-              No saved addresses. You'll be asked to add one.
-            </Text>
+
+        {/* Add New Address Form */}
+        {showAddressForm ? (
+          <Card variant="outlined">
+            <Text style={styles.formTitle}>Add Pickup Address</Text>
+
+            <View style={styles.labelRow}>
+              {['Home', 'Office', 'Other'].map((label) => (
+                <TouchableOpacity
+                  key={label}
+                  style={[styles.labelChip, newAddress.label === label && styles.labelChipActive]}
+                  onPress={() => setNewAddress({ ...newAddress, label })}
+                >
+                  <Text style={[styles.labelChipText, newAddress.label === label && styles.labelChipTextActive]}>
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            <TextInput
+              style={styles.textInput}
+              placeholder="Full address (House no, Street, Area)"
+              value={newAddress.full_address}
+              onChangeText={(text) => setNewAddress({ ...newAddress, full_address: text })}
+              multiline
+              numberOfLines={2}
+            />
+
+            <TextInput
+              style={styles.textInput}
+              placeholder="Landmark (optional)"
+              value={newAddress.landmark}
+              onChangeText={(text) => setNewAddress({ ...newAddress, landmark: text })}
+            />
+
+            <View style={styles.row}>
+              <TextInput
+                style={[styles.textInput, styles.halfInput]}
+                placeholder="Pincode"
+                value={newAddress.pincode}
+                onChangeText={(text) => setNewAddress({ ...newAddress, pincode: text.replace(/\D/g, '') })}
+                keyboardType="number-pad"
+                maxLength={6}
+              />
+              <TextInput
+                style={[styles.textInput, styles.halfInput]}
+                placeholder="City"
+                value={newAddress.city}
+                onChangeText={(text) => setNewAddress({ ...newAddress, city: text })}
+              />
+            </View>
+
+            <Button
+              title={savingAddress ? "Saving..." : "Save Address"}
+              onPress={handleSaveAddress}
+              loading={savingAddress}
+              disabled={!newAddress.full_address.trim() || newAddress.pincode.length !== 6}
+              fullWidth
+              size="medium"
+            />
           </Card>
+        ) : (
+          <TouchableOpacity onPress={() => setShowAddressForm(true)} style={styles.addAddressBtn}>
+            <Text style={styles.addAddressText}>+ Add New Address</Text>
+          </TouchableOpacity>
         )}
       </ScrollView>
 
@@ -152,7 +264,7 @@ const styles = StyleSheet.create({
   backBtn: { ...typography.label, color: colors.primary[500], marginBottom: spacing.md },
   title: { ...typography.h2, color: colors.text.primary },
   scroll: { flex: 1 },
-  content: { padding: spacing.lg, gap: spacing.md },
+  content: { padding: spacing.lg, gap: spacing.md, paddingBottom: 100 },
   sectionTitle: { ...typography.h4, color: colors.text.primary, marginTop: spacing.md },
   dateCard: { width: 64, height: 80, borderRadius: 12, backgroundColor: colors.white, justifyContent: 'center', alignItems: 'center', marginRight: spacing.sm, borderWidth: 1, borderColor: colors.neutral[200] },
   dateCardSelected: { backgroundColor: colors.primary[500], borderColor: colors.primary[500] },
@@ -170,6 +282,17 @@ const styles = StyleSheet.create({
   addressRow: { gap: 4 },
   addressLabel: { ...typography.label, color: colors.text.primary },
   addressText: { ...typography.bodySmall, color: colors.text.secondary },
-  noAddress: { ...typography.body, color: colors.text.secondary, textAlign: 'center' },
+  addressPincode: { ...typography.caption, color: colors.text.tertiary, marginTop: 2 },
+  formTitle: { ...typography.h4, color: colors.text.primary, marginBottom: spacing.md },
+  labelRow: { flexDirection: 'row', gap: spacing.sm, marginBottom: spacing.md },
+  labelChip: { paddingHorizontal: spacing.lg, paddingVertical: spacing.sm, borderRadius: 20, backgroundColor: colors.neutral[100], borderWidth: 1, borderColor: colors.neutral[200] },
+  labelChipActive: { backgroundColor: colors.primary[50], borderColor: colors.primary[500] },
+  labelChipText: { ...typography.labelSmall, color: colors.text.secondary },
+  labelChipTextActive: { color: colors.primary[700] },
+  textInput: { borderWidth: 1, borderColor: colors.neutral[300], borderRadius: 10, paddingHorizontal: spacing.md, paddingVertical: spacing.md, marginBottom: spacing.sm, fontSize: 14, color: colors.text.primary, backgroundColor: colors.white },
+  row: { flexDirection: 'row', gap: spacing.sm },
+  halfInput: { flex: 1 },
+  addAddressBtn: { padding: spacing.lg, borderRadius: 12, borderWidth: 1, borderColor: colors.primary[300], borderStyle: 'dashed', alignItems: 'center' },
+  addAddressText: { ...typography.label, color: colors.primary[500] },
   footer: { padding: spacing.lg, backgroundColor: colors.background.primary, borderTopWidth: 1, borderTopColor: colors.neutral[200] },
 });
