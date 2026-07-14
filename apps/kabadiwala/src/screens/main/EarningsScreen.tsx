@@ -30,48 +30,48 @@ export function EarningsScreen() {
     setRefreshing(false);
   }
 
+  // Calculate totals from transactions
+  const totalScrapCollected = transactions.reduce((sum, t) => sum + (t.total_amount || 0), 0);
+  const totalPlatformFees = transactions.reduce((sum, t) => sum + (t.commission_amount || 0), 0);
+  const totalPickups = transactions.length;
+
   return (
     <ScrollView
       style={styles.container}
       contentContainerStyle={styles.content}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
-      <Text style={styles.title}>Earnings</Text>
+      <Text style={styles.title}>Transactions</Text>
 
-      {/* Summary Cards */}
+      {/* Summary - Total Scrap Collected */}
       <Card>
-        <Text style={styles.cardLabel}>Total Earnings</Text>
-        <Text style={styles.bigNumber}>{formatCurrency(earnings?.total || 0)}</Text>
+        <Text style={styles.cardLabel}>Total Scrap Collected (Value)</Text>
+        <Text style={styles.bigNumber}>{formatCurrency(totalScrapCollected)}</Text>
+        <Text style={styles.pickupsText}>{totalPickups} pickups completed</Text>
       </Card>
 
+      {/* Platform Fees */}
       <View style={styles.row}>
         <Card style={styles.halfCard}>
-          <Text style={styles.smallLabel}>Today</Text>
-          <Text style={styles.smallValue}>{formatCurrency(earnings?.today || 0)}</Text>
+          <Text style={styles.smallLabel}>Paid to Households</Text>
+          <Text style={styles.smallValue}>{formatCurrency(totalScrapCollected)}</Text>
         </Card>
         <Card style={styles.halfCard}>
-          <Text style={styles.smallLabel}>This Week</Text>
-          <Text style={styles.smallValue}>{formatCurrency(earnings?.this_week || 0)}</Text>
-        </Card>
-      </View>
-
-      <View style={styles.row}>
-        <Card style={styles.halfCard}>
-          <Text style={styles.smallLabel}>This Month</Text>
-          <Text style={styles.smallValue}>{formatCurrency(earnings?.this_month || 0)}</Text>
-        </Card>
-        <Card style={styles.halfCard}>
-          <Text style={styles.smallLabel}>Commission Paid</Text>
+          <Text style={styles.smallLabel}>Platform Fee (10%)</Text>
           <Text style={[styles.smallValue, { color: colors.error }]}>
-            -{formatCurrency(earnings?.total_commission_paid || 0)}
+            {formatCurrency(totalPlatformFees)}
           </Text>
         </Card>
       </View>
 
-      {/* Commission Info */}
+      {/* How it works explanation */}
       <Card variant="filled">
-        <Text style={styles.commissionNote}>
-          💡 Platform deducts 10% commission per transaction. Commission is clearly shown in each transaction.
+        <Text style={styles.howItWorksTitle}>💡 How earnings work</Text>
+        <Text style={styles.howItWorksText}>
+          1. You pay the household for their scrap (shown as "Scrap Value"){'\n'}
+          2. Platform charges 10% service fee on each transaction{'\n'}
+          3. You sell the collected scrap to recyclers at your own rate{'\n'}
+          4. Your profit = Recycler price − Household price − Platform fee
         </Text>
       </Card>
 
@@ -82,19 +82,34 @@ export function EarningsScreen() {
           <View style={styles.txnRow}>
             <View>
               <Text style={styles.txnDate}>{new Date(txn.created_at).toLocaleDateString()}</Text>
-              <Text style={styles.txnAmount}>Earned: {formatCurrency(txn.kabadiwala_payout)}</Text>
+              <Text style={styles.txnScrap}>Scrap Value: {formatCurrency(txn.total_amount)}</Text>
             </View>
             <View style={styles.txnRight}>
-              <Text style={styles.txnTotal}>Total: {formatCurrency(txn.total_amount)}</Text>
-              <Text style={styles.txnComm}>Comm: -{formatCurrency(txn.commission_amount)}</Text>
+              <Text style={styles.txnPaid}>Paid to household</Text>
+              <Text style={styles.txnFee}>Platform fee: {formatCurrency(txn.commission_amount)}</Text>
             </View>
           </View>
         </Card>
       ))}
 
       {transactions.length === 0 && (
-        <Text style={styles.noTxns}>No transactions yet. Complete pickups to start earning!</Text>
+        <Card variant="filled">
+          <Text style={styles.noTxns}>
+            No transactions yet.{'\n'}Complete pickups to see your transaction history here.
+          </Text>
+        </Card>
       )}
+
+      {/* Tip */}
+      <Card variant="filled">
+        <Text style={styles.tipTitle}>📈 Maximize your earnings</Text>
+        <Text style={styles.tipText}>
+          • Collect metals & e-waste — highest resale margins{'\n'}
+          • Build volume in one area to reduce travel costs{'\n'}
+          • Maintain 4.5+ rating for premium bookings{'\n'}
+          • Bulk sells to recyclers get better rates
+        </Text>
+      </Card>
     </ScrollView>
   );
 }
@@ -104,18 +119,22 @@ const styles = StyleSheet.create({
   content: { padding: spacing.lg, paddingTop: spacing['5xl'], gap: spacing.md },
   title: { ...typography.h2, color: colors.text.primary },
   cardLabel: { ...typography.label, color: colors.text.secondary, marginBottom: spacing.xs },
-  bigNumber: { ...typography.currencyLarge, color: colors.primary[700] },
+  bigNumber: { ...typography.currencyLarge, color: colors.secondary[700] },
+  pickupsText: { ...typography.bodySmall, color: colors.text.secondary, marginTop: spacing.xs },
   row: { flexDirection: 'row', gap: spacing.md },
   halfCard: { flex: 1 },
   smallLabel: { ...typography.bodySmall, color: colors.text.secondary },
   smallValue: { ...typography.h4, color: colors.text.primary, marginTop: 4 },
-  commissionNote: { ...typography.bodySmall, color: colors.secondary[800] },
+  howItWorksTitle: { ...typography.label, color: colors.text.primary, marginBottom: spacing.sm },
+  howItWorksText: { ...typography.bodySmall, color: colors.text.secondary, lineHeight: 22 },
   sectionTitle: { ...typography.h4, color: colors.text.primary, marginTop: spacing.md },
   txnRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   txnDate: { ...typography.bodySmall, color: colors.text.secondary },
-  txnAmount: { ...typography.label, color: colors.primary[700], marginTop: 2 },
+  txnScrap: { ...typography.label, color: colors.text.primary, marginTop: 2 },
   txnRight: { alignItems: 'flex-end' },
-  txnTotal: { ...typography.bodySmall, color: colors.text.primary },
-  txnComm: { ...typography.caption, color: colors.error, marginTop: 2 },
-  noTxns: { ...typography.body, color: colors.text.secondary, textAlign: 'center', paddingVertical: spacing['3xl'] },
+  txnPaid: { ...typography.bodySmall, color: colors.text.secondary },
+  txnFee: { ...typography.caption, color: colors.error, marginTop: 2 },
+  noTxns: { ...typography.body, color: colors.text.secondary, textAlign: 'center' },
+  tipTitle: { ...typography.label, color: colors.text.primary, marginBottom: spacing.sm },
+  tipText: { ...typography.bodySmall, color: colors.text.secondary, lineHeight: 22 },
 });
