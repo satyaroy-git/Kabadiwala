@@ -40,9 +40,9 @@ export function MainTabNavigator() {
         tabBarActiveTintColor: colors.secondary[500],
         tabBarInactiveTintColor: colors.neutral[500],
         tabBarStyle: {
-          paddingBottom: 8,
+          paddingBottom: 20,
           paddingTop: 8,
-          height: 60,
+          height: 70,
           borderTopWidth: 1,
           borderTopColor: colors.neutral[200],
         },
