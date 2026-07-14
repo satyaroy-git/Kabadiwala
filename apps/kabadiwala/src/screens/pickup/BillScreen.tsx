@@ -62,22 +62,22 @@ export function BillScreen() {
         <View style={styles.divider} />
 
         <View style={styles.lineItem}>
-          <Text style={styles.totalLabel}>Total Value</Text>
+          <Text style={styles.totalLabel}>Scrap Value (paid to household)</Text>
           <Text style={styles.totalValue}>{formatCurrency(totalAmount)}</Text>
         </View>
 
         <View style={styles.lineItem}>
           <Text style={styles.commLabel}>
-            Platform Commission ({PLATFORM_CONFIG.COMMISSION_PERCENTAGE}%)
+            Platform Fee ({PLATFORM_CONFIG.COMMISSION_PERCENTAGE}%)
           </Text>
-          <Text style={styles.commValue}>-{formatCurrency(commission)}</Text>
+          <Text style={styles.commValue}>{formatCurrency(commission)}</Text>
         </View>
 
         <View style={styles.divider} />
 
         <View style={styles.lineItem}>
-          <Text style={styles.payoutLabel}>Your Payout</Text>
-          <Text style={styles.payoutValue}>{formatCurrency(payout)}</Text>
+          <Text style={styles.payoutLabel}>Your Total Cost</Text>
+          <Text style={styles.payoutValue}>{formatCurrency(totalPaid)}</Text>
         </View>
       </Card>
 
