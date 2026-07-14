@@ -130,6 +130,21 @@ export function DashboardScreen() {
           </Text>
         </Card>
       )}
+
+      {/* Phase 2: Quick Access */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Insights</Text>
+        <View style={styles.quickRow}>
+          <Card style={styles.quickCard} onPress={() => navigation.navigate('Badges' as never)}>
+            <Text style={styles.quickEmoji}>⭐</Text>
+            <Text style={styles.quickLabel}>Rating & Badges</Text>
+          </Card>
+          <Card style={styles.quickCard} onPress={() => navigation.navigate('Analytics' as never)}>
+            <Text style={styles.quickEmoji}>📊</Text>
+            <Text style={styles.quickLabel}>Analytics</Text>
+          </Card>
+        </View>
+      </View>
     </ScrollView>
   );
 }
@@ -160,4 +175,8 @@ const styles = StyleSheet.create({
   statValue: { ...typography.h4, color: colors.secondary[700] },
   statLabel: { ...typography.caption, color: colors.text.secondary, marginTop: 4 },
   offlineNote: { ...typography.body, color: colors.error, textAlign: 'center' },
+  quickRow: { flexDirection: 'row', gap: spacing.sm },
+  quickCard: { flex: 1, alignItems: 'center', padding: spacing.lg },
+  quickEmoji: { fontSize: 28, marginBottom: spacing.sm },
+  quickLabel: { ...typography.label, color: colors.text.primary, textAlign: 'center' },
 });

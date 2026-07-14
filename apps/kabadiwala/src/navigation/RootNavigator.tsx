@@ -23,6 +23,10 @@ import { NavigationScreen } from '../screens/pickup/NavigationScreen';
 import { WeightEntryScreen } from '../screens/pickup/WeightEntryScreen';
 import { BillScreen } from '../screens/pickup/BillScreen';
 
+// Phase 2 screens
+import { BadgesScreen } from '../screens/main/BadgesScreen';
+import { AnalyticsScreen } from '../screens/main/AnalyticsScreen';
+
 export type RootStackParamList = {
   Login: undefined;
   OTP: { phone: string };
@@ -37,6 +41,8 @@ export type RootStackParamList = {
   Navigation: { bookingId: string; address: any };
   WeightEntry: { bookingId: string; items: any[] };
   Bill: { bookingId: string; transaction: any };
+  Badges: undefined;
+  Analytics: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -71,6 +77,8 @@ export function RootNavigator() {
           <Stack.Screen name="Navigation" component={NavigationScreen} />
           <Stack.Screen name="WeightEntry" component={WeightEntryScreen} />
           <Stack.Screen name="Bill" component={BillScreen} />
+          <Stack.Screen name="Badges" component={BadgesScreen} />
+          <Stack.Screen name="Analytics" component={AnalyticsScreen} />
         </>
       )}
     </Stack.Navigator>
