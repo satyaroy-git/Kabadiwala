@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Card, Button, colors, spacing, typography } from '@kabadiwala/ui';
 import { SCRAP_PARENT_CATEGORIES } from '@kabadiwala/shared';
 
 type Frequency = 'weekly' | 'biweekly' | 'monthly';
+
+const STORAGE_KEY = '@kabadiwala_recurring_schedule';
+
+interface RecurringSchedule {
+  frequency: Frequency;
+  selectedDay: string;
+  selectedCategories: string[];
+  isActive: boolean;
+  createdAt: string;
+}
 
 export function RecurringScreen() {
   const navigation = useNavigation();
@@ -12,8 +23,41 @@ export function RecurringScreen() {
   const [selectedDay, setSelectedDay] = useState<string>('Saturday');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [isActive, setIsActive] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+  useEffect(() => {
+    loadSchedule();
+  }, []);
+
+  async function loadSchedule() {
+    try {
+      const saved = await AsyncStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const schedule: RecurringSchedule = JSON.parse(saved);
+        setFrequency(schedule.frequency);
+        setSelectedDay(schedule.selectedDay);
+        setSelectedCategories(schedule.selectedCategories);
+        setIsActive(schedule.isActive);
+      }
+    } catch (error) {
+      console.error('Error loading schedule:', error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function saveSchedule(active: boolean) {
+    const schedule: RecurringSchedule = {
+      frequency,
+      selectedDay,
+      selectedCategories,
+      isActive: active,
+      createdAt: new Date().toISOString(),
+    };
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(schedule));
+  }
 
   function toggleCategory(id: string) {
     setSelectedCategories((prev) =>
@@ -21,35 +65,41 @@ export function RecurringScreen() {
     );
   }
 
-  function handleSave() {
+  async function handleSave() {
     if (selectedCategories.length === 0) {
       Alert.alert('Error', 'Please select at least one scrap category');
       return;
     }
     setIsActive(true);
+    await saveSchedule(true);
     Alert.alert(
       'Schedule Saved! ✅',
       `Your ${frequency} pickup is set for every ${selectedDay}. We'll auto-book for you!`
     );
   }
 
-  function handleCancel() {
+  async function handleCancel() {
     Alert.alert('Cancel Schedule', 'Stop recurring pickups?', [
       { text: 'No' },
-      { text: 'Yes', onPress: () => setIsActive(false) },
+      {
+        text: 'Yes',
+        onPress: async () => {
+          setIsActive(false);
+          await saveSchedule(false);
+        },
+      },
     ]);
   }
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={{ ...typography.label, color: colors.primary[500], marginBottom: spacing.md }}>← Back</Text>
+        <Text style={styles.backBtn}>← Back</Text>
       </TouchableOpacity>
       <Text style={styles.title}>🔄 Recurring Pickups</Text>
       <Text style={styles.subtitle}>
         Set it once, we'll auto-book pickups for you!
       </Text>
-
 
       {isActive && (
         <Card>
@@ -58,7 +108,13 @@ export function RecurringScreen() {
             <View style={{ flex: 1 }}>
               <Text style={styles.activeTitle}>Schedule Active</Text>
               <Text style={styles.activeDesc}>
-                {frequency} on {selectedDay}
+                {frequency.charAt(0).toUpperCase() + frequency.slice(1)} on {selectedDay}
+              </Text>
+              <Text style={styles.activeCategories}>
+                {selectedCategories.map((id) => {
+                  const cat = SCRAP_PARENT_CATEGORIES.find((c) => c.id === id);
+                  return cat ? `${cat.icon} ${cat.name}` : id;
+                }).join(', ')}
               </Text>
             </View>
             <TouchableOpacity onPress={handleCancel}>
@@ -85,7 +141,6 @@ export function RecurringScreen() {
           ))}
         </View>
       </Card>
-
 
       {/* Day Selection */}
       <Card>
@@ -146,16 +201,17 @@ export function RecurringScreen() {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background.secondary },
   content: { padding: spacing.lg, paddingTop: spacing['5xl'], gap: spacing.md },
+  backBtn: { ...typography.label, color: colors.primary[500], marginBottom: spacing.md },
   title: { ...typography.h2, color: colors.text.primary, textAlign: 'center' },
   subtitle: { ...typography.body, color: colors.text.secondary, textAlign: 'center', marginBottom: spacing.sm },
   activeBar: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   activeIcon: { fontSize: 24 },
   activeTitle: { ...typography.label, color: colors.primary[700] },
   activeDesc: { ...typography.bodySmall, color: colors.text.secondary },
+  activeCategories: { ...typography.caption, color: colors.text.tertiary, marginTop: 2 },
   cancelText: { ...typography.label, color: colors.error },
   sectionTitle: { ...typography.h4, color: colors.text.primary, marginBottom: spacing.md },
   freqRow: { flexDirection: 'row', gap: spacing.sm },
