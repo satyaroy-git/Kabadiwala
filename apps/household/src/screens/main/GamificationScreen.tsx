@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Card, colors, spacing, typography } from '@kabadiwala/ui';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -22,6 +23,7 @@ interface LeaderboardEntry {
 
 export function GamificationScreen() {
   const { profile } = useAuth();
+  const navigation = useNavigation();
   const totalPickups = profile?.total_pickups || 0;
   const totalKg = profile?.total_recycled_kg || 0;
 
@@ -64,6 +66,9 @@ export function GamificationScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Text style={{ ...typography.label, color: colors.primary[500], marginBottom: spacing.md }}>← Back</Text>
+      </TouchableOpacity>
       <Text style={styles.title}>🎮 Green Rewards</Text>
 
       {/* Points & Streak */}

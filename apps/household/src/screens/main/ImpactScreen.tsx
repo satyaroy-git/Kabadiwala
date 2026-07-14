@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Share, TouchableOpacity } from 'rea
 import { Card, Button, colors, spacing, typography } from '@kabadiwala/ui';
 import { formatWeight } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
+import { useNavigation } from '@react-navigation/native';
 import { getBookings } from '../../services/api';
 
 interface ImpactStats {
@@ -23,6 +24,7 @@ const ENERGY_PER_KG_RECYCLED = 4.5; // kWh saved per kg recycled
 
 export function ImpactScreen() {
   const { profile } = useAuth();
+  const navigation = useNavigation();
   const [stats, setStats] = useState<ImpactStats>({
     totalRecycledKg: 0,
     co2SavedKg: 0,
@@ -79,6 +81,9 @@ export function ImpactScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Text style={{ ...typography.label, color: colors.primary[500], marginBottom: spacing.md }}>← Back</Text>
+      </TouchableOpacity>
       <Text style={styles.title}>🌱 Your Green Impact</Text>
       <Text style={styles.subtitle}>Every pickup makes a difference!</Text>
 

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Card, Button, colors, spacing, typography } from '@kabadiwala/ui';
 import { SCRAP_PARENT_CATEGORIES } from '@kabadiwala/shared';
 
 type Frequency = 'weekly' | 'biweekly' | 'monthly';
 
 export function RecurringScreen() {
+  const navigation = useNavigation();
   const [frequency, setFrequency] = useState<Frequency>('weekly');
   const [selectedDay, setSelectedDay] = useState<string>('Saturday');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -40,6 +42,9 @@ export function RecurringScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Text style={{ ...typography.label, color: colors.primary[500], marginBottom: spacing.md }}>← Back</Text>
+      </TouchableOpacity>
       <Text style={styles.title}>🔄 Recurring Pickups</Text>
       <Text style={styles.subtitle}>
         Set it once, we'll auto-book pickups for you!

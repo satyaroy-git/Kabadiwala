@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Share, TouchableOpacity, Clipboard, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Share, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Card, Button, colors, spacing, typography } from '@kabadiwala/ui';
 import { formatCurrency } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
@@ -16,6 +17,7 @@ const CASHBACK_PER_REFERRAL = 50; // ₹50 per successful referral
 
 export function ReferralScreen() {
   const { user, profile } = useAuth();
+  const navigation = useNavigation();
   const [stats, setStats] = useState<ReferralStats>({
     referralCode: '',
     totalReferred: 0,
@@ -51,6 +53,9 @@ export function ReferralScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Text style={{ ...typography.label, color: colors.primary[500], marginBottom: spacing.md }}>← Back</Text>
+      </TouchableOpacity>
       <Text style={styles.title}>🎁 Refer & Earn</Text>
       <Text style={styles.subtitle}>
         Invite friends, both of you earn ₹{CASHBACK_PER_REFERRAL}!
