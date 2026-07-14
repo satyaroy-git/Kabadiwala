@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
@@ -53,9 +53,16 @@ export function BookingDetailScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Text style={styles.backText}>← Back</Text>
+      </TouchableOpacity>
+
       <View style={styles.header}>
         <Text style={styles.title}>Pickup Details</Text>
-        <Badge text={formatBookingStatus(booking.status)} variant="info" />
+        <Badge
+          text={formatBookingStatus(booking.status)}
+          variant={booking.status === 'cancelled' ? 'error' : booking.status === 'completed' ? 'success' : 'info'}
+        />
       </View>
 
       <Card>
@@ -109,6 +116,14 @@ export function BookingDetailScreen() {
           fullWidth
         />
       )}
+
+      {/* Always show a back button */}
+      <Button
+        title="← Go Back"
+        onPress={() => navigation.goBack()}
+        variant="ghost"
+        fullWidth
+      />
     </ScrollView>
   );
 }
@@ -116,6 +131,8 @@ export function BookingDetailScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background.secondary },
   content: { padding: spacing.lg, paddingTop: spacing['5xl'], gap: spacing.md },
+  backButton: { marginBottom: spacing.sm },
+  backText: { ...typography.label, color: colors.primary[500] },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   title: { ...typography.h2, color: colors.text.primary },
   label: { ...typography.label, color: colors.text.secondary, marginBottom: spacing.sm },

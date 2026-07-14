@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
 import { formatCurrency, formatDate, RateCard, Booking } from '@kabadiwala/shared';
@@ -20,6 +20,13 @@ export function HomeScreen() {
   useEffect(() => {
     loadData();
   }, []);
+
+  // Refresh data when screen comes into focus (e.g., after cancelling a booking)
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+    }, [])
+  );
 
   async function loadData() {
     try {
