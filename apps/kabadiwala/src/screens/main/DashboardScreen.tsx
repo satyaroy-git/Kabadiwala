@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
 import { formatCurrency, Booking, EarningsSummary } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
-import { setOnlineStatus, getMyActivePickups, getEarningsSummary } from '../../services/api';
+import { setOnlineStatus, getMyActivePickups, getTransactionHistory } from '../../services/api';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -15,7 +15,7 @@ export function DashboardScreen() {
   const { profile } = useAuth();
   const [isOnline, setIsOnline] = useState(profile?.is_online || false);
   const [activePickups, setActivePickups] = useState<Booking[]>([]);
-  const [earnings, setEarnings] = useState<EarningsSummary | null>(null);
+  const [earnings, setEarnings] = useState<any>({ today: 0, this_week: 0, this_month: 0, total: 0 });
 
   useEffect(() => {
     loadData();
@@ -30,12 +30,31 @@ export function DashboardScreen() {
 
   async function loadData() {
     try {
-      const [pickups, earn] = await Promise.all([
+      const [pickups, txns] = await Promise.all([
         getMyActivePickups(),
-        getEarningsSummary(),
+        getTransactionHistory(),
       ]);
       setActivePickups(pickups);
-      setEarnings(earn);
+
+      // Calculate spend from transactions (scrap value + platform fee)
+      const now = new Date();
+      const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const startOfWeek = new Date(now);
+      startOfWeek.setDate(now.getDate() - now.getDay());
+      startOfWeek.setHours(0, 0, 0, 0);
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+      let today = 0, thisWeek = 0, thisMonth = 0, total = 0;
+      txns.forEach((t: any) => {
+        const spent = (t.total_amount || 0) + (t.commission_amount || 0);
+        const txnDate = new Date(t.created_at);
+        total += spent;
+        if (txnDate >= startOfMonth) thisMonth += spent;
+        if (txnDate >= startOfWeek) thisWeek += spent;
+        if (txnDate >= startOfDay) today += spent;
+      });
+
+      setEarnings({ today, this_week: thisWeek, this_month: thisMonth, total });
     } catch (err) {
       console.error('Dashboard load error:', err);
     }
@@ -73,9 +92,9 @@ export function DashboardScreen() {
         </View>
       </View>
 
-      {/* Today's Earnings */}
+      {/* Today's Pickups */}
       <Card>
-        <Text style={styles.cardTitle}>Today's Earnings</Text>
+        <Text style={styles.cardTitle}>Today's Pickups (Value)</Text>
         <Text style={styles.earningsValue}>{formatCurrency(earnings?.today || 0)}</Text>
         <View style={styles.earningsRow}>
           <View style={styles.earningStat}>
@@ -123,7 +142,7 @@ export function DashboardScreen() {
           </View>
           <View style={styles.stat}>
             <Text style={styles.statValue}>{formatCurrency(earnings?.total || 0)}</Text>
-            <Text style={styles.statLabel}>Total Earned</Text>
+            <Text style={styles.statLabel}>Total Spent</Text>
           </View>
           <View style={styles.stat}>
             <Text style={styles.statValue}>{profile?.service_pincodes?.length || 0}</Text>

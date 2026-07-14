@@ -21,7 +21,7 @@ function TabIcon({ name, focused }: { name: string; focused: boolean }) {
   const icons: Record<string, string> = {
     Dashboard: '🏠',
     Requests: '📥',
-    Earnings: '💰',
+    Earnings: '📋',
     Profile: '👤',
   };
   return (
@@ -54,7 +54,7 @@ export function MainTabNavigator() {
     >
       <Tab.Screen name="Dashboard" component={DashboardScreen} options={{ title: 'Home' }} />
       <Tab.Screen name="Requests" component={RequestsScreen} options={{ title: 'Requests' }} />
-      <Tab.Screen name="Earnings" component={EarningsScreen} options={{ title: 'Earnings' }} />
+      <Tab.Screen name="Earnings" component={EarningsScreen} options={{ title: 'Transactions' }} />
       <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile' }} />
     </Tab.Navigator>
   );
