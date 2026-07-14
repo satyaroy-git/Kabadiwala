@@ -157,10 +157,7 @@ export async function getBookings(status?: string): Promise<Booking[]> {
 
   let query = supabase
     .from('bookings')
-    .select(`
-      *,
-      kabadiwala:kabadiwala_profiles (name, phone, selfie_url, rating, vehicle_type)
-    `)
+    .select('*')
     .eq('household_id', user.id)
     .order('created_at', { ascending: false });
 
@@ -176,11 +173,7 @@ export async function getBookings(status?: string): Promise<Booking[]> {
 export async function getBookingById(bookingId: string): Promise<Booking> {
   const { data, error } = await supabase
     .from('bookings')
-    .select(`
-      *,
-      kabadiwala:kabadiwala_profiles (name, phone, selfie_url, rating, vehicle_type),
-      transaction:transactions (*)
-    `)
+    .select('*')
     .eq('id', bookingId)
     .single();
 
