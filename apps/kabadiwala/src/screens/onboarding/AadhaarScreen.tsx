@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button, Input, Card, colors, spacing, typography } from '@kabadiwala/ui';
-import { isValidAadhaar, maskAadhaar } from '@kabadiwala/shared';
+import { isValidAadhaar } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Aadhaar'>;
@@ -20,21 +20,26 @@ export function AadhaarScreen({ navigation }: Props) {
     if (!name.trim()) { setError('Please enter your name'); return; }
     if (!isValidAadhaar(aadhaar)) { setError('Please enter a valid 12-digit Aadhaar number'); return; }
     setLoading(true);
-    // Simulate DigiLocker OTP
+    // Demo mode: simulate OTP send
     setTimeout(() => {
       setStep('verify');
+      setOtp('123456'); // Auto-fill for testing
       setLoading(false);
-    }, 1500);
+      Alert.alert(
+        'Demo Mode',
+        'In production, an OTP will be sent to your Aadhaar-linked mobile via DigiLocker.\n\nFor testing, OTP is pre-filled: 123456'
+      );
+    }, 1000);
   }
 
   async function handleVerify() {
     if (otp.length !== 6) { setError('Enter 6-digit OTP'); return; }
     setLoading(true);
-    // Simulate verification
+    // Demo mode: accept any 6-digit OTP
     setTimeout(() => {
       setLoading(false);
       navigation.navigate('Selfie');
-    }, 1500);
+    }, 1000);
   }
 
   return (
@@ -55,7 +60,7 @@ export function AadhaarScreen({ navigation }: Props) {
           />
           <Input
             label="Aadhaar Number"
-            placeholder="XXXX XXXX XXXX"
+            placeholder="Enter 12-digit Aadhaar"
             keyboardType="number-pad"
             maxLength={12}
             value={aadhaar}
@@ -67,11 +72,20 @@ export function AadhaarScreen({ navigation }: Props) {
               🔒 We use DigiLocker API for verification. Your Aadhaar number is not stored — only verification status.
             </Text>
           </Card>
+          <Card variant="filled">
+            <Text style={styles.demoNote}>
+              🧪 Demo Mode: Enter any valid 12-digit number (e.g., 234567890123). OTP will be auto-filled.
+            </Text>
+          </Card>
           <Button title="Send Aadhaar OTP" onPress={handleSendOTP} loading={loading} fullWidth size="large" />
         </View>
       ) : (
         <View style={styles.form}>
-          <Text style={styles.sentText}>OTP sent to Aadhaar-linked mobile</Text>
+          <Card variant="filled">
+            <Text style={styles.sentText}>
+              ✅ OTP auto-filled for testing. In production, this will be sent to your Aadhaar-linked mobile.
+            </Text>
+          </Card>
           <Input
             label="Enter OTP"
             placeholder="6-digit code"
@@ -81,7 +95,7 @@ export function AadhaarScreen({ navigation }: Props) {
             onChangeText={(t) => { setOtp(t.replace(/\D/g, '')); setError(''); }}
             error={error}
           />
-          <Button title="Verify Aadhaar" onPress={handleVerify} loading={loading} fullWidth size="large" />
+          <Button title="Verify & Continue" onPress={handleVerify} loading={loading} fullWidth size="large" />
         </View>
       )}
     </View>
@@ -94,5 +108,6 @@ const styles = StyleSheet.create({
   subtitle: { ...typography.body, color: colors.text.secondary, marginBottom: spacing['3xl'] },
   form: { gap: spacing.md },
   privacyNote: { ...typography.bodySmall, color: colors.primary[800] },
-  sentText: { ...typography.body, color: colors.text.secondary, textAlign: 'center', marginBottom: spacing.lg },
+  demoNote: { ...typography.bodySmall, color: colors.secondary[700] },
+  sentText: { ...typography.bodySmall, color: colors.primary[800], textAlign: 'center' },
 });
