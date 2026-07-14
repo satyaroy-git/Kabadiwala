@@ -1,33 +1,43 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button, Input, colors, spacing, typography } from '@kabadiwala/ui';
 import { RootStackParamList } from '../../navigation/RootNavigator';
-import { signInWithEmail } from '../../services/api';
+import { signInWithEmail, signUpWithEmail } from '../../services/api';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
 export function LoginScreen({ navigation }: Props) {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   function isValidEmail(e: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.trim());
   }
 
-  async function handleSendOTP() {
+  async function handleSubmit() {
     setError('');
-    if (!isValidEmail(email)) {
-      setError('Please enter a valid email address');
-      return;
-    }
+    if (!isValidEmail(email)) { setError('Please enter a valid email address'); return; }
+    if (password.length < 6) { setError('Password must be at least 6 characters'); return; }
+
     setLoading(true);
     try {
-      await signInWithEmail(email.trim().toLowerCase());
-      navigation.navigate('OTP', { phone: email.trim().toLowerCase() });
+      if (isSignUp) {
+        await signUpWithEmail(email.trim().toLowerCase(), password);
+      } else {
+        await signInWithEmail(email.trim().toLowerCase(), password);
+      }
     } catch (err: any) {
-      setError(err.message || 'Failed to send OTP');
+      if (err.message?.includes('Invalid login credentials')) {
+        setError('Invalid email or password. Try signing up instead.');
+      } else if (err.message?.includes('already registered')) {
+        setError('This email is already registered. Try signing in.');
+      } else {
+        setError(err.message || 'Something went wrong.');
+      }
     } finally {
       setLoading(false);
     }
@@ -56,17 +66,33 @@ export function LoginScreen({ navigation }: Props) {
             autoCapitalize="none"
             value={email}
             onChangeText={(text) => { setEmail(text); setError(''); }}
-            error={error}
             leftIcon={<Text style={styles.prefix}>✉️</Text>}
           />
+          <Input
+            label="Password"
+            placeholder={isSignUp ? "Create a password (min 6 chars)" : "Enter your password"}
+            secureTextEntry
+            value={password}
+            onChangeText={(text) => { setPassword(text); setError(''); }}
+            leftIcon={<Text style={styles.prefix}>🔒</Text>}
+          />
+
+          {error ? <Text style={styles.error}>{error}</Text> : null}
+
           <Button
-            title="Get OTP"
-            onPress={handleSendOTP}
+            title={isSignUp ? "Sign Up" : "Sign In"}
+            onPress={handleSubmit}
             loading={loading}
-            disabled={!isValidEmail(email)}
+            disabled={!isValidEmail(email) || password.length < 6}
             fullWidth
             size="large"
           />
+
+          <TouchableOpacity onPress={() => { setIsSignUp(!isSignUp); setError(''); }}>
+            <Text style={styles.switchText}>
+              {isSignUp ? "Already have an account? Sign In" : "New here? Create an account"}
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -76,10 +102,12 @@ export function LoginScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background.primary },
   content: { flex: 1, justifyContent: 'center', paddingHorizontal: spacing['3xl'] },
-  logoContainer: { alignItems: 'center', marginBottom: spacing['5xl'] },
+  logoContainer: { alignItems: 'center', marginBottom: spacing['4xl'] },
   logoEmoji: { fontSize: 64, marginBottom: spacing.lg },
   title: { ...typography.h1, color: colors.secondary[700], marginBottom: spacing.sm },
   subtitle: { ...typography.body, color: colors.text.secondary, textAlign: 'center', lineHeight: 22 },
-  form: { marginBottom: spacing['3xl'] },
+  form: { marginBottom: spacing['3xl'], gap: spacing.sm },
   prefix: { fontSize: 18 },
+  error: { ...typography.bodySmall, color: colors.error, textAlign: 'center', marginBottom: spacing.sm },
+  switchText: { ...typography.label, color: colors.secondary[500], textAlign: 'center', marginTop: spacing.lg },
 });

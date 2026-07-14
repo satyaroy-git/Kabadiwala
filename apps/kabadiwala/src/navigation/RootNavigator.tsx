@@ -5,7 +5,6 @@ import { LoadingScreen } from '@kabadiwala/ui';
 
 // Auth screens
 import { LoginScreen } from '../screens/auth/LoginScreen';
-import { OTPScreen } from '../screens/auth/OTPScreen';
 
 // Onboarding screens
 import { OnboardingScreen } from '../screens/onboarding/OnboardingScreen';
@@ -54,7 +53,6 @@ export function RootNavigator() {
       {!isAuthenticated ? (
         <>
           <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="OTP" component={OTPScreen} />
         </>
       ) : !profile ? (
         <>

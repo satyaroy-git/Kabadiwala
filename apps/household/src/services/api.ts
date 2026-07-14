@@ -10,19 +10,19 @@ import {
 
 // ========== Auth ==========
 
-export async function signInWithEmail(email: string) {
-  const { data, error } = await supabase.auth.signInWithOtp({
+export async function signUpWithEmail(email: string, password: string) {
+  const { data, error } = await supabase.auth.signUp({
     email,
+    password,
   });
   if (error) throw error;
   return data;
 }
 
-export async function verifyOTP(email: string, otp: string) {
-  const { data, error } = await supabase.auth.verifyOtp({
+export async function signInWithEmail(email: string, password: string) {
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
-    token: otp,
-    type: 'email',
+    password,
   });
   if (error) throw error;
   return data;
@@ -123,10 +123,7 @@ export async function addAddress(address: Omit<Address, 'id'>) {
 export async function getRateCards(): Promise<RateCard[]> {
   const { data, error } = await supabase
     .from('rate_cards')
-    .select(`
-      *,
-      scrap_categories (name, icon)
-    `)
+    .select('*')
     .eq('is_active', true)
     .order('sort_order', { ascending: true });
 
