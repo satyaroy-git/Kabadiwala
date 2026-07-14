@@ -83,7 +83,9 @@ export function BookingsScreen() {
               {item.scrap_items.map((i) => i.category_name).join(', ')}
             </Text>
             <Text style={styles.bookingAmount}>
-              Est. {formatCurrency(item.total_estimated_amount)}
+              {item.status === 'completed' && item.actual_amount
+                ? `Paid: ${formatCurrency(item.actual_amount)}`
+                : `Est. ${formatCurrency(item.total_estimated_amount)}`}
             </Text>
           </View>
           <Badge text={formatBookingStatus(item.status)} variant={getStatusVariant(item.status)} />

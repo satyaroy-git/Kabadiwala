@@ -78,9 +78,18 @@ export function BookingDetailScreen() {
           </View>
         ))}
         <View style={styles.totalRow}>
-          <Text style={styles.totalLabel}>Estimated Total</Text>
-          <Text style={styles.totalValue}>{formatCurrency(booking.total_estimated_amount)}</Text>
+          <Text style={styles.totalLabel}>
+            {booking.status === 'completed' && booking.actual_amount ? 'Amount Received' : 'Estimated Total'}
+          </Text>
+          <Text style={styles.totalValue}>
+            {formatCurrency(booking.actual_amount || booking.total_estimated_amount)}
+          </Text>
         </View>
+        {booking.status === 'completed' && booking.actual_amount && booking.actual_amount !== booking.total_estimated_amount && (
+          <Text style={{ ...typography.caption, color: colors.text.tertiary, marginTop: 4 }}>
+            (Estimated was {formatCurrency(booking.total_estimated_amount)})
+          </Text>
+        )}
       </Card>
 
       {/* Actions */}
