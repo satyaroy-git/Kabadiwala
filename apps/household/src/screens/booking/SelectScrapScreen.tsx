@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Input, colors, spacing, typography } from '@kabadiwala/ui';
-import { SCRAP_CATEGORIES, SCRAP_PARENT_CATEGORIES } from '@kabadiwala/shared';
+import { SCRAP_CATEGORIES, SCRAP_PARENT_CATEGORIES, useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -18,6 +18,7 @@ export function SelectScrapScreen() {
   const navigation = useNavigation<NavigationProp>();
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
   const [activeCategory, setActiveCategory] = useState('paper');
+  const { t } = useTranslation();
 
   function toggleCategory(categoryId: string, categoryName: string) {
     const exists = selectedItems.find((i) => i.category_id === categoryId);
@@ -50,7 +51,7 @@ export function SelectScrapScreen() {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.backBtn}>← Back</Text>
         </TouchableOpacity>
-        <Text style={styles.title}>Select Scrap</Text>
+        <Text style={styles.title}>{t('select_scrap')}</Text>
         <Text style={styles.subtitle}>Choose what you want to sell</Text>
       </View>
 

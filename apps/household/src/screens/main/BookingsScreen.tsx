@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, RefreshControl, TouchableOpacity } fr
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatDate, formatCurrency, formatBookingStatus, Booking } from '@kabadiwala/shared';
+import { formatDate, formatCurrency, formatBookingStatus, Booking, useTranslation } from '@kabadiwala/shared';
 import { getBookings } from '../../services/api';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 
@@ -17,6 +17,7 @@ export function BookingsScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<FilterTab>('active');
+  const { t } = useTranslation();
 
   useEffect(() => {
     loadBookings();
@@ -97,7 +98,7 @@ export function BookingsScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>My Pickups</Text>
+        <Text style={styles.title}>{t('active_pickups')}</Text>
       </View>
 
       {/* Filter Tabs */}
@@ -124,8 +125,8 @@ export function BookingsScreen() {
         ListEmptyComponent={
           <View style={styles.empty}>
             <Text style={styles.emptyEmoji}>📦</Text>
-            <Text style={styles.emptyText}>No pickups yet</Text>
-            <Text style={styles.emptySubtext}>Book your first scrap pickup!</Text>
+            <Text style={styles.emptyText}>{t('book_pickup')}</Text>
+            <Text style={styles.emptySubtext}>{t('sell_scrap_best_rates')}</Text>
           </View>
         }
       />

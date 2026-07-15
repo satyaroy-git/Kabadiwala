@@ -2,6 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text } from 'react-native';
 import { colors } from '@kabadiwala/ui';
+import { useTranslation } from '@kabadiwala/shared';
 
 import { HomeScreen } from '../screens/main/HomeScreen';
 import { RateCardScreen } from '../screens/main/RateCardScreen';
@@ -32,6 +33,7 @@ function TabIcon({ name, focused }: { name: string; focused: boolean }) {
 }
 
 export function MainTabNavigator() {
+  const { t } = useTranslation();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -52,9 +54,9 @@ export function MainTabNavigator() {
         },
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
-      <Tab.Screen name="Rates" component={RateCardScreen} options={{ title: 'Rates' }} />
-      <Tab.Screen name="Bookings" component={BookingsScreen} options={{ title: 'My Pickups' }} />
+      <Tab.Screen name="Home" component={HomeScreen} options={{ title: t('hello') }} />
+      <Tab.Screen name="Rates" component={RateCardScreen} options={{ title: t('todays_rates') }} />
+      <Tab.Screen name="Bookings" component={BookingsScreen} options={{ title: t('active_pickups') }} />
       <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile' }} />
     </Tab.Navigator>
   );

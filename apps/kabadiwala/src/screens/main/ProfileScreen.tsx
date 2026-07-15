@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Card, Button, Rating, Badge, colors, spacing, typography } from '@kabadiwala/ui';
 import { VEHICLE_TYPE_LABELS } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
 import { signOut } from '../../services/api';
 
 export function ProfileScreen() {
+  const navigation = useNavigation();
   const { profile } = useAuth();
 
   function handleSignOut() {
