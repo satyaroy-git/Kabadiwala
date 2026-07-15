@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, RefreshControl } from 'react-native';
 import { Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, RateCard } from '@kabadiwala/shared';
+import { formatCurrency, RateCard, useTranslation } from '@kabadiwala/shared';
 import { getRateCards } from '../../services/api';
 
 export function RateCardScreen() {
   const [rates, setRates] = useState<RateCard[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     loadRates();
@@ -58,10 +59,8 @@ export function RateCardScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Live Rate Card</Text>
-        <Text style={styles.subtitle}>
-          Rates per kg • Updated weekly
-        </Text>
+        <Text style={styles.title}>{t('live_rate_card')}</Text>
+        <Text style={styles.subtitle}>{t('rates_per_kg')}</Text>
       </View>
 
       <View style={styles.infoCard}>

@@ -19,4 +19,5 @@ export * from './utils/calculations';
 
 // i18n
 export { t, getLanguage, setLanguage, loadLanguage, onLanguageChange, LANGUAGES } from './i18n';
+export { useTranslation } from './i18n/useTranslation';
 export type { Language, TranslationKeys } from './i18n';

@@ -2,13 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Card, Button, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatWeight } from '@kabadiwala/shared';
+import { formatWeight, useTranslation } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
 import { signOut } from '../../services/api';
 
 export function ProfileScreen() {
   const navigation = useNavigation();
   const { profile, user } = useAuth();
+  const { t } = useTranslation();
 
   async function handleSignOut() {
     Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
@@ -64,18 +65,18 @@ export function ProfileScreen() {
       {/* Menu Items */}
       <Card>
         <MenuItem icon="🌐" title="Language / भाषा" onPress={() => navigation.navigate('LanguageSelect' as never)} />
-        <MenuItem icon="🔄" title="Recurring Pickups" onPress={() => navigation.navigate('Recurring' as never)} />
-        <MenuItem icon="🌍" title="My Green Impact" onPress={() => navigation.navigate('Impact' as never)} />
-        <MenuItem icon="🎮" title="Rewards & Badges" onPress={() => navigation.navigate('Gamification' as never)} />
-        <MenuItem icon="🎁" title="Refer & Earn" onPress={() => navigation.navigate('Referral' as never)} />
-        <MenuItem icon="📍" title="Saved Addresses" onPress={() => handleMenuPress('Saved Addresses')} />
-        <MenuItem icon="📄" title="Transaction History" onPress={() => handleMenuPress('Transaction History')} />
-        <MenuItem icon="❓" title="Help & Support" onPress={() => handleMenuPress('Help & Support')} />
+        <MenuItem icon="🔄" title={t('recurring_pickups')} onPress={() => navigation.navigate('Recurring' as never)} />
+        <MenuItem icon="🌍" title={t('my_impact')} onPress={() => navigation.navigate('Impact' as never)} />
+        <MenuItem icon="🎮" title={t('rewards_badges')} onPress={() => navigation.navigate('Gamification' as never)} />
+        <MenuItem icon="🎁" title={t('refer_earn')} onPress={() => navigation.navigate('Referral' as never)} />
+        <MenuItem icon="📍" title={t('saved_addresses')} onPress={() => handleMenuPress(t('saved_addresses'))} />
+        <MenuItem icon="📄" title={t('transaction_history')} onPress={() => handleMenuPress(t('transaction_history'))} />
+        <MenuItem icon="❓" title={t('help_support')} onPress={() => handleMenuPress(t('help_support'))} />
       </Card>
 
       {/* Sign Out */}
       <Button
-        title="Sign Out"
+        title={t('sign_out')}
         onPress={handleSignOut}
         variant="outline"
         fullWidth

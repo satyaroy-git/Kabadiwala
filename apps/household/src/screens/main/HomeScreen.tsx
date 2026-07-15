@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, formatDate, RateCard, Booking } from '@kabadiwala/shared';
+import { formatCurrency, formatDate, RateCard, Booking, useTranslation } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
 import { getRateCards, getBookings } from '../../services/api';
 import { RootStackParamList } from '../../navigation/RootNavigator';
@@ -13,6 +13,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 export function HomeScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { profile } = useAuth();
+  const { t } = useTranslation();
   const [rates, setRates] = useState<RateCard[]>([]);
   const [activeBookings, setActiveBookings] = useState<Booking[]>([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -60,14 +61,14 @@ export function HomeScreen() {
       {/* Header */}
       <View style={styles.header}>
         <View>
-          <Text style={styles.greeting}>Hello, {profile?.name || 'there'}! 👋</Text>
-          <Text style={styles.tagline}>Sell your scrap at the best rates</Text>
+          <Text style={styles.greeting}>{t('hello')}, {profile?.name || 'there'}! 👋</Text>
+          <Text style={styles.tagline}>{t('sell_scrap_best_rates')}</Text>
         </View>
       </View>
 
       {/* Quick Book Button */}
       <Button
-        title="📦  Book a Pickup"
+        title={`📦  ${t('book_pickup')}`}
         onPress={() => navigation.navigate('SelectScrap')}
         size="large"
         fullWidth
@@ -76,7 +77,7 @@ export function HomeScreen() {
       {/* Active Bookings */}
       {activeBookings.length > 0 && (
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Active Pickups</Text>
+          <Text style={styles.sectionTitle}>{t('active_pickups')}</Text>
           {activeBookings.map((booking) => (
             <Card
               key={booking.id}
@@ -116,9 +117,9 @@ export function HomeScreen() {
       {/* Live Rates Preview */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Today's Rates</Text>
+          <Text style={styles.sectionTitle}>{t('todays_rates')}</Text>
           <Button
-            title="View All"
+            title={t('view_all')}
             onPress={() => navigation.getParent()?.navigate('Rates')}
             variant="ghost"
             size="small"
@@ -140,7 +141,7 @@ export function HomeScreen() {
 
       {/* Phase 2: Quick Access */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Explore</Text>
+        <Text style={styles.sectionTitle}>{t('explore')}</Text>
         <View style={styles.quickGrid}>
           <Card style={styles.quickCard} onPress={() => navigation.navigate('Impact')}>
             <Text style={styles.quickEmoji}>🌍</Text>
