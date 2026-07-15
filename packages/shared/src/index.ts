@@ -15,3 +15,8 @@ export * from './constants/config';
 export * from './utils/formatters';
 export * from './utils/validators';
 export * from './utils/calculations';
+
+
+// i18n
+export { t, getLanguage, setLanguage, loadLanguage, onLanguageChange, LANGUAGES } from './i18n';
+export type { Language, TranslationKeys } from './i18n';

@@ -124,6 +124,15 @@ export function PickupDetailScreen() {
         <Button title="⚖️ Start Weighing" onPress={handleStartWeighing} fullWidth size="large" />
       )}
 
+      {['accepted', 'en_route', 'arrived'].includes(booking.status) && (
+        <Button
+          title="💬 Chat with Household"
+          onPress={() => navigation.navigate('Chat' as never, { bookingId: route.params.bookingId } as never)}
+          variant="outline"
+          fullWidth
+        />
+      )}
+
       <Button title="← Go Back" onPress={() => navigation.goBack()} variant="ghost" fullWidth />
     </ScrollView>
   );

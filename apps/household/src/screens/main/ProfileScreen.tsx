@@ -63,6 +63,7 @@ export function ProfileScreen() {
 
       {/* Menu Items */}
       <Card>
+        <MenuItem icon="🌐" title="Language / भाषा" onPress={() => navigation.navigate('LanguageSelect' as never)} />
         <MenuItem icon="🔄" title="Recurring Pickups" onPress={() => navigation.navigate('Recurring' as never)} />
         <MenuItem icon="🌍" title="My Green Impact" onPress={() => navigation.navigate('Impact' as never)} />
         <MenuItem icon="🎮" title="Rewards & Badges" onPress={() => navigation.navigate('Gamification' as never)} />

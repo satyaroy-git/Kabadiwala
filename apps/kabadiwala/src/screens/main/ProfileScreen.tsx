@@ -50,7 +50,10 @@ export function ProfileScreen() {
         <DetailRow label="🔔 Notifications" value="On" />
         <DetailRow label="📍 Location Sharing" value="While online" />
         <DetailRow label="🗓️ Availability" value="Mon-Sat, 9am-6pm" />
+        <DetailRow label="🌐 Language" value="Tap to change" />
       </Card>
+
+      <Button title="🌐 Change Language" onPress={() => navigation.navigate('LanguageSelect' as never)} variant="outline" fullWidth />
 
       <Button title="Sign Out" onPress={handleSignOut} variant="outline" fullWidth />
       <Text style={styles.version}>Kabadiwala Partner v1.0.0</Text>

@@ -30,6 +30,8 @@ import { ImpactScreen } from '../screens/main/ImpactScreen';
 import { ReferralScreen } from '../screens/main/ReferralScreen';
 import { RecurringScreen } from '../screens/main/RecurringScreen';
 import { GamificationScreen } from '../screens/main/GamificationScreen';
+import { LanguageScreen } from '../screens/main/LanguageScreen';
+import { ChatScreen } from '../screens/chat/ChatScreen';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -46,6 +48,8 @@ export type RootStackParamList = {
   Referral: undefined;
   Recurring: undefined;
   Gamification: undefined;
+  LanguageSelect: undefined;
+  Chat: { bookingId: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -86,6 +90,8 @@ export function RootNavigator() {
           <Stack.Screen name="Referral" component={ReferralScreen} />
           <Stack.Screen name="Recurring" component={RecurringScreen} />
           <Stack.Screen name="Gamification" component={GamificationScreen} />
+          <Stack.Screen name="LanguageSelect" component={LanguageScreen} />
+          <Stack.Screen name="Chat" component={ChatScreen} />
         </>
       )}
     </Stack.Navigator>

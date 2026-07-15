@@ -102,6 +102,15 @@ export function BookingDetailScreen() {
         />
       )}
 
+      {['accepted', 'en_route', 'arrived', 'weighing'].includes(booking.status) && (
+        <Button
+          title="💬 Chat with Kabadiwala"
+          onPress={() => navigation.navigate('Chat', { bookingId: booking.id })}
+          variant="outline"
+          fullWidth
+        />
+      )}
+
       {booking.status === 'completed' && (
         <Button
           title="Rate Kabadiwala"
