@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, TouchableOpacity, Image } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button, Input, colors, spacing, typography } from '@kabadiwala/ui';
 import { RootStackParamList } from '../../navigation/RootNavigator';
@@ -50,7 +50,11 @@ export function LoginScreen({ navigation }: Props) {
     >
       <View style={styles.content}>
         <View style={styles.logoContainer}>
-          <Text style={styles.logoEmoji}>🚛</Text>
+          <Image
+            source={require('../../assets/logo.png')}
+            style={styles.logoImage}
+            resizeMode="contain"
+          />
           <Text style={styles.title}>Kabadiwala Partner</Text>
           <Text style={styles.subtitle}>
             Join India's largest scrap pickup network.{'\n'}
@@ -103,7 +107,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background.primary },
   content: { flex: 1, justifyContent: 'center', paddingHorizontal: spacing['3xl'] },
   logoContainer: { alignItems: 'center', marginBottom: spacing['4xl'] },
-  logoEmoji: { fontSize: 64, marginBottom: spacing.lg },
+  logoImage: { width: 120, height: 120, marginBottom: spacing.lg },
   title: { ...typography.h1, color: colors.secondary[700], marginBottom: spacing.sm },
   subtitle: { ...typography.body, color: colors.text.secondary, textAlign: 'center', lineHeight: 22 },
   form: { marginBottom: spacing['3xl'], gap: spacing.sm },
