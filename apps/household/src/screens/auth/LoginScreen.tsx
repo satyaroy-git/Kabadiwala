@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, TouchableOpacity, Image } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button, Input, colors, spacing, typography } from '@kabadiwala/ui';
 import { RootStackParamList } from '../../navigation/RootNavigator';
@@ -60,7 +60,11 @@ export function LoginScreen({ navigation }: Props) {
       <View style={styles.content}>
         {/* Logo */}
         <View style={styles.logoContainer}>
-          <Text style={styles.logoEmoji}>♻️</Text>
+          <Image
+            source={require('../../assets/logo.png')}
+            style={styles.logoImage}
+            resizeMode="contain"
+          />
           <Text style={styles.title}>Kabadiwala</Text>
           <Text style={styles.subtitle}>
             Sell your scrap at the best rates.{'\n'}Verified dealers at your doorstep.
@@ -139,8 +143,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: spacing['4xl'],
   },
-  logoEmoji: {
-    fontSize: 64,
+  logoImage: {
+    width: 120,
+    height: 120,
     marginBottom: spacing.lg,
   },
   title: {
