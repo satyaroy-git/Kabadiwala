@@ -38,6 +38,7 @@ function TranslatedTabLabel({ translationKey, focused }: { translationKey: strin
     <Text style={{
       fontSize: 11,
       fontWeight: '500',
+      lineHeight: 18,
       color: focused ? colors.primary[500] : colors.neutral[500],
     }}>
       {t(translationKey as any)}

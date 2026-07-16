@@ -112,9 +112,9 @@ const styles = StyleSheet.create({
     minHeight: 48,
   },
   size_large: {
-    paddingVertical: spacing.lg,
+    paddingVertical: spacing.xl,
     paddingHorizontal: spacing['2xl'],
-    minHeight: 56,
+    minHeight: 58,
   },
 
   fullWidth: {
@@ -127,7 +127,8 @@ const styles = StyleSheet.create({
   // Label styles
   label: {
     ...typography.button,
-    lineHeight: 24,
+    lineHeight: 28,
+    includeFontPadding: true,
   },
   label_primary: {
     color: colors.white,

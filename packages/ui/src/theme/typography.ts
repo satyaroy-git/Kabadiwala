@@ -17,24 +17,24 @@ export const typography: Record<string, TextStyle> = {
   h3: {
     fontSize: 20,
     fontWeight: '600',
-    lineHeight: 28,
+    lineHeight: 30,
   },
   h4: {
     fontSize: 18,
     fontWeight: '600',
-    lineHeight: 24,
+    lineHeight: 26,
   },
 
   // Body
   bodyLarge: {
     fontSize: 16,
     fontWeight: '400',
-    lineHeight: 24,
+    lineHeight: 26,
   },
   body: {
     fontSize: 14,
     fontWeight: '400',
-    lineHeight: 20,
+    lineHeight: 22,
   },
   bodySmall: {
     fontSize: 12,
@@ -46,7 +46,7 @@ export const typography: Record<string, TextStyle> = {
   label: {
     fontSize: 14,
     fontWeight: '500',
-    lineHeight: 20,
+    lineHeight: 22,
   },
   labelSmall: {
     fontSize: 12,
@@ -65,12 +65,12 @@ export const typography: Record<string, TextStyle> = {
   button: {
     fontSize: 16,
     fontWeight: '600',
-    lineHeight: 20,
+    lineHeight: 26,
   },
   buttonSmall: {
     fontSize: 14,
     fontWeight: '600',
-    lineHeight: 18,
+    lineHeight: 22,
   },
 
   // Numbers/Currency
