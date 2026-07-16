@@ -120,7 +120,7 @@ export function HomeScreen() {
           <Text style={styles.sectionTitle}>{t('todays_rates')}</Text>
           <Button
             title={t('view_all')}
-            onPress={() => navigation.getParent()?.navigate('Rates')}
+            onPress={() => navigation.navigate('MainTabs', { screen: 'Rates' })}
             variant="ghost"
             size="small"
           />
