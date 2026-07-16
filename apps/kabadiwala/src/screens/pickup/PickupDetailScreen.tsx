@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatDate, formatCurrency, Booking } from '@kabadiwala/shared';
+import { formatDate, formatCurrency, Booking, useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { updateBookingStatus } from '../../services/api';
 import { supabase } from '../../services/supabase';
@@ -14,6 +14,7 @@ type RouteType = RouteProp<RootStackParamList, 'PickupDetail'>;
 export function PickupDetailScreen() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteType>();
+  const { t } = useTranslation();
   const [booking, setBooking] = useState<any>(null);
   const [address, setAddress] = useState<any>(null);
 
@@ -80,11 +81,11 @@ export function PickupDetailScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={styles.backBtn}>← Back</Text>
+        <Text style={styles.backBtn}>← {t('back')}</Text>
       </TouchableOpacity>
 
       <View style={styles.headerRow}>
-        <Text style={styles.title}>Pickup Details</Text>
+        <Text style={styles.title}>{t('pickup_details')}</Text>
         <Badge text={booking.status.replace('_', ' ')} variant="info" />
       </View>
 

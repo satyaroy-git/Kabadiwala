@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useNavigation } from '@react-navigation/native';
 import { Card, Rating, colors, spacing, typography } from '@kabadiwala/ui';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTranslation } from '@kabadiwala/shared';
 
 interface Badge {
   id: string;
@@ -17,6 +18,7 @@ interface Badge {
 export function BadgesScreen() {
   const navigation = useNavigation();
   const { profile } = useAuth();
+  const { t } = useTranslation();
   const rating = profile?.rating || 0;
   const totalPickups = profile?.total_pickups || 0;
 
@@ -45,10 +47,10 @@ export function BadgesScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={styles.backBtn}>← Back</Text>
+        <Text style={styles.backBtn}>← {t('back')}</Text>
       </TouchableOpacity>
 
-      <Text style={styles.title}>⭐ Rating & Badges</Text>
+      <Text style={styles.title}>⭐ {t('rewards_badges')}</Text>
 
       {/* Rating Card */}
       <Card>

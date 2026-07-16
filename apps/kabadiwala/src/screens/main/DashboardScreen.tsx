@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Switch } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, Booking, EarningsSummary } from '@kabadiwala/shared';
+import { formatCurrency, Booking, EarningsSummary, useTranslation } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
 import { setOnlineStatus, getMyActivePickups, getTransactionHistory } from '../../services/api';
 import { RootStackParamList } from '../../navigation/RootNavigator';
@@ -13,6 +13,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 export function DashboardScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { profile } = useAuth();
+  const { t } = useTranslation();
   const [isOnline, setIsOnline] = useState(profile?.is_online || false);
   const [activePickups, setActivePickups] = useState<Booking[]>([]);
   const [earnings, setEarnings] = useState<any>({ today: 0, this_week: 0, this_month: 0, total: 0 });
@@ -111,7 +112,7 @@ export function DashboardScreen() {
       {/* Active Pickups */}
       {activePickups.length > 0 && (
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Active Pickups ({activePickups.length})</Text>
+          <Text style={styles.sectionTitle}>{t('active_pickups')} ({activePickups.length})</Text>
           {activePickups.map((pickup) => (
             <Card key={pickup.id} onPress={() => navigation.navigate('PickupDetail', { bookingId: pickup.id })}>
               <View style={styles.pickupRow}>

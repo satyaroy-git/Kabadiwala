@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'rea
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Card, Button, colors, spacing, typography } from '@kabadiwala/ui';
-import { SCRAP_PARENT_CATEGORIES } from '@kabadiwala/shared';
+import { SCRAP_PARENT_CATEGORIES, useTranslation } from '@kabadiwala/shared';
 
 type Frequency = 'weekly' | 'biweekly' | 'monthly';
 
@@ -19,6 +19,7 @@ interface RecurringSchedule {
 
 export function RecurringScreen() {
   const navigation = useNavigation();
+  const { t } = useTranslation();
   const [frequency, setFrequency] = useState<Frequency>('weekly');
   const [selectedDay, setSelectedDay] = useState<string>('Saturday');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -94,9 +95,9 @@ export function RecurringScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={styles.backBtn}>← Back</Text>
+        <Text style={styles.backBtn}>← {t('back')}</Text>
       </TouchableOpacity>
-      <Text style={styles.title}>🔄 Recurring Pickups</Text>
+      <Text style={styles.title}>🔄 {t('recurring_pickups')}</Text>
       <Text style={styles.subtitle}>
         Set it once, we'll auto-book pickups for you!
       </Text>
@@ -118,7 +119,7 @@ export function RecurringScreen() {
               </Text>
             </View>
             <TouchableOpacity onPress={handleCancel}>
-              <Text style={styles.cancelText}>Cancel</Text>
+              <Text style={styles.cancelText}>{t('cancel')}</Text>
             </TouchableOpacity>
           </View>
         </Card>

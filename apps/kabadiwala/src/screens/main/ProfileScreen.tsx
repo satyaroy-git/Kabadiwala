@@ -2,13 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Card, Button, Rating, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { VEHICLE_TYPE_LABELS } from '@kabadiwala/shared';
+import { VEHICLE_TYPE_LABELS, useTranslation } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
 import { signOut } from '../../services/api';
 
 export function ProfileScreen() {
   const navigation = useNavigation();
   const { profile } = useAuth();
+  const { t } = useTranslation();
 
   function handleSignOut() {
     Alert.alert('Sign Out', 'Are you sure?', [
@@ -57,7 +58,7 @@ export function ProfileScreen() {
 
       <Button title="🌐 Change Language" onPress={() => navigation.navigate('LanguageSelect' as never)} variant="outline" fullWidth />
 
-      <Button title="Sign Out" onPress={handleSignOut} variant="outline" fullWidth />
+      <Button title={t('sign_out')} onPress={handleSignOut} variant="outline" fullWidth />
       <Text style={styles.version}>Kabadiwala Partner v1.0.0</Text>
     </ScrollView>
   );

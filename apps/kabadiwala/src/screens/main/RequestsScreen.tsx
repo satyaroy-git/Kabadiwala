@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, RefreshControl, Alert } from 'react-n
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatDate, formatCurrency, formatDistance, Booking } from '@kabadiwala/shared';
+import { formatDate, formatCurrency, formatDistance, Booking, useTranslation } from '@kabadiwala/shared';
 import { getPickupRequests, acceptPickup, rejectPickup } from '../../services/api';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 
@@ -11,6 +11,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export function RequestsScreen() {
   const navigation = useNavigation<NavigationProp>();
+  const { t } = useTranslation();
   const [requests, setRequests] = useState<Booking[]>([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -88,7 +89,7 @@ export function RequestsScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Pickup Requests</Text>
+        <Text style={styles.title}>{t('active_pickups')}</Text>
         <Text style={styles.subtitle}>Nearby requests in your pincodes</Text>
       </View>
 

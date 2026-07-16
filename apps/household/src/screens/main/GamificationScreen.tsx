@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useNavigation } from '@react-navigation/native';
 import { Card, colors, spacing, typography } from '@kabadiwala/ui';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTranslation } from '@kabadiwala/shared';
 
 interface Badge {
   id: string;
@@ -24,6 +25,7 @@ interface LeaderboardEntry {
 export function GamificationScreen() {
   const { profile } = useAuth();
   const navigation = useNavigation();
+  const { t } = useTranslation();
   const totalPickups = profile?.total_pickups || 0;
   const totalKg = profile?.total_recycled_kg || 0;
 
@@ -67,9 +69,9 @@ export function GamificationScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={{ ...typography.label, color: colors.primary[500], marginBottom: spacing.md }}>← Back</Text>
+        <Text style={{ ...typography.label, color: colors.primary[500], marginBottom: spacing.md }}>← {t('back')}</Text>
       </TouchableOpacity>
-      <Text style={styles.title}>🎮 Green Rewards</Text>
+      <Text style={styles.title}>🎮 {t('rewards_badges')}</Text>
 
       {/* Points & Streak */}
       <View style={styles.topRow}>

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, PLATFORM_CONFIG } from '@kabadiwala/shared';
+import { formatCurrency, PLATFORM_CONFIG, useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { supabase } from '../../services/supabase';
 
@@ -13,6 +13,7 @@ type RouteType = RouteProp<RootStackParamList, 'Bill'>;
 export function BillScreen() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteType>();
+  const { t } = useTranslation();
   const { bookingId, transaction } = route.params;
 
   const totalAmount = transaction?.total_amount || 0;
@@ -89,7 +90,7 @@ export function BillScreen() {
       </Card>
 
       <Button
-        title="✅ Done - Mark as Complete"
+        title={`✅ ${t('done')} - Mark as Complete`}
         onPress={handleDone}
         fullWidth
         size="large"

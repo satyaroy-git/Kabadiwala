@@ -3,16 +3,18 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, colors, spacing, typography } from '@kabadiwala/ui';
+import { useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export function BookingScreen() {
   const navigation = useNavigation<NavigationProp>();
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Book a Pickup</Text>
+      <Text style={styles.title}>{t('book_pickup')}</Text>
       <Text style={styles.subtitle}>
         Schedule a scrap pickup at your doorstep
       </Text>

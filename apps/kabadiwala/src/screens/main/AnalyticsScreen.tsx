@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Card, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency } from '@kabadiwala/shared';
+import { formatCurrency, useTranslation } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
 import { getEarningsSummary, getTransactionHistory } from '../../services/api';
 
@@ -23,6 +23,7 @@ interface MaterialBreakdown {
 export function AnalyticsScreen() {
   const navigation = useNavigation();
   const { profile } = useAuth();
+  const { t } = useTranslation();
   const [earnings, setEarnings] = useState<any>(null);
   const [weeklyData, setWeeklyData] = useState<DayEarning[]>([]);
   const [materials, setMaterials] = useState<MaterialBreakdown[]>([]);
@@ -95,7 +96,7 @@ export function AnalyticsScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={styles.backBtn}>← Back</Text>
+        <Text style={styles.backBtn}>← {t('back')}</Text>
       </TouchableOpacity>
 
       <Text style={styles.title}>📊 Analytics</Text>

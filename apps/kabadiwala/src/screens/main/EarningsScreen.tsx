@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 import { Card, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, EarningsSummary, Transaction } from '@kabadiwala/shared';
+import { formatCurrency, EarningsSummary, Transaction, useTranslation } from '@kabadiwala/shared';
 import { getEarningsSummary, getTransactionHistory } from '../../services/api';
 
 export function EarningsScreen() {
   const [earnings, setEarnings] = useState<EarningsSummary | null>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [refreshing, setRefreshing] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => { loadData(); }, []);
 
@@ -42,7 +43,7 @@ export function EarningsScreen() {
       contentContainerStyle={styles.content}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
-      <Text style={styles.title}>Transactions</Text>
+      <Text style={styles.title}>{t('transaction_history')}</Text>
 
       {/* Summary - Your Total Spend */}
       <Card>

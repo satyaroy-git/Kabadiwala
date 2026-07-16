@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Input, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, calculateTotalAmount } from '@kabadiwala/shared';
+import { formatCurrency, calculateTotalAmount, useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { submitWeightEntry } from '../../services/api';
 
@@ -20,6 +20,7 @@ interface WeightItem {
 export function WeightEntryScreen() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteType>();
+  const { t } = useTranslation();
   const { bookingId, items } = route.params;
   const [loading, setLoading] = useState(false);
 

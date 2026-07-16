@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, KeyboardAvoidingView, Platform, TouchableOpacity, Image } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button, Input, colors, spacing, typography } from '@kabadiwala/ui';
+import { useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { signInWithEmail, signUpWithEmail } from '../../services/api';
 
@@ -13,6 +14,7 @@ export function LoginScreen({ navigation }: Props) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
+  const { t } = useTranslation();
 
   function isValidEmail(e: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.trim());
@@ -55,17 +57,16 @@ export function LoginScreen({ navigation }: Props) {
             style={styles.logoImage}
             resizeMode="contain"
           />
-          <Text style={styles.title}>Kabadiwala Partner</Text>
+          <Text style={styles.title}>{t('partner_app_name')}</Text>
           <Text style={styles.subtitle}>
-            Join India's largest scrap pickup network.{'\n'}
-            Earn more with verified pickups.
+            {t('login_partner_subtitle')}
           </Text>
         </View>
 
         <View style={styles.form}>
           <Input
-            label="Email Address"
-            placeholder="Enter your email"
+            label={t('email')}
+            placeholder={t('enter_email')}
             keyboardType="email-address"
             autoCapitalize="none"
             value={email}
@@ -73,8 +74,8 @@ export function LoginScreen({ navigation }: Props) {
             leftIcon={<Text style={styles.prefix}>✉️</Text>}
           />
           <Input
-            label="Password"
-            placeholder={isSignUp ? "Create a password (min 6 chars)" : "Enter your password"}
+            label={t('password')}
+            placeholder={isSignUp ? "Create a password (min 6 chars)" : t('enter_password')}
             secureTextEntry
             value={password}
             onChangeText={(text) => { setPassword(text); setError(''); }}
@@ -84,7 +85,7 @@ export function LoginScreen({ navigation }: Props) {
           {error ? <Text style={styles.error}>{error}</Text> : null}
 
           <Button
-            title={isSignUp ? "Sign Up" : "Sign In"}
+            title={isSignUp ? t('sign_up') : t('sign_in')}
             onPress={handleSubmit}
             loading={loading}
             disabled={!isValidEmail(email) || password.length < 6}
@@ -94,7 +95,7 @@ export function LoginScreen({ navigation }: Props) {
 
           <TouchableOpacity onPress={() => { setIsSignUp(!isSignUp); setError(''); }}>
             <Text style={styles.switchText}>
-              {isSignUp ? "Already have an account? Sign In" : "New here? Create an account"}
+              {isSignUp ? `${t('already_account')}? ${t('sign_in')}` : `${t('new_here')} ${t('sign_up')}`}
             </Text>
           </TouchableOpacity>
         </View>
