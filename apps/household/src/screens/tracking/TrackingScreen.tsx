@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatETA, formatDistance } from '@kabadiwala/shared';
+import { formatETA, formatDistance, useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { getBookingById, subscribeToKabadiwalaLocation, subscribeToBookingStatus } from '../../services/api';
 
@@ -11,6 +11,7 @@ type RouteType = RouteProp<RootStackParamList, 'Tracking'>;
 export function TrackingScreen() {
   const route = useRoute<RouteType>();
   const { bookingId } = route.params;
+  const { t } = useTranslation();
   const [kabadiwalaLocation, setKabadiwalaLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [bookingStatus, setBookingStatus] = useState<string>('en_route');
   const [kabadiwalaInfo, setKabadiwalaInfo] = useState<any>(null);
@@ -47,10 +48,10 @@ export function TrackingScreen() {
   function getStatusMessage() {
     switch (bookingStatus) {
       case 'accepted': return '🕐 Kabadiwala will start soon';
-      case 'en_route': return '🚗 Kabadiwala is on the way';
-      case 'arrived': return '✅ Kabadiwala has arrived!';
-      case 'weighing': return '⚖️ Weighing in progress';
-      default: return '📍 Tracking...';
+      case 'en_route': return t('kabadiwala_on_way');
+      case 'arrived': return t('kabadiwala_arrived');
+      case 'weighing': return t('weighing_progress');
+      default: return `📍 ${t('tracking')}...`;
     }
   }
 

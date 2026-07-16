@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Button, Input, colors, spacing, typography } from '@kabadiwala/ui';
-import { isValidName } from '@kabadiwala/shared';
+import { isValidName, useTranslation } from '@kabadiwala/shared';
 import { createHouseholdProfile } from '../../services/api';
 import { useAuth } from '../../contexts/AuthContext';
 
 export function ProfileSetupScreen() {
   const { user, refreshProfile } = useAuth();
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -36,15 +37,15 @@ export function ProfileSetupScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.emoji}>👋</Text>
-      <Text style={styles.title}>Welcome!</Text>
+      <Text style={styles.title}>{t('welcome')}</Text>
       <Text style={styles.subtitle}>
         Let's set up your profile to get started with scrap pickups.
       </Text>
 
       <View style={styles.form}>
         <Input
-          label="Your Name"
-          placeholder="Enter your full name"
+          label={t('enter_name')}
+          placeholder={t('enter_name')}
           value={name}
           onChangeText={(text) => {
             setName(text);
@@ -55,7 +56,7 @@ export function ProfileSetupScreen() {
         />
 
         <Button
-          title="Get Started"
+          title={t('get_started')}
           onPress={handleCreateProfile}
           loading={loading}
           disabled={name.trim().length < 2}

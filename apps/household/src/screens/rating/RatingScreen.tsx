@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TextInput, Alert } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Rating, colors, spacing, typography } from '@kabadiwala/ui';
+import { useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { rateKabadiwala } from '../../services/api';
 
@@ -13,6 +14,7 @@ export function RatingScreen() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteType>();
   const { bookingId, kabadiwalaName } = route.params;
+  const { t } = useTranslation();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,8 +27,8 @@ export function RatingScreen() {
     setLoading(true);
     try {
       await rateKabadiwala(bookingId, rating, comment);
-      Alert.alert('Thank you!', 'Your rating has been submitted.', [
-        { text: 'OK', onPress: () => navigation.navigate('MainTabs') },
+      Alert.alert(t('thank_you'), 'Your rating has been submitted.', [
+        { text: t('ok'), onPress: () => navigation.navigate('MainTabs') },
       ]);
     } catch (err: any) {
       Alert.alert('Error', err.message || 'Failed to submit rating');
@@ -38,7 +40,7 @@ export function RatingScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.emoji}>⭐</Text>
-      <Text style={styles.title}>Rate {kabadiwalaName}</Text>
+      <Text style={styles.title}>{t('rate_kabadiwala')}</Text>
       <Text style={styles.subtitle}>How was your pickup experience?</Text>
 
       <View style={styles.ratingContainer}>
@@ -56,7 +58,7 @@ export function RatingScreen() {
       />
 
       <Button
-        title="Submit Rating"
+        title={t('submit_rating')}
         onPress={handleSubmit}
         loading={loading}
         disabled={rating === 0}

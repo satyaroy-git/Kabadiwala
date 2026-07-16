@@ -71,4 +71,35 @@ export interface TranslationKeys {
   coming_soon: string;
   profile: string;
   home: string;
+
+  // Booking Detail
+  pickup_details: string;
+  scheduled: string;
+  items: string;
+  amount_received: string;
+  estimated_total: string;
+  cancel_pickup_confirm: string;
+  yes_cancel: string;
+  rate_kabadiwala: string;
+
+  // Tracking
+  tracking: string;
+  kabadiwala_on_way: string;
+  kabadiwala_arrived: string;
+  weighing_progress: string;
+
+  // Rating
+  submit_rating: string;
+  thank_you: string;
+
+  // Profile Setup
+  welcome: string;
+  enter_name: string;
+  get_started: string;
+
+  // Chat
+  chat: string;
+  send: string;
+  type_message: string;
+  no_messages: string;
 }

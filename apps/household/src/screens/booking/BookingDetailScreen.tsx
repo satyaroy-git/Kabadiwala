@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity } from 'rea
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, formatDate, formatBookingStatus, Booking } from '@kabadiwala/shared';
+import { formatCurrency, formatDate, formatBookingStatus, Booking, useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { getBookingById, cancelBooking } from '../../services/api';
 
@@ -13,6 +13,7 @@ type RouteType = RouteProp<RootStackParamList, 'BookingDetail'>;
 export function BookingDetailScreen() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteType>();
+  const { t } = useTranslation();
   const [booking, setBooking] = useState<Booking | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -32,17 +33,17 @@ export function BookingDetailScreen() {
   }
 
   async function handleCancel() {
-    Alert.alert('Cancel Pickup', 'Are you sure?', [
-      { text: 'No', style: 'cancel' },
+    Alert.alert(t('cancel_pickup'), t('cancel_pickup_confirm'), [
+      { text: t('cancel'), style: 'cancel' },
       {
-        text: 'Yes, Cancel',
+        text: t('yes_cancel'),
         style: 'destructive',
         onPress: async () => {
           try {
             await cancelBooking(route.params.bookingId, 'Cancelled by user');
             navigation.goBack();
           } catch (err) {
-            Alert.alert('Error', 'Failed to cancel');
+            Alert.alert(t('error'), 'Failed to cancel');
           }
         },
       },
@@ -54,7 +55,7 @@ export function BookingDetailScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
-        <Text style={styles.title}>Pickup Details</Text>
+        <Text style={styles.title}>{t('pickup_details')}</Text>
         <Badge
           text={formatBookingStatus(booking.status)}
           variant={booking.status === 'cancelled' ? 'error' : booking.status === 'completed' ? 'success' : 'info'}
@@ -62,13 +63,13 @@ export function BookingDetailScreen() {
       </View>
 
       <Card>
-        <Text style={styles.label}>📅 Scheduled</Text>
+        <Text style={styles.label}>📅 {t('scheduled')}</Text>
         <Text style={styles.value}>{formatDate(booking.scheduled_date)}</Text>
         <Text style={styles.subvalue}>{booking.time_slot.label}</Text>
       </Card>
 
       <Card>
-        <Text style={styles.label}>📦 Items</Text>
+        <Text style={styles.label}>📦 {t('items')}</Text>
         {booking.scrap_items.map((item) => (
           <View key={item.category_id} style={styles.itemRow}>
             <Text style={styles.itemName}>{item.category_name}</Text>
@@ -79,7 +80,7 @@ export function BookingDetailScreen() {
         ))}
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>
-            {booking.status === 'completed' && booking.actual_amount ? 'Amount Received' : 'Estimated Total'}
+            {booking.status === 'completed' && booking.actual_amount ? t('amount_received') : t('estimated_total')}
           </Text>
           <Text style={styles.totalValue}>
             {formatCurrency(booking.actual_amount || booking.total_estimated_amount)}
@@ -113,7 +114,7 @@ export function BookingDetailScreen() {
 
       {booking.status === 'completed' && (
         <Button
-          title="Rate Kabadiwala"
+          title={t('rate_kabadiwala')}
           onPress={() => navigation.navigate('Rating', {
             bookingId: booking.id,
             kabadiwalaName: (booking as any).kabadiwala?.name || 'Kabadiwala',
@@ -124,7 +125,7 @@ export function BookingDetailScreen() {
 
       {['pending', 'assigned', 'accepted'].includes(booking.status) && (
         <Button
-          title="Cancel Pickup"
+          title={t('cancel_pickup')}
           onPress={handleCancel}
           variant="outline"
           fullWidth

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { colors, spacing, typography } from '@kabadiwala/ui';
+import { useTranslation } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../services/supabase';
 
@@ -19,6 +20,7 @@ export function ChatScreen() {
   const route = useRoute<any>();
   const { bookingId } = route.params;
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const [sending, setSending] = useState(false);
@@ -101,7 +103,7 @@ export function ChatScreen() {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.backBtn}>← Back</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Chat</Text>
+        <Text style={styles.headerTitle}>{t('chat')}</Text>
         <View style={{ width: 50 }} />
       </View>
 
@@ -116,7 +118,7 @@ export function ChatScreen() {
         ListEmptyComponent={
           <View style={styles.emptyChat}>
             <Text style={styles.emptyChatEmoji}>💬</Text>
-            <Text style={styles.emptyChatText}>No messages yet</Text>
+            <Text style={styles.emptyChatText}>{t('no_messages')}</Text>
             <Text style={styles.emptyChatSubtext}>Send a message to coordinate your pickup</Text>
           </View>
         }
@@ -126,7 +128,7 @@ export function ChatScreen() {
       <View style={styles.inputRow}>
         <TextInput
           style={styles.textInput}
-          placeholder="Type a message..."
+          placeholder={t('type_message')}
           value={newMessage}
           onChangeText={setNewMessage}
           multiline
@@ -137,7 +139,7 @@ export function ChatScreen() {
           onPress={handleSend}
           disabled={!newMessage.trim() || sending}
         >
-          <Text style={styles.sendBtnText}>Send</Text>
+          <Text style={styles.sendBtnText}>{t('send')}</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
