@@ -104,17 +104,17 @@ const styles = StyleSheet.create({
   size_small: {
     paddingVertical: spacing.sm,
     paddingHorizontal: spacing.lg,
-    height: 36,
+    minHeight: 36,
   },
   size_medium: {
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.xl,
-    height: 48,
+    minHeight: 48,
   },
   size_large: {
     paddingVertical: spacing.lg,
     paddingHorizontal: spacing['2xl'],
-    height: 56,
+    minHeight: 56,
   },
 
   fullWidth: {
@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
   // Label styles
   label: {
     ...typography.button,
+    lineHeight: 24,
   },
   label_primary: {
     color: colors.white,
