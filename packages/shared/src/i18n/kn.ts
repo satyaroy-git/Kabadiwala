@@ -49,4 +49,6 @@ export const kn: TranslationKeys = {
   rewards_badges: 'ಬಹುಮಾನ & ಬ್ಯಾಡ್ಜ್',
   refer_earn: 'ರೆಫರ್ ಮಾಡಿ ಗಳಿಸಿ',
   coming_soon: 'ಈ ವೈಶಿಷ್ಟ್ಯ ಶೀಘ್ರದಲ್ಲೇ ಬರುತ್ತಿದೆ!',
+  profile: 'ಪ್ರೊಫೈಲ್',
+  home: 'ಹೋಮ್',
 };

@@ -49,4 +49,6 @@ export const mr: TranslationKeys = {
   rewards_badges: 'बक्षीसे आणि बॅज',
   refer_earn: 'रेफर करा आणि कमवा',
   coming_soon: 'हे वैशिष्ट्य लवकरच येत आहे!',
+  profile: 'प्रोफाइल',
+  home: 'होम',
 };

@@ -49,4 +49,6 @@ export const te: TranslationKeys = {
   rewards_badges: 'రివార్డ్‌లు & బ్యాడ్జ్‌లు',
   refer_earn: 'రిఫర్ చేసి సంపాదించండి',
   coming_soon: 'ఈ ఫీచర్ త్వరలో వస్తుంది!',
+  profile: 'ప్రొఫైల్',
+  home: 'హోమ్',
 };

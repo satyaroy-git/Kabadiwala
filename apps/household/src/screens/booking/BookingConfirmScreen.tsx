@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, formatDate } from '@kabadiwala/shared';
+import { formatCurrency, formatDate, useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { createBooking } from '../../services/api';
 
@@ -15,6 +15,7 @@ export function BookingConfirmScreen() {
   const route = useRoute<RouteType>();
   const { bookingData } = route.params;
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   async function handleConfirm() {
     setLoading(true);
@@ -44,7 +45,7 @@ export function BookingConfirmScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Confirm Booking</Text>
+        <Text style={styles.title}>{t('confirm_booking')}</Text>
         <Text style={styles.subtitle}>Review your pickup details</Text>
       </View>
 
@@ -77,7 +78,7 @@ export function BookingConfirmScreen() {
 
       <View style={styles.footer}>
         <Button
-          title="Confirm Pickup"
+          title={t('confirm_pickup')}
           onPress={handleConfirm}
           loading={loading}
           fullWidth

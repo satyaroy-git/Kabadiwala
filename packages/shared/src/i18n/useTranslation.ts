@@ -1,16 +1,27 @@
-import { useState, useEffect } from 'react';
-import { t, onLanguageChange, loadLanguage, TranslationKeys } from './index';
+import { useState, useEffect, useCallback } from 'react';
+import { t, onLanguageChange, loadLanguage, getLanguage } from './index';
+import { TranslationKeys } from './translations';
 
 export function useTranslation() {
-  const [, setTick] = useState(0);
+  const [lang, setLang] = useState(getLanguage());
 
   useEffect(() => {
-    loadLanguage();
+    // Load saved language on mount
+    loadLanguage().then((savedLang) => {
+      setLang(savedLang);
+    });
+
+    // Listen for language changes
     const unsubscribe = onLanguageChange(() => {
-      setTick((prev) => prev + 1); // Force re-render
+      setLang(getLanguage());
     });
     return unsubscribe;
   }, []);
 
-  return { t };
+  // Return t function that always uses current language
+  const translate = useCallback((key: keyof TranslationKeys): string => {
+    return t(key);
+  }, [lang]); // Re-create when lang changes to trigger re-renders in consumers
+
+  return { t: translate, currentLanguage: lang };
 }

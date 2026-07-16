@@ -49,4 +49,6 @@ export const hi: TranslationKeys = {
   rewards_badges: 'इनाम और बैज',
   refer_earn: 'रेफर करें और कमाएं',
   coming_soon: 'यह सुविधा जल्द आ रही है!',
+  profile: 'प्रोफ़ाइल',
+  home: 'होम',
 };

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, TextInput, Alert 
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Input, colors, spacing, typography } from '@kabadiwala/ui';
-import { BOOKING_TIME_SLOTS } from '@kabadiwala/shared';
+import { BOOKING_TIME_SLOTS, useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { getAddresses, addAddress } from '../../services/api';
 
@@ -19,6 +19,7 @@ export function SelectSlotScreen() {
   const [selectedSlot, setSelectedSlot] = useState<string>('');
   const [addresses, setAddresses] = useState<any[]>([]);
   const [selectedAddress, setSelectedAddress] = useState<string>('');
+  const { t } = useTranslation();
 
   // New address form
   const [showAddressForm, setShowAddressForm] = useState(false);
@@ -109,7 +110,7 @@ export function SelectSlotScreen() {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.backBtn}>← Back</Text>
         </TouchableOpacity>
-        <Text style={styles.title}>Select Date & Time</Text>
+        <Text style={styles.title}>{t('select_date_time')}</Text>
       </View>
 
       <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
@@ -247,7 +248,7 @@ export function SelectSlotScreen() {
       {/* Footer */}
       <View style={styles.footer}>
         <Button
-          title="Review Booking"
+          title={t('review_booking')}
           onPress={handleContinue}
           disabled={!canProceed}
           fullWidth

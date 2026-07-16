@@ -32,8 +32,20 @@ function TabIcon({ name, focused }: { name: string; focused: boolean }) {
   );
 }
 
-export function MainTabNavigator() {
+function TranslatedTabLabel({ translationKey, focused }: { translationKey: string; focused: boolean }) {
   const { t } = useTranslation();
+  return (
+    <Text style={{
+      fontSize: 11,
+      fontWeight: '500',
+      color: focused ? colors.primary[500] : colors.neutral[500],
+    }}>
+      {t(translationKey as any)}
+    </Text>
+  );
+}
+
+export function MainTabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -48,16 +60,28 @@ export function MainTabNavigator() {
           borderTopWidth: 1,
           borderTopColor: colors.neutral[200],
         },
-        tabBarLabelStyle: {
-          fontSize: 11,
-          fontWeight: '500',
-        },
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ title: t('hello') }} />
-      <Tab.Screen name="Rates" component={RateCardScreen} options={{ title: t('todays_rates') }} />
-      <Tab.Screen name="Bookings" component={BookingsScreen} options={{ title: t('active_pickups') }} />
-      <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile' }} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ tabBarLabel: ({ focused }) => <TranslatedTabLabel translationKey="home" focused={focused} /> }}
+      />
+      <Tab.Screen
+        name="Rates"
+        component={RateCardScreen}
+        options={{ tabBarLabel: ({ focused }) => <TranslatedTabLabel translationKey="todays_rates" focused={focused} /> }}
+      />
+      <Tab.Screen
+        name="Bookings"
+        component={BookingsScreen}
+        options={{ tabBarLabel: ({ focused }) => <TranslatedTabLabel translationKey="active_pickups" focused={focused} /> }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ tabBarLabel: ({ focused }) => <TranslatedTabLabel translationKey="profile" focused={focused} /> }}
+      />
     </Tab.Navigator>
   );
 }

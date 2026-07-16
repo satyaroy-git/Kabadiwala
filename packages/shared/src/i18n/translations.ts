@@ -69,4 +69,6 @@ export interface TranslationKeys {
   rewards_badges: string;
   refer_earn: string;
   coming_soon: string;
+  profile: string;
+  home: string;
 }

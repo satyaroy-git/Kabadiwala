@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Card, colors, spacing, typography } from '@kabadiwala/ui';
+import { colors, spacing, typography } from '@kabadiwala/ui';
 import { LANGUAGES, getLanguage, setLanguage, Language } from '@kabadiwala/shared';
+import * as Updates from 'expo-updates';
 
 export function LanguageScreen() {
   const navigation = useNavigation();
@@ -12,8 +13,8 @@ export function LanguageScreen() {
     setSelected(lang);
     await setLanguage(lang);
     Alert.alert(
-      'Language Changed',
-      `App language set to ${LANGUAGES.find(l => l.code === lang)?.nativeName}. Some screens will update on next visit.`,
+      '✅ Language Changed',
+      `App language set to ${LANGUAGES.find(l => l.code === lang)?.nativeName}.\n\nPlease go back to see changes. All screens will now show in the selected language.`,
       [{ text: 'OK', onPress: () => navigation.goBack() }]
     );
   }

@@ -49,4 +49,6 @@ export const en: TranslationKeys = {
   rewards_badges: 'Rewards & Badges',
   refer_earn: 'Refer & Earn',
   coming_soon: 'This feature is coming soon!',
+  profile: 'Profile',
+  home: 'Home',
 };

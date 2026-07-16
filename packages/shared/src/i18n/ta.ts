@@ -49,4 +49,6 @@ export const ta: TranslationKeys = {
   rewards_badges: 'வெகுமதி & பேட்ஜ்',
   refer_earn: 'பரிந்துரை & சம்பாதி',
   coming_soon: 'இந்த அம்சம் விரைவில் வரும்!',
+  profile: 'சுயவிவரம்',
+  home: 'முகப்பு',
 };
