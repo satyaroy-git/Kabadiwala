@@ -72,4 +72,8 @@ export const ta: TranslationKeys = {
   send: 'அனுப்பு',
   type_message: 'செய்தி தட்டச்சு செய்க...',
   no_messages: 'செய்திகள் எதுவும் இல்லை',
+  choose_scrap_subtitle: 'விற்க தேர்வு செய்யுங்கள்',
+  approx_weight: 'தோராய எடை:',
+  items_selected: 'பொருட்கள் தேர்வு',
+  next_select_time: 'அடுத்து: நேரம் தேர்வு',
 };

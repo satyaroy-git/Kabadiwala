@@ -72,4 +72,8 @@ export const kn: TranslationKeys = {
   send: 'ಕಳುಹಿಸಿ',
   type_message: 'ಸಂದೇಶ ಟೈಪ್ ಮಾಡಿ...',
   no_messages: 'ಯಾವುದೇ ಸಂದೇಶಗಳಿಲ್ಲ',
+  choose_scrap_subtitle: 'ಮಾರಲು ಆಯ್ಕೆ ಮಾಡಿ',
+  approx_weight: 'ಅಂದಾಜು ತೂಕ:',
+  items_selected: 'ಐಟಂಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿದ್ದೀರಿ',
+  next_select_time: 'ಮುಂದೆ: ಸಮಯ ಆಯ್ಕೆ',
 };

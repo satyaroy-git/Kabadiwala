@@ -72,4 +72,8 @@ export const or: TranslationKeys = {
   send: 'ପଠାନ୍ତୁ',
   type_message: 'ମେସେଜ ଲେଖନ୍ତୁ...',
   no_messages: 'କୌଣସି ମେସେଜ ନାହିଁ',
+  choose_scrap_subtitle: 'ବିକ୍ରି କରିବାକୁ ବାଛନ୍ତୁ',
+  approx_weight: 'ଆନୁମାନିକ ଓଜନ:',
+  items_selected: 'ଆଇଟମ ବାଛିଛନ୍ତି',
+  next_select_time: 'ପରବର୍ତ୍ତୀ: ସମୟ ବାଛନ୍ତୁ',
 };

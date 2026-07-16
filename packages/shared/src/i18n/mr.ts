@@ -72,4 +72,8 @@ export const mr: TranslationKeys = {
   send: 'पाठवा',
   type_message: 'संदेश लिहा...',
   no_messages: 'कोणतेही संदेश नाहीत',
+  choose_scrap_subtitle: 'विकण्यासाठी निवडा',
+  approx_weight: 'अंदाजे वजन:',
+  items_selected: 'आयटम निवडले',
+  next_select_time: 'पुढे: वेळ निवडा',
 };

@@ -72,4 +72,8 @@ export const hi: TranslationKeys = {
   send: 'भेजें',
   type_message: 'संदेश लिखें...',
   no_messages: 'कोई संदेश नहीं',
+  choose_scrap_subtitle: 'बेचने के लिए चुनें',
+  approx_weight: 'अनुमानित वज़न:',
+  items_selected: 'आइटम चुने गए',
+  next_select_time: 'अगला: समय चुनें',
 };

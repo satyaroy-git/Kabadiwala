@@ -103,4 +103,8 @@ export interface TranslationKeys {
   send: string;
   type_message: string;
   no_messages: string;
+  choose_scrap_subtitle: string;
+  approx_weight: string;
+  items_selected: string;
+  next_select_time: string;
 }

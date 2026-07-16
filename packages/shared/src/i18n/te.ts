@@ -72,4 +72,8 @@ export const te: TranslationKeys = {
   send: 'పంపండి',
   type_message: 'సందేశం టైప్ చేయండి...',
   no_messages: 'సందేశాలు లేవు',
+  choose_scrap_subtitle: 'అమ్మడానికి ఎంచుకోండి',
+  approx_weight: 'సుమారు బరువు:',
+  items_selected: 'ఐటమ్‌లు ఎంచుకున్నారు',
+  next_select_time: 'తదుపరి: సమయం ఎంచుకోండి',
 };

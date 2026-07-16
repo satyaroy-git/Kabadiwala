@@ -72,4 +72,8 @@ export const en: TranslationKeys = {
   send: 'Send',
   type_message: 'Type a message...',
   no_messages: 'No messages yet',
+  choose_scrap_subtitle: 'Choose what you want to sell',
+  approx_weight: 'Approx. weight:',
+  items_selected: 'item(s) selected',
+  next_select_time: 'Next: Select Time Slot',
 };

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Input, colors, spacing, typography } from '@kabadiwala/ui';
-import { SCRAP_CATEGORIES, SCRAP_PARENT_CATEGORIES, useTranslation } from '@kabadiwala/shared';
+import { SCRAP_CATEGORIES, SCRAP_PARENT_CATEGORIES, useTranslation, getLanguage } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -52,7 +52,7 @@ export function SelectScrapScreen() {
           <Text style={styles.backBtn}>← Back</Text>
         </TouchableOpacity>
         <Text style={styles.title}>{t('select_scrap')}</Text>
-        <Text style={styles.subtitle}>Choose what you want to sell</Text>
+        <Text style={styles.subtitle}>{t('choose_scrap_subtitle')}</Text>
       </View>
 
       {/* Parent Category Tabs */}
@@ -85,7 +85,9 @@ export function SelectScrapScreen() {
                 <Text style={styles.itemIcon}>{category.icon}</Text>
                 <View style={styles.itemInfo}>
                   <Text style={styles.itemName}>{category.name}</Text>
-                  <Text style={styles.itemNameHindi}>{category.name_hindi}</Text>
+                  <Text style={styles.itemNameHindi}>
+                    {getLanguage() === 'hi' ? category.name_hindi : category.name}
+                  </Text>
                 </View>
                 <View style={[styles.checkbox, isSelected && styles.checkboxSelected]}>
                   {isSelected && <Text style={styles.checkmark}>✓</Text>}
@@ -95,7 +97,7 @@ export function SelectScrapScreen() {
               {/* Weight Input (shown when selected) */}
               {isSelected && (
                 <View style={styles.weightInput}>
-                  <Text style={styles.weightLabel}>Approx. weight:</Text>
+                  <Text style={styles.weightLabel}>{t('approx_weight')}</Text>
                   <View style={styles.weightControls}>
                     <TouchableOpacity
                       style={styles.weightBtn}
@@ -124,10 +126,10 @@ export function SelectScrapScreen() {
       {selectedItems.length > 0 && (
         <View style={styles.footer}>
           <Text style={styles.footerText}>
-            {selectedItems.length} item(s) selected
+            {selectedItems.length} {t('items_selected')}
           </Text>
           <Button
-            title="Next: Select Time Slot"
+            title={t('next_select_time')}
             onPress={() => navigation.navigate('SelectSlot', { selectedItems })}
             fullWidth
           />
