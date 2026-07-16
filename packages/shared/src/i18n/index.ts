@@ -6,10 +6,11 @@ import { mr } from './mr';
 import { ta } from './ta';
 import { te } from './te';
 import { kn } from './kn';
+import { or } from './or';
 
 export { Language, TranslationKeys, LANGUAGES } from './translations';
 
-const translations: Record<Language, TranslationKeys> = { en, hi, mr, ta, te, kn };
+const translations: Record<Language, TranslationKeys> = { en, hi, mr, ta, te, kn, or };
 
 const STORAGE_KEY = '@kabadiwala_language';
 let currentLanguage: Language = 'en';

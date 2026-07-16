@@ -1,4 +1,4 @@
-export type Language = 'en' | 'hi' | 'mr' | 'ta' | 'te' | 'kn';
+export type Language = 'en' | 'hi' | 'mr' | 'ta' | 'te' | 'kn' | 'or';
 
 export const LANGUAGES: { code: Language; name: string; nativeName: string }[] = [
   { code: 'en', name: 'English', nativeName: 'English' },
@@ -7,6 +7,7 @@ export const LANGUAGES: { code: Language; name: string; nativeName: string }[] =
   { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்' },
   { code: 'te', name: 'Telugu', nativeName: 'తెలుగు' },
   { code: 'kn', name: 'Kannada', nativeName: 'ಕನ್ನಡ' },
+  { code: 'or', name: 'Odia', nativeName: 'ଓଡ଼ିଆ' },
 ];
 
 export interface TranslationKeys {
