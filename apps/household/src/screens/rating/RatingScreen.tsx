@@ -21,17 +21,17 @@ export function RatingScreen() {
 
   async function handleSubmit() {
     if (rating === 0) {
-      Alert.alert('Please select a rating');
+      Alert.alert(t('please_select_rating'));
       return;
     }
     setLoading(true);
     try {
       await rateKabadiwala(bookingId, rating, comment);
-      Alert.alert(t('thank_you'), 'Your rating has been submitted.', [
+      Alert.alert(t('thank_you'), t('rating_submitted'), [
         { text: t('ok'), onPress: () => navigation.navigate('MainTabs') },
       ]);
     } catch (err: any) {
-      Alert.alert('Error', err.message || 'Failed to submit rating');
+      Alert.alert(t('error'), err.message || t('failed'));
     } finally {
       setLoading(false);
     }

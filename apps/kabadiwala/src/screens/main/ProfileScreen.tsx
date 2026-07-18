@@ -12,9 +12,9 @@ export function ProfileScreen() {
   const { t } = useTranslation();
 
   function handleSignOut() {
-    Alert.alert('Sign Out', 'Are you sure?', [
-      { text: 'Cancel' },
-      { text: 'Sign Out', style: 'destructive', onPress: signOut },
+    Alert.alert(t('sign_out'), t('are_you_sure'), [
+      { text: t('cancel') },
+      { text: t('sign_out'), style: 'destructive', onPress: signOut },
     ]);
   }
 

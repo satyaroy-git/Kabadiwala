@@ -74,16 +74,16 @@ export function RecurringScreen() {
     setIsActive(true);
     await saveSchedule(true);
     Alert.alert(
-      'Schedule Saved! ✅',
-      `Your ${frequency} pickup is set for every ${selectedDay}. We'll auto-book for you!`
+      t('schedule_saved'),
+      t('schedule_saved_msg')
     );
   }
 
   async function handleCancel() {
-    Alert.alert('Cancel Schedule', 'Stop recurring pickups?', [
-      { text: 'No' },
+    Alert.alert(t('cancel'), t('stop_recurring'), [
+      { text: t('no') },
       {
-        text: 'Yes',
+        text: t('yes'),
         onPress: async () => {
           setIsActive(false);
           await saveSchedule(false);

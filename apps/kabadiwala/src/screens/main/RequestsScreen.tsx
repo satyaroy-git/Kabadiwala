@@ -35,20 +35,20 @@ export function RequestsScreen() {
   async function handleAccept(bookingId: string) {
     try {
       await acceptPickup(bookingId);
-      Alert.alert('Pickup Accepted! ✅', 'You can now navigate to the household.', [
-        { text: 'View Pickup', onPress: () => navigation.navigate('PickupDetail', { bookingId }) },
+      Alert.alert(t('pickup_accepted'), t('navigate_to_household'), [
+        { text: t('view_pickup'), onPress: () => navigation.navigate('PickupDetail', { bookingId }) },
       ]);
       await loadRequests();
     } catch (err: any) {
-      Alert.alert('Error', err.message);
+      Alert.alert(t('error'), err.message);
     }
   }
 
   async function handleReject(bookingId: string) {
-    Alert.alert('Decline Pickup', 'Are you sure?', [
-      { text: 'Cancel' },
+    Alert.alert(t('decline_pickup'), t('are_you_sure'), [
+      { text: t('cancel') },
       {
-        text: 'Decline',
+        text: t('decline_pickup'),
         style: 'destructive',
         onPress: async () => {
           await rejectPickup(bookingId, 'declined');

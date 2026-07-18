@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Share, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Share, TouchableOpacity, Alert, Clipboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Card, Button, colors, spacing, typography } from '@kabadiwala/ui';
 import { formatCurrency, useTranslation } from '@kabadiwala/shared';
@@ -35,7 +35,7 @@ export function ReferralScreen() {
 
   function handleCopyCode() {
     Clipboard.setString(stats.referralCode);
-    Alert.alert('Copied!', 'Referral code copied to clipboard');
+    Alert.alert(t('copied'), t('referral_copied'));
   }
 
   async function handleShareReferral() {

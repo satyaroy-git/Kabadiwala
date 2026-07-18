@@ -135,4 +135,23 @@ export interface TranslationKeys {
   pincode: string;
   city: string;
   landmark: string;
+
+  // Alert messages
+  booking_confirmed_msg: string;
+  verified_kabadiwala_assigned: string;
+  pickup_accepted: string;
+  navigate_to_household: string;
+  view_pickup: string;
+  decline_pickup: string;
+  are_you_sure: string;
+  yes: string;
+  no: string;
+  schedule_saved: string;
+  schedule_saved_msg: string;
+  stop_recurring: string;
+  copied: string;
+  referral_copied: string;
+  please_select_rating: string;
+  rating_submitted: string;
+  failed: string;
 }

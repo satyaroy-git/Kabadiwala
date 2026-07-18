@@ -43,7 +43,7 @@ export function BookingDetailScreen() {
             await cancelBooking(route.params.bookingId, 'Cancelled by user');
             navigation.goBack();
           } catch (err) {
-            Alert.alert(t('error'), 'Failed to cancel');
+            Alert.alert(t('error'), t('failed'));
           }
         },
       },

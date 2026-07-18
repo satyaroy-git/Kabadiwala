@@ -31,12 +31,12 @@ export function BookingConfirmScreen() {
         notes: '',
       });
       Alert.alert(
-        'Booking Confirmed! ✅',
-        'A verified kabadiwala will be assigned shortly. You will receive a notification.',
-        [{ text: 'OK', onPress: () => navigation.navigate('MainTabs') }]
+        t('booking_confirmed'),
+        t('booking_confirmed_msg'),
+        [{ text: t('ok'), onPress: () => navigation.navigate('MainTabs') }]
       );
     } catch (err: any) {
-      Alert.alert('Error', err.message || 'Failed to create booking');
+      Alert.alert(t('error'), err.message || t('failed'));
     } finally {
       setLoading(false);
     }
