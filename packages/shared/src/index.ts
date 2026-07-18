@@ -26,3 +26,7 @@ export type { Language, TranslationKeys } from './i18n';
 // Payment
 export { createPaymentOrder, processPayment, verifyPayment, isPaymentConfigured } from './services/payment';
 export type { PaymentOrder, PaymentResult } from './services/payment';
+
+// Theme
+export { getThemeMode, isDarkMode, loadTheme, setThemeMode, onThemeChange, darkColors } from './theme/darkMode';
+export type { ThemeMode } from './theme/darkMode';

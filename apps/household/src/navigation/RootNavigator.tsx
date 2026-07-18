@@ -62,7 +62,10 @@ export function RootNavigator() {
   }
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ 
+      headerShown: false,
+      animation: 'slide_from_right',
+    }}>
       {!isAuthenticated ? (
         // Auth flow
         <>
