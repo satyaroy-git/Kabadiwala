@@ -20,6 +20,19 @@ export function SelectScrapScreen() {
   const [activeCategory, setActiveCategory] = useState('paper');
   const { t } = useTranslation();
 
+  function getCategoryName(category: any): string {
+    const lang = getLanguage();
+    switch(lang) {
+      case 'hi': return category.name_hindi || category.name;
+      case 'or': return category.name_odia || category.name;
+      case 'mr': return category.name_marathi || category.name;
+      case 'ta': return category.name_tamil || category.name;
+      case 'te': return category.name_telugu || category.name;
+      case 'kn': return category.name_kannada || category.name;
+      default: return category.name;
+    }
+  }
+
   function toggleCategory(categoryId: string, categoryName: string) {
     const exists = selectedItems.find((i) => i.category_id === categoryId);
     if (exists) {
@@ -67,7 +80,7 @@ export function SelectScrapScreen() {
             <Text
               style={[styles.categoryTabText, activeCategory === cat.id && styles.categoryTabTextActive]}
             >
-              {cat.name}
+              {getCategoryName(cat)}
             </Text>
           </TouchableOpacity>
         ))}
@@ -84,12 +97,7 @@ export function SelectScrapScreen() {
               <View style={styles.itemRow}>
                 <Text style={styles.itemIcon}>{category.icon}</Text>
                 <View style={styles.itemInfo}>
-                  <Text style={styles.itemName}>{category.name}</Text>
-                  {getLanguage() === 'hi' && (
-                    <Text style={styles.itemNameHindi}>
-                      {category.name_hindi}
-                    </Text>
-                  )}
+                  <Text style={styles.itemName}>{getCategoryName(category)}</Text>
                 </View>
                 <View style={[styles.checkbox, isSelected && styles.checkboxSelected]}>
                   {isSelected && <Text style={styles.checkmark}>✓</Text>}

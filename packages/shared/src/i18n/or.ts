@@ -171,4 +171,8 @@ export const or: TranslationKeys = {
   you_paid_msg: 'ଆପଣ ଗୃହସ୍ଥଙ୍କୁ ଦେଲେ + ପ୍ଲାଟଫର୍ମ ଫି',
   maximize_earnings: 'ଆୟ ବଢ଼ାନ୍ତୁ',
   maximize_earnings_tips: '• ଧାତୁ ଓ ଇ-ବେକାର ସଂଗ୍ରହ — ସର୍ବାଧିକ ମାର୍ଜିନ\n• ଗୋଟିଏ ଅଞ୍ଚଳରେ ଭଲ୍ୟୁମ — ଯାତ୍ରା ଖର୍ଚ୍ଚ କମ\n• 4.5+ ରେଟିଂ — ପ୍ରିମିୟମ ବୁକିଂ\n• ରିସାଇକ୍ଲରଙ୍କୁ ଥୋକରେ ବିକ୍ରି — ଭଲ ଦାମ',
+  morning_slot: 'ସକାଳ (9 AM - 12 PM)',
+  afternoon_slot: 'ଅପରାହ୍ନ (12 PM - 3 PM)',
+  evening_slot: 'ସନ୍ଧ୍ୟା (3 PM - 6 PM)',
+  late_evening_slot: 'ରାତ୍ରି (6 PM - 8 PM)',
 };

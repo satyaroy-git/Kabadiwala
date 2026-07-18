@@ -214,4 +214,10 @@ export interface TranslationKeys {
   you_paid_msg: string;
   maximize_earnings: string;
   maximize_earnings_tips: string;
+
+  // Time slots
+  morning_slot: string;
+  afternoon_slot: string;
+  evening_slot: string;
+  late_evening_slot: string;
 }

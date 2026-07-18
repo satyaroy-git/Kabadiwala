@@ -2,6 +2,11 @@ export interface ScrapCategory {
   id: string;
   name: string;
   name_hindi: string;
+  name_odia?: string;
+  name_marathi?: string;
+  name_tamil?: string;
+  name_telugu?: string;
+  name_kannada?: string;
   icon: string; // emoji or icon name
   parent_id: string | null;
   description: string;

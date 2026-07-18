@@ -171,4 +171,8 @@ export const kn: TranslationKeys = {
   you_paid_msg: 'ನೀವು ಮನೆಗೆ ಪಾವತಿಸಿದ್ದೀರಿ + ಪ್ಲಾಟ್‌ಫಾರ್ಮ್ ಶುಲ್ಕ',
   maximize_earnings: 'ಆದಾಯ ಹೆಚ್ಚಿಸಿ',
   maximize_earnings_tips: '• ಲೋಹ & ಇ-ತ್ಯಾಜ್ಯ ಸಂಗ್ರಹಿಸಿ — ಅತಿ ಹೆಚ್ಚು ಮಾರ್ಜಿನ್\n• ಒಂದು ಪ್ರದೇಶದಲ್ಲಿ ವಾಲ್ಯೂಮ್ — ಪ್ರಯಾಣ ವೆಚ್ಚ ಕಡಿಮೆ\n• 4.5+ ರೇಟಿಂಗ್ — ಪ್ರೀಮಿಯಂ ಬುಕಿಂಗ್\n• ರಿಸೈಕ್ಲರ್‌ಗೆ ಬೃಹತ್ ಮಾರಾಟ — ಉತ್ತಮ ಬೆಲೆ',
+  morning_slot: 'ಬೆಳಿಗ್ಗೆ (9 AM - 12 PM)',
+  afternoon_slot: 'ಮಧ್ಯಾಹ್ನ (12 PM - 3 PM)',
+  evening_slot: 'ಸಂಜೆ (3 PM - 6 PM)',
+  late_evening_slot: 'ರಾತ್ರಿ (6 PM - 8 PM)',
 };

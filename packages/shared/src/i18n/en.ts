@@ -171,4 +171,8 @@ export const en: TranslationKeys = {
   you_paid_msg: 'You paid to the household + platform fee',
   maximize_earnings: 'Maximize your earnings',
   maximize_earnings_tips: '• Collect metals & e-waste — highest resale margins\n• Build volume in one area to reduce travel costs\n• Maintain 4.5+ rating for premium bookings\n• Bulk sells to recyclers get better rates',
+  morning_slot: 'Morning (9 AM - 12 PM)',
+  afternoon_slot: 'Afternoon (12 PM - 3 PM)',
+  evening_slot: 'Evening (3 PM - 6 PM)',
+  late_evening_slot: 'Late Evening (6 PM - 8 PM)',
 };

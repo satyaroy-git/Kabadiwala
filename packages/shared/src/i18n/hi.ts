@@ -171,4 +171,8 @@ export const hi: TranslationKeys = {
   you_paid_msg: 'आपने घर को भुगतान + प्लेटफॉर्म शुल्क दिया',
   maximize_earnings: 'कमाई बढ़ाएं',
   maximize_earnings_tips: '• धातु और ई-कचरा इकट्ठा करें — सबसे ज़्यादा मार्जिन\n• एक क्षेत्र में वॉल्यूम बनाएं — यात्रा खर्च कम\n• 4.5+ रेटिंग बनाएं — प्रीमियम बुकिंग\n• रिसाइकलर को थोक में बेचें — बेहतर दाम',
+  morning_slot: 'सुबह (9 AM - 12 PM)',
+  afternoon_slot: 'दोपहर (12 PM - 3 PM)',
+  evening_slot: 'शाम (3 PM - 6 PM)',
+  late_evening_slot: 'रात (6 PM - 8 PM)',
 };

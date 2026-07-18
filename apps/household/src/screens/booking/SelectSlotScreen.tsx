@@ -152,7 +152,9 @@ export function SelectSlotScreen() {
                 onPress={() => setSelectedSlot(slot.start)}
               >
                 <Text style={[styles.slotText, isSelected && styles.slotTextSelected]}>
-                  {slot.label}
+                  {slot.start === '09:00' ? t('morning_slot') :
+                   slot.start === '12:00' ? t('afternoon_slot') :
+                   slot.start === '15:00' ? t('evening_slot') : t('late_evening_slot')}
                 </Text>
               </TouchableOpacity>
             );

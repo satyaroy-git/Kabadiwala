@@ -171,4 +171,8 @@ export const te: TranslationKeys = {
   you_paid_msg: 'మీరు ఇంటికి చెల్లించారు + ప్లాట్‌ఫారం ఫీ',
   maximize_earnings: 'ఆదాయం పెంచుకోండి',
   maximize_earnings_tips: '• లోహాలు & ఇ-వ్యర్థాలు సేకరించండి — అధిక మార్జిన్\n• ఒక ప్రాంతంలో వాల్యూమ్ పెంచండి — ప్రయాణ ఖర్చు తగ్గుతుంది\n• 4.5+ రేటింగ్ — ప్రీమియం బుకింగ్\n• రీసైక్లర్‌కు బల్క్‌గా అమ్మండి — మంచి ధర',
+  morning_slot: 'ఉదయం (9 AM - 12 PM)',
+  afternoon_slot: 'మధ్యాహ్నం (12 PM - 3 PM)',
+  evening_slot: 'సాయంత్రం (3 PM - 6 PM)',
+  late_evening_slot: 'రాత్రి (6 PM - 8 PM)',
 };
