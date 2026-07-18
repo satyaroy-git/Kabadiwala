@@ -67,6 +67,7 @@ export function BookingsScreen() {
   }
 
   function renderBooking({ item }: { item: Booking }) {
+    const statusTranslation: Record<string, string> = { pending: t('pending'), accepted: t('accepted'), payment_pending: t('payment_pending'), completed: t('completed'), cancelled: t('cancelled'), en_route: t('en_route'), arrived: t('arrived') };
     return (
       <Card
         onPress={() => {
@@ -89,7 +90,7 @@ export function BookingsScreen() {
                 : `Est. ${formatCurrency(item.total_estimated_amount)}`}
             </Text>
           </View>
-          <Badge text={formatBookingStatus(item.status)} variant={getStatusVariant(item.status)} />
+          <Badge text={statusTranslation[item.status] || item.status} variant={getStatusVariant(item.status)} />
         </View>
       </Card>
     );
@@ -103,17 +104,20 @@ export function BookingsScreen() {
 
       {/* Filter Tabs */}
       <View style={styles.tabs}>
-        {(['active', 'completed', 'all'] as FilterTab[]).map((tab) => (
+        {(['active', 'completed', 'all'] as FilterTab[]).map((tab) => {
+          const tabLabels: Record<FilterTab, string> = { active: t('active'), completed: t('completed'), all: t('all') };
+          return (
           <TouchableOpacity
             key={tab}
             style={[styles.tab, activeTab === tab && styles.tabActive]}
             onPress={() => setActiveTab(tab)}
           >
             <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              {tabLabels[tab]}
             </Text>
           </TouchableOpacity>
-        ))}
+          );
+        })}
       </View>
 
       <FlatList

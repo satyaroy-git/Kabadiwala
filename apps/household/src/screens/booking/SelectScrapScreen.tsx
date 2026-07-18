@@ -85,9 +85,11 @@ export function SelectScrapScreen() {
                 <Text style={styles.itemIcon}>{category.icon}</Text>
                 <View style={styles.itemInfo}>
                   <Text style={styles.itemName}>{category.name}</Text>
-                  <Text style={styles.itemNameHindi}>
-                    {getLanguage() === 'hi' ? category.name_hindi : category.name}
-                  </Text>
+                  {getLanguage() === 'hi' && (
+                    <Text style={styles.itemNameHindi}>
+                      {category.name_hindi}
+                    </Text>
+                  )}
                 </View>
                 <View style={[styles.checkbox, isSelected && styles.checkboxSelected]}>
                   {isSelected && <Text style={styles.checkmark}>✓</Text>}

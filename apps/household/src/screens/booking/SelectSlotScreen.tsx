@@ -115,7 +115,7 @@ export function SelectSlotScreen() {
 
       <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
         {/* Date Selection */}
-        <Text style={styles.sectionTitle}>Pick a Date</Text>
+        <Text style={styles.sectionTitle}>{t('pick_date')}</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {dates.map((date) => {
             const d = new Date(date);
@@ -141,7 +141,7 @@ export function SelectSlotScreen() {
         </ScrollView>
 
         {/* Time Slot Selection */}
-        <Text style={styles.sectionTitle}>Pick a Time Slot</Text>
+        <Text style={styles.sectionTitle}>{t('pick_time_slot')}</Text>
         <View style={styles.slotsGrid}>
           {BOOKING_TIME_SLOTS.map((slot) => {
             const isSelected = selectedSlot === slot.start;
@@ -160,7 +160,7 @@ export function SelectSlotScreen() {
         </View>
 
         {/* Address Section */}
-        <Text style={styles.sectionTitle}>Pickup Address</Text>
+        <Text style={styles.sectionTitle}>{t('pickup_address')}</Text>
 
         {/* Existing addresses */}
         {addresses.map((addr) => (
@@ -198,7 +198,7 @@ export function SelectSlotScreen() {
 
             <TextInput
               style={styles.textInput}
-              placeholder="Full address (House no, Street, Area)"
+              placeholder={t('full_address')}
               value={newAddress.full_address}
               onChangeText={(text) => setNewAddress({ ...newAddress, full_address: text })}
               multiline
@@ -207,7 +207,7 @@ export function SelectSlotScreen() {
 
             <TextInput
               style={styles.textInput}
-              placeholder="Landmark (optional)"
+              placeholder={t('landmark')}
               value={newAddress.landmark}
               onChangeText={(text) => setNewAddress({ ...newAddress, landmark: text })}
             />
@@ -215,7 +215,7 @@ export function SelectSlotScreen() {
             <View style={styles.row}>
               <TextInput
                 style={[styles.textInput, styles.halfInput]}
-                placeholder="Pincode"
+                placeholder={t('pincode')}
                 value={newAddress.pincode}
                 onChangeText={(text) => setNewAddress({ ...newAddress, pincode: text.replace(/\D/g, '') })}
                 keyboardType="number-pad"
@@ -223,14 +223,14 @@ export function SelectSlotScreen() {
               />
               <TextInput
                 style={[styles.textInput, styles.halfInput]}
-                placeholder="City"
+                placeholder={t('city')}
                 value={newAddress.city}
                 onChangeText={(text) => setNewAddress({ ...newAddress, city: text })}
               />
             </View>
 
             <Button
-              title={savingAddress ? "Saving..." : "Save Address"}
+              title={savingAddress ? "Saving..." : t('save_address')}
               onPress={handleSaveAddress}
               loading={savingAddress}
               disabled={!newAddress.full_address.trim() || newAddress.pincode.length !== 6}
@@ -240,7 +240,7 @@ export function SelectSlotScreen() {
           </Card>
         ) : (
           <TouchableOpacity onPress={() => setShowAddressForm(true)} style={styles.addAddressBtn}>
-            <Text style={styles.addAddressText}>+ Add New Address</Text>
+            <Text style={styles.addAddressText}>{t('add_new_address')}</Text>
           </TouchableOpacity>
         )}
       </ScrollView>

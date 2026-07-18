@@ -107,4 +107,32 @@ export interface TranslationKeys {
   approx_weight: string;
   items_selected: string;
   next_select_time: string;
+
+  // Filters & Status
+  active: string;
+  completed: string;
+  all: string;
+  pending: string;
+  accepted: string;
+  payment_pending: string;
+  cancelled: string;
+  en_route: string;
+  arrived: string;
+
+  // Home & Info
+  why_kabadiwala: string;
+  why_kabadiwala_points: string;
+  auto_pickup: string;
+
+  // Booking flow
+  review_details: string;
+  schedule: string;
+  scrap_items: string;
+  rates_locked_booking: string;
+  add_new_address: string;
+  save_address: string;
+  full_address: string;
+  pincode: string;
+  city: string;
+  landmark: string;
 }

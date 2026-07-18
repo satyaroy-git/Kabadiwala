@@ -46,20 +46,20 @@ export function BookingConfirmScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{t('confirm_booking')}</Text>
-        <Text style={styles.subtitle}>Review your pickup details</Text>
+        <Text style={styles.subtitle}>{t('review_details')}</Text>
       </View>
 
       <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
         {/* Date & Time */}
         <Card>
-          <Text style={styles.cardTitle}>📅 Schedule</Text>
+          <Text style={styles.cardTitle}>📅 {t('schedule')}</Text>
           <Text style={styles.cardValue}>{formatDate(bookingData.date)}</Text>
           <Text style={styles.cardSubvalue}>{bookingData.timeSlot?.label}</Text>
         </Card>
 
         {/* Items */}
         <Card>
-          <Text style={styles.cardTitle}>📦 Scrap Items</Text>
+          <Text style={styles.cardTitle}>📦 {t('scrap_items')}</Text>
           {bookingData.selectedItems.map((item: any) => (
             <View key={item.category_id} style={styles.itemRow}>
               <Text style={styles.itemName}>{item.category_name}</Text>
@@ -71,7 +71,7 @@ export function BookingConfirmScreen() {
         {/* Info */}
         <Card variant="filled">
           <Text style={styles.infoText}>
-            💡 Rates are locked at booking time. Final amount will be calculated after weighing.
+            💡 {t('rates_locked_booking')}
           </Text>
         </Card>
       </ScrollView>

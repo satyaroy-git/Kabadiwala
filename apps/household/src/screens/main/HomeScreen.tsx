@@ -145,32 +145,28 @@ export function HomeScreen() {
         <View style={styles.quickGrid}>
           <Card style={styles.quickCard} onPress={() => navigation.navigate('Impact')}>
             <Text style={styles.quickEmoji}>🌍</Text>
-            <Text style={styles.quickLabel}>My Impact</Text>
+            <Text style={styles.quickLabel}>{t('my_impact')}</Text>
           </Card>
           <Card style={styles.quickCard} onPress={() => navigation.navigate('Gamification')}>
             <Text style={styles.quickEmoji}>🎮</Text>
-            <Text style={styles.quickLabel}>Rewards</Text>
+            <Text style={styles.quickLabel}>{t('rewards_badges')}</Text>
           </Card>
           <Card style={styles.quickCard} onPress={() => navigation.navigate('Referral')}>
             <Text style={styles.quickEmoji}>🎁</Text>
-            <Text style={styles.quickLabel}>Refer & Earn</Text>
+            <Text style={styles.quickLabel}>{t('refer_earn')}</Text>
           </Card>
           <Card style={styles.quickCard} onPress={() => navigation.navigate('Recurring')}>
             <Text style={styles.quickEmoji}>🔄</Text>
-            <Text style={styles.quickLabel}>Auto Pickup</Text>
+            <Text style={styles.quickLabel}>{t('auto_pickup')}</Text>
           </Card>
         </View>
       </View>
 
       {/* Info Section */}
       <Card variant="filled">
-        <Text style={styles.infoTitle}>🌱 Why Kabadiwala?</Text>
+        <Text style={styles.infoTitle}>🌱 {t('why_kabadiwala')}</Text>
         <Text style={styles.infoText}>
-          • Verified scrap dealers at your doorstep{'\n'}
-          • Live rates updated weekly{'\n'}
-          • UPI payment immediately after weighing{'\n'}
-          • Track your kabadiwala on the map{'\n'}
-          • Digital receipt for every pickup
+          {t('why_kabadiwala_points')}
         </Text>
       </Card>
     </ScrollView>
