@@ -15,14 +15,22 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.kabadiwala.household"
+      "bundleIdentifier": "com.kabadiwala.household",
+      "config": {
+        "googleMapsApiKey": "AIzaSyAJnHEl3WQoy4P8wknfRANGfMP2BVEqvpM"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#4CAF50"
       },
-      "package": "com.kabadiwala.household"
+      "package": "com.kabadiwala.household",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAJnHEl3WQoy4P8wknfRANGfMP2BVEqvpM"
+        }
+      }
     },
     "extra": {
       "eas": {
