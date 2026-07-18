@@ -185,4 +185,33 @@ export interface TranslationKeys {
   total_spent: string;
   on: string;
   while_online: string;
+
+  // Partner app - Dashboard & Pickup flow
+  online: string;
+  offline: string;
+  todays_pickups_value: string;
+  this_week: string;
+  this_month: string;
+  insights: string;
+  rating_badges: string;
+  analytics: string;
+  go_online_msg: string;
+  navigation_active: string;
+  broadcasting_location: string;
+  navigating_to: string;
+  ive_arrived: string;
+  start_navigation: string;
+  start_weighing: string;
+  enter_weights: string;
+  weigh_each_item: string;
+  actual_weight_kg: string;
+  generate_bill: string;
+  total_amount: string;
+  bill_generated: string;
+  transaction_summary: string;
+  your_total_cost: string;
+  mark_complete: string;
+  you_paid_msg: string;
+  maximize_earnings: string;
+  maximize_earnings_tips: string;
 }

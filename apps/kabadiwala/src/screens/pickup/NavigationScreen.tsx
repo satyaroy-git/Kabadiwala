@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, colors, spacing, typography } from '@kabadiwala/ui';
+import { useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { broadcastLocation, updateBookingStatus } from '../../services/api';
 // import * as Location from 'expo-location';
@@ -13,6 +14,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 export function NavigationScreen() {
   const route = useRoute<RouteType>();
   const navigation = useNavigation<NavigationProp>();
+  const { t } = useTranslation();
   const { bookingId, address } = route.params;
   const locationInterval = useRef<NodeJS.Timeout | null>(null);
 
@@ -46,22 +48,22 @@ export function NavigationScreen() {
       {/* Map placeholder */}
       <View style={styles.mapArea}>
         <Text style={styles.mapEmoji}>🗺️</Text>
-        <Text style={styles.mapText}>Navigation Active</Text>
+        <Text style={styles.mapText}>{t('navigation_active')}</Text>
         <Text style={styles.mapSubtext}>
-          Broadcasting your location to household
+          {t('broadcasting_location')}
         </Text>
       </View>
 
       {/* Destination */}
       <View style={styles.bottomSheet}>
         <Card>
-          <Text style={styles.destLabel}>Navigating to:</Text>
+          <Text style={styles.destLabel}>{t('navigating_to')}</Text>
           <Text style={styles.destAddress}>{address?.full_address || 'Address'}</Text>
           <Text style={styles.destPincode}>📍 {address?.pincode}</Text>
         </Card>
 
         <Button
-          title="✅ I've Arrived"
+          title={`✅ ${t('ive_arrived')}`}
           onPress={handleArrived}
           fullWidth
           size="large"

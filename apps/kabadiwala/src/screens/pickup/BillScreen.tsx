@@ -44,12 +44,12 @@ export function BillScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.checkmark}>✅</Text>
-      <Text style={styles.title}>Bill Generated!</Text>
+      <Text style={styles.title}>{t('bill_generated')}</Text>
       <Text style={styles.subtitle}>Payment will be processed via UPI</Text>
 
       {/* Bill Details */}
       <Card>
-        <Text style={styles.sectionTitle}>Transaction Summary</Text>
+        <Text style={styles.sectionTitle}>{t('transaction_summary')}</Text>
 
         {transaction?.items?.map((item: any) => (
           <View key={item.category_id} style={styles.lineItem}>
@@ -77,7 +77,7 @@ export function BillScreen() {
         <View style={styles.divider} />
 
         <View style={styles.lineItem}>
-          <Text style={styles.payoutLabel}>Your Total Cost</Text>
+          <Text style={styles.payoutLabel}>{t('your_total_cost')}</Text>
           <Text style={styles.payoutValue}>{formatCurrency(totalPaid)}</Text>
         </View>
       </Card>
@@ -85,12 +85,12 @@ export function BillScreen() {
       {/* Total Cost to Kabadiwala */}
       <Card variant="filled">
         <Text style={styles.paymentNote}>
-          💰 You paid {formatCurrency(totalAmount)} to the household + {formatCurrency(commission)} platform fee = {formatCurrency(totalPaid)} total.
+          💰 {t('you_paid_msg')}
         </Text>
       </Card>
 
       <Button
-        title={`✅ ${t('done')} - Mark as Complete`}
+        title={`✅ ${t('mark_complete')}`}
         onPress={handleDone}
         fullWidth
         size="large"

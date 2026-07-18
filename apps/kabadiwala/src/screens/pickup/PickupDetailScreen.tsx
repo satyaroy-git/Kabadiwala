@@ -116,18 +116,18 @@ export function PickupDetailScreen() {
 
       {/* Action buttons based on status */}
       {booking.status === 'accepted' && (
-        <Button title="🚗 Start Navigation" onPress={handleStartNavigation} fullWidth size="large" />
+        <Button title={`🚗 ${t('start_navigation')}`} onPress={handleStartNavigation} fullWidth size="large" />
       )}
       {booking.status === 'en_route' && (
-        <Button title="✅ I've Arrived" onPress={handleMarkArrived} fullWidth size="large" />
+        <Button title={`✅ ${t('ive_arrived')}`} onPress={handleMarkArrived} fullWidth size="large" />
       )}
       {booking.status === 'arrived' && (
-        <Button title="⚖️ Start Weighing" onPress={handleStartWeighing} fullWidth size="large" />
+        <Button title={`⚖️ ${t('start_weighing')}`} onPress={handleStartWeighing} fullWidth size="large" />
       )}
 
       {['accepted', 'en_route', 'arrived'].includes(booking.status) && (
         <Button
-          title="💬 Chat with Household"
+          title={`💬 ${t('chat')}`}
           onPress={() => navigation.navigate('Chat' as never, { bookingId: route.params.bookingId } as never)}
           variant="outline"
           fullWidth

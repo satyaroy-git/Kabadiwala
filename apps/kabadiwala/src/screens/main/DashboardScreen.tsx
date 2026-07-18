@@ -82,7 +82,7 @@ export function DashboardScreen() {
         </View>
         <View style={styles.onlineToggle}>
           <Text style={[styles.onlineLabel, isOnline && styles.onlineLabelActive]}>
-            {isOnline ? 'Online' : 'Offline'}
+            {isOnline ? t('online') : t('offline')}
           </Text>
           <Switch
             value={isOnline}
@@ -95,15 +95,15 @@ export function DashboardScreen() {
 
       {/* Today's Pickups */}
       <Card>
-        <Text style={styles.cardTitle}>Today's Pickups (Value)</Text>
+        <Text style={styles.cardTitle}>{t('todays_pickups_value')}</Text>
         <Text style={styles.earningsValue}>{formatCurrency(earnings?.today || 0)}</Text>
         <View style={styles.earningsRow}>
           <View style={styles.earningStat}>
-            <Text style={styles.earnLabel}>This Week</Text>
+            <Text style={styles.earnLabel}>{t('this_week')}</Text>
             <Text style={styles.earnValue}>{formatCurrency(earnings?.this_week || 0)}</Text>
           </View>
           <View style={styles.earningStat}>
-            <Text style={styles.earnLabel}>This Month</Text>
+            <Text style={styles.earnLabel}>{t('this_month')}</Text>
             <Text style={styles.earnValue}>{formatCurrency(earnings?.this_month || 0)}</Text>
           </View>
         </View>
@@ -155,22 +155,22 @@ export function DashboardScreen() {
       {!isOnline && (
         <Card variant="filled">
           <Text style={styles.offlineNote}>
-            🔴 You're offline. Go online to receive pickup requests.
+            🔴 {t('go_online_msg')}
           </Text>
         </Card>
       )}
 
       {/* Phase 2: Quick Access */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Insights</Text>
+        <Text style={styles.sectionTitle}>{t('insights')}</Text>
         <View style={styles.quickRow}>
           <Card style={styles.quickCard} onPress={() => navigation.navigate('Badges' as never)}>
             <Text style={styles.quickEmoji}>⭐</Text>
-            <Text style={styles.quickLabel}>Rating & Badges</Text>
+            <Text style={styles.quickLabel}>{t('rating_badges')}</Text>
           </Card>
           <Card style={styles.quickCard} onPress={() => navigation.navigate('Analytics' as never)}>
             <Text style={styles.quickEmoji}>📊</Text>
-            <Text style={styles.quickLabel}>Analytics</Text>
+            <Text style={styles.quickLabel}>{t('analytics')}</Text>
           </Card>
         </View>
       </View>

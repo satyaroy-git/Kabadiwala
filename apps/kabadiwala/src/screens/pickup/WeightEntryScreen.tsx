@@ -73,9 +73,9 @@ export function WeightEntryScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>⚖️ Enter Weights</Text>
+        <Text style={styles.title}>⚖️ {t('enter_weights')}</Text>
         <Text style={styles.subtitle}>
-          Weigh each item and enter the actual weight
+          {t('weigh_each_item')}
         </Text>
       </View>
 
@@ -87,7 +87,7 @@ export function WeightEntryScreen() {
               Rate: {formatCurrency(item.locked_rate_per_kg)}/kg
             </Text>
             <Input
-              label="Actual Weight (kg)"
+              label={t('actual_weight_kg')}
               placeholder="0.0"
               keyboardType="decimal-pad"
               value={item.actual_weight_kg}
@@ -105,11 +105,11 @@ export function WeightEntryScreen() {
       {/* Total & Generate Bill */}
       <View style={styles.footer}>
         <View style={styles.totalRow}>
-          <Text style={styles.totalLabel}>Total Amount</Text>
+          <Text style={styles.totalLabel}>{t('total_amount')}</Text>
           <Text style={styles.totalValue}>{formatCurrency(calculateTotal())}</Text>
         </View>
         <Button
-          title="Generate Bill"
+          title={t('generate_bill')}
           onPress={handleGenerateBill}
           loading={loading}
           fullWidth

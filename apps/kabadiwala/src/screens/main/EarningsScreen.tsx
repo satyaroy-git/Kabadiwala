@@ -101,12 +101,9 @@ export function EarningsScreen() {
 
       {/* Tip */}
       <Card variant="filled">
-        <Text style={styles.tipTitle}>📈 Maximize your earnings</Text>
+        <Text style={styles.tipTitle}>📈 {t('maximize_earnings')}</Text>
         <Text style={styles.tipText}>
-          • Collect metals & e-waste — highest resale margins{'\n'}
-          • Build volume in one area to reduce travel costs{'\n'}
-          • Maintain 4.5+ rating for premium bookings{'\n'}
-          • Bulk sells to recyclers get better rates
+          {t('maximize_earnings_tips')}
         </Text>
       </Card>
     </ScrollView>
