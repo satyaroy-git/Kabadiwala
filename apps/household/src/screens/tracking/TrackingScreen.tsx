@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
-import { Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
+import { Card, Badge, colors, spacing, typography, MapPlaceholder } from '@kabadiwala/ui';
 import { formatETA, formatDistance, useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { getBookingById, subscribeToKabadiwalaLocation, subscribeToBookingStatus } from '../../services/api';
@@ -57,20 +57,16 @@ export function TrackingScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Map Placeholder */}
+      {/* Live Map */}
       <View style={styles.mapContainer}>
-        <View style={styles.mapPlaceholder}>
-          <Text style={styles.mapText}>🗺️</Text>
-          <Text style={styles.mapLabel}>Live Map</Text>
-          {kabadiwalaLocation && (
-            <Text style={styles.mapCoords}>
-              📍 {kabadiwalaLocation.lat.toFixed(4)}, {kabadiwalaLocation.lng.toFixed(4)}
-            </Text>
-          )}
-          <Text style={styles.mapNote}>
-            (Mapbox integration - shows live kabadiwala location)
-          </Text>
-        </View>
+        <MapPlaceholder
+          latitude={kabadiwalaLocation?.lat || 19.0760}
+          longitude={kabadiwalaLocation?.lng || 72.8777}
+          label={t('kabadiwala_on_way')}
+          destLatitude={19.0800}
+          destLongitude={72.8800}
+          destLabel="Your Location"
+        />
       </View>
 
       {/* Status Card */}

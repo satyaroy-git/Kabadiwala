@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Button, Card, colors, spacing, typography } from '@kabadiwala/ui';
+import { Button, Card, colors, spacing, typography, MapPlaceholder } from '@kabadiwala/ui';
 import { useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { broadcastLocation, updateBookingStatus } from '../../services/api';
@@ -17,6 +17,8 @@ export function NavigationScreen() {
   const { t } = useTranslation();
   const { bookingId, address } = route.params;
   const locationInterval = useRef<NodeJS.Timeout | null>(null);
+  const [currentLat, setCurrentLat] = useState(19.0760);
+  const [currentLng, setCurrentLng] = useState(72.8777);
 
   useEffect(() => {
     startLocationBroadcast();
@@ -33,6 +35,8 @@ export function NavigationScreen() {
       // Simulate location broadcast
       const lat = 19.0760 + Math.random() * 0.01;
       const lng = 72.8777 + Math.random() * 0.01;
+      setCurrentLat(lat);
+      setCurrentLng(lng);
       broadcastLocation(bookingId, lat, lng);
     }, 5000);
   }
@@ -47,11 +51,14 @@ export function NavigationScreen() {
     <View style={styles.container}>
       {/* Map placeholder */}
       <View style={styles.mapArea}>
-        <Text style={styles.mapEmoji}>🗺️</Text>
-        <Text style={styles.mapText}>{t('navigation_active')}</Text>
-        <Text style={styles.mapSubtext}>
-          {t('broadcasting_location')}
-        </Text>
+        <MapPlaceholder
+          latitude={currentLat}
+          longitude={currentLng}
+          label={t('navigation_active')}
+          destLatitude={address?.lat || 19.0800}
+          destLongitude={address?.lng || 72.8800}
+          destLabel={address?.full_address?.slice(0, 20) || 'Destination'}
+        />
       </View>
 
       {/* Destination */}

@@ -5,6 +5,7 @@ export { Card } from './components/Card';
 export { Badge } from './components/Badge';
 export { Rating } from './components/Rating';
 export { LoadingScreen } from './components/LoadingScreen';
+export { MapPlaceholder } from './components/MapPlaceholder';
 
 // Theme
 export { colors } from './theme/colors';
