@@ -30,7 +30,7 @@ export function ProfileScreen() {
           </View>
           <Text style={styles.name}>{profile?.name}</Text>
           <Badge
-            text={profile?.status === 'verified' ? '✓ Verified' : 'Pending'}
+            text={profile?.status === 'verified' ? `✓ ${t('verified')}` : 'Pending'}
             variant={profile?.status === 'verified' ? 'success' : 'warning'}
           />
           <View style={styles.ratingRow}>
@@ -41,22 +41,22 @@ export function ProfileScreen() {
 
       {/* Details */}
       <Card>
-        <DetailRow label="Vehicle" value={VEHICLE_TYPE_LABELS[profile?.vehicle_type || ''] || 'N/A'} />
-        <DetailRow label="Phone" value={profile?.phone || ''} />
-        <DetailRow label="Total Pickups" value={String(profile?.total_pickups || 0)} />
-        <DetailRow label="Service Pincodes" value={profile?.service_pincodes?.join(', ') || 'None'} />
+        <DetailRow label={t('vehicle')} value={VEHICLE_TYPE_LABELS[profile?.vehicle_type || ''] || 'N/A'} />
+        <DetailRow label={t('phone')} value={profile?.phone || ''} />
+        <DetailRow label={t('total_pickups')} value={String(profile?.total_pickups || 0)} />
+        <DetailRow label={t('service_pincodes')} value={profile?.service_pincodes?.join(', ') || 'None'} />
       </Card>
 
       {/* Settings */}
       <Card>
-        <Text style={styles.sectionTitle}>Settings</Text>
-        <DetailRow label="🔔 Notifications" value="On" />
-        <DetailRow label="📍 Location Sharing" value="While online" />
-        <DetailRow label="🗓️ Availability" value="Mon-Sat, 9am-6pm" />
-        <DetailRow label="🌐 Language" value="Tap to change" />
+        <Text style={styles.sectionTitle}>{t('settings')}</Text>
+        <DetailRow label={`🔔 ${t('notifications')}`} value={t('on')} />
+        <DetailRow label={`📍 ${t('location_sharing')}`} value={t('while_online')} />
+        <DetailRow label={`🗓️ ${t('availability')}`} value="Mon-Sat, 9am-6pm" />
+        <DetailRow label={`🌐 ${t('language')}`} value={t('tap_to_change')} />
       </Card>
 
-      <Button title="🌐 Change Language" onPress={() => navigation.navigate('LanguageSelect' as never)} variant="outline" fullWidth />
+      <Button title={`🌐 ${t('change_language')}`} onPress={() => navigation.navigate('LanguageSelect' as never)} variant="outline" fullWidth />
 
       <Button title={t('sign_out')} onPress={handleSignOut} variant="outline" fullWidth />
       <Text style={styles.version}>Kabadiwala Partner v1.0.0</Text>

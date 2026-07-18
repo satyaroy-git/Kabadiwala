@@ -47,19 +47,19 @@ export function EarningsScreen() {
 
       {/* Summary - Your Total Spend */}
       <Card>
-        <Text style={styles.cardLabel}>Your Total Spend</Text>
+        <Text style={styles.cardLabel}>{t('your_total_spend')}</Text>
         <Text style={styles.bigNumber}>{formatCurrency(totalCostToKabadiwala)}</Text>
-        <Text style={styles.pickupsText}>{totalPickups} pickups completed</Text>
+        <Text style={styles.pickupsText}>{totalPickups} {t('pickups_completed')}</Text>
       </Card>
 
       {/* Breakdown */}
       <View style={styles.row}>
         <Card style={styles.halfCard}>
-          <Text style={styles.smallLabel}>Paid to Households</Text>
+          <Text style={styles.smallLabel}>{t('paid_to_households')}</Text>
           <Text style={styles.smallValue}>{formatCurrency(totalScrapCollected)}</Text>
         </Card>
         <Card style={styles.halfCard}>
-          <Text style={styles.smallLabel}>Platform Fee (10%)</Text>
+          <Text style={styles.smallLabel}>{t('platform_fee')}</Text>
           <Text style={[styles.smallValue, { color: colors.error }]}>
             {formatCurrency(totalPlatformFees)}
           </Text>
@@ -68,27 +68,24 @@ export function EarningsScreen() {
 
       {/* How it works explanation */}
       <Card variant="filled">
-        <Text style={styles.howItWorksTitle}>💡 How earnings work</Text>
+        <Text style={styles.howItWorksTitle}>💡 {t('how_earnings_work')}</Text>
         <Text style={styles.howItWorksText}>
-          1. You pay the household for their scrap (shown as "Scrap Value"){'\n'}
-          2. Platform charges 10% service fee on each transaction{'\n'}
-          3. You sell the collected scrap to recyclers at your own rate{'\n'}
-          4. Your profit = Recycler price − Household price − Platform fee
+          {t('how_earnings_points')}
         </Text>
       </Card>
 
       {/* Recent Transactions */}
-      <Text style={styles.sectionTitle}>Recent Transactions</Text>
+      <Text style={styles.sectionTitle}>{t('recent_transactions')}</Text>
       {transactions.slice(0, 10).map((txn) => (
         <Card key={txn.id} variant="outlined">
           <View style={styles.txnRow}>
             <View>
               <Text style={styles.txnDate}>{new Date(txn.created_at).toLocaleDateString()}</Text>
-              <Text style={styles.txnScrap}>Scrap Value: {formatCurrency(txn.total_amount)}</Text>
+              <Text style={styles.txnScrap}>{t('scrap_value')}: {formatCurrency(txn.total_amount)}</Text>
             </View>
             <View style={styles.txnRight}>
-              <Text style={styles.txnTotal}>Total Paid: {formatCurrency(txn.total_amount + txn.commission_amount)}</Text>
-              <Text style={styles.txnFee}>Incl. platform fee: {formatCurrency(txn.commission_amount)}</Text>
+              <Text style={styles.txnTotal}>{t('total_paid')}: {formatCurrency(txn.total_amount + txn.commission_amount)}</Text>
+              <Text style={styles.txnFee}>{t('incl_platform_fee')}: {formatCurrency(txn.commission_amount)}</Text>
             </View>
           </View>
         </Card>

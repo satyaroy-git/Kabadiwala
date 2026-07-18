@@ -154,4 +154,35 @@ export interface TranslationKeys {
   please_select_rating: string;
   rating_submitted: string;
   failed: string;
+
+  // Partner app specific
+  nearby_requests: string;
+  accept: string;
+  decline: string;
+  est: string;
+  your_total_spend: string;
+  pickups_completed: string;
+  paid_to_households: string;
+  platform_fee: string;
+  how_earnings_work: string;
+  how_earnings_points: string;
+  recent_transactions: string;
+  scrap_value: string;
+  total_paid: string;
+  incl_platform_fee: string;
+  verified: string;
+  vehicle: string;
+  phone: string;
+  total_pickups: string;
+  service_pincodes: string;
+  settings: string;
+  notifications: string;
+  location_sharing: string;
+  availability: string;
+  language: string;
+  tap_to_change: string;
+  change_language: string;
+  total_spent: string;
+  on: string;
+  while_online: string;
 }

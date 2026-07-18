@@ -79,8 +79,8 @@ export function RequestsScreen() {
         </Text>
 
         <View style={styles.actions}>
-          <Button title="Accept" onPress={() => handleAccept(item.id)} size="small" />
-          <Button title="Decline" onPress={() => handleReject(item.id)} variant="outline" size="small" />
+          <Button title={t('accept')} onPress={() => handleAccept(item.id)} size="small" />
+          <Button title={t('decline')} onPress={() => handleReject(item.id)} variant="outline" size="small" />
         </View>
       </Card>
     );
@@ -90,7 +90,7 @@ export function RequestsScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{t('active_pickups')}</Text>
-        <Text style={styles.subtitle}>Nearby requests in your pincodes</Text>
+        <Text style={styles.subtitle}>{t('nearby_requests')}</Text>
       </View>
 
       <FlatList

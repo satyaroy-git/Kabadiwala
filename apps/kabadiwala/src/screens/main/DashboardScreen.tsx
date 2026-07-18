@@ -139,15 +139,15 @@ export function DashboardScreen() {
         <View style={styles.statsGrid}>
           <View style={styles.stat}>
             <Text style={styles.statValue}>{profile?.total_pickups || 0}</Text>
-            <Text style={styles.statLabel}>Total Pickups</Text>
+            <Text style={styles.statLabel}>{t('total_pickups')}</Text>
           </View>
           <View style={styles.stat}>
             <Text style={styles.statValue}>{formatCurrency(earnings?.total || 0)}</Text>
-            <Text style={styles.statLabel}>Total Spent</Text>
+            <Text style={styles.statLabel}>{t('total_spent')}</Text>
           </View>
           <View style={styles.stat}>
             <Text style={styles.statValue}>{profile?.service_pincodes?.length || 0}</Text>
-            <Text style={styles.statLabel}>Pincodes</Text>
+            <Text style={styles.statLabel}>{t('service_pincodes')}</Text>
           </View>
         </View>
       </Card>
