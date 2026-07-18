@@ -5,7 +5,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, colors, spacing, typography } from '@kabadiwala/ui';
 import { formatCurrency, PLATFORM_CONFIG, useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
-import { supabase } from '../../services/supabase';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 type RouteType = RouteProp<RootStackParamList, 'Bill'>;
@@ -21,24 +20,12 @@ export function BillScreen() {
   const totalPaid = totalAmount + commission;
 
   async function handleDone() {
-    try {
-      // Mark booking as completed
-      await supabase
-        .from('bookings')
-        .update({ status: 'completed', completed_at: new Date().toISOString() })
-        .eq('id', bookingId);
-
-      // Mark transaction as completed
-      if (transaction?.transaction_id) {
-        await supabase
-          .from('transactions')
-          .update({ payment_status: 'completed', completed_at: new Date().toISOString() })
-          .eq('id', transaction.transaction_id);
-      }
-    } catch (err) {
-      console.error('Error completing booking:', err);
-    }
-    navigation.navigate('MainTabs');
+    // Navigate to payment screen for UPI processing
+    navigation.navigate('Payment' as never, {
+      bookingId,
+      amount: totalAmount,
+      receipt: transaction?.receipt_number || `KBD-${Date.now()}`,
+    } as never);
   }
 
   return (

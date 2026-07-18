@@ -22,6 +22,7 @@ import { PickupDetailScreen } from '../screens/pickup/PickupDetailScreen';
 import { NavigationScreen } from '../screens/pickup/NavigationScreen';
 import { WeightEntryScreen } from '../screens/pickup/WeightEntryScreen';
 import { BillScreen } from '../screens/pickup/BillScreen';
+import { PaymentScreen } from '../screens/pickup/PaymentScreen';
 
 // Phase 2 screens
 import { BadgesScreen } from '../screens/main/BadgesScreen';
@@ -43,6 +44,7 @@ export type RootStackParamList = {
   Navigation: { bookingId: string; address: any };
   WeightEntry: { bookingId: string; items: any[] };
   Bill: { bookingId: string; transaction: any };
+  Payment: { bookingId: string; amount: number; receipt: string };
   Badges: undefined;
   Analytics: undefined;
   LanguageSelect: undefined;
@@ -81,6 +83,7 @@ export function RootNavigator() {
           <Stack.Screen name="Navigation" component={NavigationScreen} />
           <Stack.Screen name="WeightEntry" component={WeightEntryScreen} />
           <Stack.Screen name="Bill" component={BillScreen} />
+          <Stack.Screen name="Payment" component={PaymentScreen} options={{ gestureEnabled: false }} />
           <Stack.Screen name="Badges" component={BadgesScreen} />
           <Stack.Screen name="Analytics" component={AnalyticsScreen} />
           <Stack.Screen name="LanguageSelect" component={LanguageScreen} />
