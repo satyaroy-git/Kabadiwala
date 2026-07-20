@@ -28,6 +28,7 @@ import { PaymentScreen } from '../screens/pickup/PaymentScreen';
 import { BadgesScreen } from '../screens/main/BadgesScreen';
 import { AnalyticsScreen } from '../screens/main/AnalyticsScreen';
 import { LanguageScreen } from '../screens/main/LanguageScreen';
+import { EditProfileScreen } from '../screens/main/EditProfileScreen';
 import { ChatScreen } from '../screens/chat/ChatScreen';
 
 export type RootStackParamList = {
@@ -48,6 +49,7 @@ export type RootStackParamList = {
   Badges: undefined;
   Analytics: undefined;
   LanguageSelect: undefined;
+  EditProfile: undefined;
   Chat: { bookingId: string };
 };
 
@@ -90,6 +92,7 @@ export function RootNavigator() {
           <Stack.Screen name="Badges" component={BadgesScreen} />
           <Stack.Screen name="Analytics" component={AnalyticsScreen} />
           <Stack.Screen name="LanguageSelect" component={LanguageScreen} />
+          <Stack.Screen name="EditProfile" component={EditProfileScreen} />
           <Stack.Screen name="Chat" component={ChatScreen} />
         </>
       )}

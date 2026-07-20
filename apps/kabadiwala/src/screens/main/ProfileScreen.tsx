@@ -39,6 +39,8 @@ export function ProfileScreen() {
         </View>
       </Card>
 
+      <Button title="✏️ Edit Profile" onPress={() => navigation.navigate('EditProfile' as never)} variant="outline" fullWidth />
+
       {/* Details */}
       <Card>
         <DetailRow label={t('vehicle')} value={VEHICLE_TYPE_LABELS[profile?.vehicle_type || ''] || 'N/A'} />
