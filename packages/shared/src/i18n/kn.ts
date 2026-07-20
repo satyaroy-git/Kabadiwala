@@ -175,4 +175,12 @@ export const kn: TranslationKeys = {
   afternoon_slot: 'ಮಧ್ಯಾಹ್ನ (12 PM - 3 PM)',
   evening_slot: 'ಸಂಜೆ (3 PM - 6 PM)',
   late_evening_slot: 'ರಾತ್ರಿ (6 PM - 8 PM)',
+  onboarding_title_1: 'ನಿಮ್ಮ ಗುಜರಿ ಸುಲಭವಾಗಿ ಮಾರಿ',
+  onboarding_subtitle_1: 'ಪರಿಶೀಲಿಸಿದ ಸ್ಥಳೀಯ ಡೀಲರ್‌ಗಳೊಂದಿಗೆ ಸಂಪರ್ಕಿಸಿ.\nಉತ್ತಮ ಬೆಲೆ ಪಡೆಯಿರಿ.',
+  onboarding_title_2: 'ಪಿಕಪ್ ಬುಕ್ ಮಾಡಿ',
+  onboarding_subtitle_2: 'ಮಾರಬೇಕಾದ್ದನ್ನು ಆಯ್ಕೆ ಮಾಡಿ, ಸಮಯ ಆಯ್ಕೆ ಮಾಡಿ.',
+  onboarding_title_3: 'ತಕ್ಷಣ ಹಣ ಪಡೆಯಿರಿ',
+  onboarding_subtitle_3: 'ನಿಮ್ಮ ಮನೆಯಲ್ಲಿ ತೂಕ ಮಾಡಲಾಗುತ್ತದೆ. UPI ಮೂಲಕ ತಕ್ಷಣ ಹಣ.',
+  skip: 'ಬಿಡಿ',
+  next: 'ಮುಂದೆ',
 };

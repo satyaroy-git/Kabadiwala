@@ -33,12 +33,10 @@ export function ProfileScreen() {
   }
 
   async function handleToggleDarkMode() {
-    const { isDarkMode, setThemeMode } = require('@kabadiwala/shared');
-    const currentlyDark = isDarkMode();
-    await setThemeMode(currentlyDark ? 'light' : 'dark');
     Alert.alert(
-      currentlyDark ? 'Light Mode' : 'Dark Mode',
-      `Theme changed to ${currentlyDark ? 'light' : 'dark'} mode. Restart the app to see full effect.`
+      '🌙 Dark Mode',
+      'Dark mode is coming soon! We are working on it for the next update.',
+      [{ text: t('ok') }]
     );
   }
 
@@ -75,7 +73,7 @@ export function ProfileScreen() {
       {/* Menu Items */}
       <Card>
         <MenuItem icon="🌐" title="Language / भाषा" onPress={() => navigation.navigate('LanguageSelect' as never)} />
-        <MenuItem icon="🌙" title="Dark Mode" onPress={handleToggleDarkMode} />
+        <MenuItem icon="🌙" title="Dark Mode (Coming Soon)" onPress={handleToggleDarkMode} />
         <MenuItem icon="🔄" title={t('recurring_pickups')} onPress={() => navigation.navigate('Recurring' as never)} />
         <MenuItem icon="🌍" title={t('my_impact')} onPress={() => navigation.navigate('Impact' as never)} />
         <MenuItem icon="🎮" title={t('rewards_badges')} onPress={() => navigation.navigate('Gamification' as never)} />

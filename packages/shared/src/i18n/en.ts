@@ -175,4 +175,12 @@ export const en: TranslationKeys = {
   afternoon_slot: 'Afternoon (12 PM - 3 PM)',
   evening_slot: 'Evening (3 PM - 6 PM)',
   late_evening_slot: 'Late Evening (6 PM - 8 PM)',
+  onboarding_title_1: 'Sell Your Scrap Easily',
+  onboarding_subtitle_1: 'Connect with verified local scrap dealers.\nGet the best rates for your old newspapers, metals, plastic & e-waste.',
+  onboarding_title_2: 'Book a Pickup',
+  onboarding_subtitle_2: 'Select what you want to sell, pick a time slot, and a verified kabadiwala comes to your doorstep.',
+  onboarding_title_3: 'Get Paid Instantly',
+  onboarding_subtitle_3: 'Scrap is weighed at your door. Payment is instant via UPI. Track everything in the app.',
+  skip: 'Skip',
+  next: 'Next',
 };

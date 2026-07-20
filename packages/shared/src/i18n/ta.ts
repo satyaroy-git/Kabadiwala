@@ -175,4 +175,12 @@ export const ta: TranslationKeys = {
   afternoon_slot: 'மதியம் (12 PM - 3 PM)',
   evening_slot: 'மாலை (3 PM - 6 PM)',
   late_evening_slot: 'இரவு (6 PM - 8 PM)',
+  onboarding_title_1: 'உங்கள் குப்பையை எளிதாக விற்கவும்',
+  onboarding_subtitle_1: 'சரிபார்க்கப்பட்ட உள்ளூர் டீலர்களுடன் இணையுங்கள்.\nசிறந்த விலை பெறுங்கள்.',
+  onboarding_title_2: 'பிக்கப் புக் செய்யுங்கள்',
+  onboarding_subtitle_2: 'விற்க வேண்டியதை தேர்வு செய்யுங்கள், நேரம் தேர்வு செய்யுங்கள்.',
+  onboarding_title_3: 'உடனடி பணம் பெறுங்கள்',
+  onboarding_subtitle_3: 'உங்கள் வீட்டில் எடை போடப்படும். UPI மூலம் உடனடி பணம்.',
+  skip: 'தவிர்',
+  next: 'அடுத்து',
 };

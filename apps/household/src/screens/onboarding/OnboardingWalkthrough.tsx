@@ -2,33 +2,33 @@ import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors, spacing, typography } from '@kabadiwala/ui';
+import { t } from '@kabadiwala/shared';
 
 const { width } = Dimensions.get('window');
 const ONBOARDING_KEY = '@kabadiwala_onboarding_done';
-
-const slides = [
-  {
-    emoji: '♻️',
-    title: 'Sell Your Scrap Easily',
-    subtitle: 'Connect with verified local scrap dealers.\nGet the best rates for your old newspapers, metals, plastic & e-waste.',
-  },
-  {
-    emoji: '📱',
-    title: 'Book a Pickup',
-    subtitle: 'Select what you want to sell, pick a time slot, and a verified kabadiwala comes to your doorstep.',
-  },
-  {
-    emoji: '💰',
-    title: 'Get Paid Instantly',
-    subtitle: 'Scrap is weighed at your door. Payment is instant via UPI. Track everything in the app.',
-  },
-];
 
 interface Props {
   onComplete: () => void;
 }
 
 export function OnboardingWalkthrough({ onComplete }: Props) {
+  const slides = [
+    {
+      emoji: '♻️',
+      title: t('onboarding_title_1'),
+      subtitle: t('onboarding_subtitle_1'),
+    },
+    {
+      emoji: '📱',
+      title: t('onboarding_title_2'),
+      subtitle: t('onboarding_subtitle_2'),
+    },
+    {
+      emoji: '💰',
+      title: t('onboarding_title_3'),
+      subtitle: t('onboarding_subtitle_3'),
+    },
+  ];
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollRef = useRef<ScrollView>(null);
 
@@ -81,15 +81,15 @@ export function OnboardingWalkthrough({ onComplete }: Props) {
         {currentIndex < slides.length - 1 ? (
           <>
             <TouchableOpacity onPress={handleComplete} style={styles.skipBtn}>
-              <Text style={styles.skipText}>Skip</Text>
+              <Text style={styles.skipText}>{t('skip')}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleNext} style={styles.nextBtn}>
-              <Text style={styles.nextText}>Next →</Text>
+              <Text style={styles.nextText}>{t('next')} →</Text>
             </TouchableOpacity>
           </>
         ) : (
           <TouchableOpacity onPress={handleComplete} style={styles.getStartedBtn}>
-            <Text style={styles.getStartedText}>Get Started 🚀</Text>
+            <Text style={styles.getStartedText}>{t('get_started')} 🚀</Text>
           </TouchableOpacity>
         )}
       </View>

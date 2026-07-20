@@ -175,4 +175,12 @@ export const te: TranslationKeys = {
   afternoon_slot: 'మధ్యాహ్నం (12 PM - 3 PM)',
   evening_slot: 'సాయంత్రం (3 PM - 6 PM)',
   late_evening_slot: 'రాత్రి (6 PM - 8 PM)',
+  onboarding_title_1: 'మీ స్క్రాప్ సులభంగా అమ్మండి',
+  onboarding_subtitle_1: 'ధృవీకరించిన స్థానిక డీలర్లతో కనెక్ట్ అవండి.\nఉత్తమ ధరలు పొందండి.',
+  onboarding_title_2: 'పికప్ బుక్ చేయండి',
+  onboarding_subtitle_2: 'అమ్మాలనుకునేది ఎంచుకోండి, సమయం ఎంచుకోండి.',
+  onboarding_title_3: 'వెంటనే పేమెంట్ పొందండి',
+  onboarding_subtitle_3: 'మీ ఇంటి వద్ద తూకం వేయబడుతుంది. UPI ద్వారా వెంటనే పేమెంట్.',
+  skip: 'దాటండి',
+  next: 'తదుపరి',
 };

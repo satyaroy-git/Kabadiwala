@@ -175,4 +175,12 @@ export const mr: TranslationKeys = {
   afternoon_slot: 'दुपार (12 PM - 3 PM)',
   evening_slot: 'संध्याकाळ (3 PM - 6 PM)',
   late_evening_slot: 'रात्री (6 PM - 8 PM)',
+  onboarding_title_1: 'तुमचा भंगार सहज विका',
+  onboarding_subtitle_1: 'वेरिफाइड स्थानिक डीलरशी जोडा.\nवर्तमानपत्र, धातू, प्लास्टिक आणि ई-कचऱ्याचे सर्वोत्तम भाव मिळवा.',
+  onboarding_title_2: 'पिकअप बुक करा',
+  onboarding_subtitle_2: 'विकायचे ते निवडा, वेळ निवडा, वेरिफाइड कबाडीवाला तुमच्या दारात.',
+  onboarding_title_3: 'लगेच पेमेंट मिळवा',
+  onboarding_subtitle_3: 'तुमच्या दारात वजन होते. UPI ने लगेच पेमेंट. सर्व ऐपमध्ये ट्रॅक करा.',
+  skip: 'वगळा',
+  next: 'पुढे',
 };

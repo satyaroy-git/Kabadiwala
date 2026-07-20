@@ -175,4 +175,12 @@ export const hi: TranslationKeys = {
   afternoon_slot: 'दोपहर (12 PM - 3 PM)',
   evening_slot: 'शाम (3 PM - 6 PM)',
   late_evening_slot: 'रात (6 PM - 8 PM)',
+  onboarding_title_1: 'अपना कबाड़ आसानी से बेचें',
+  onboarding_subtitle_1: 'वेरिफाइड स्थानीय कबाड़ डीलरों से जुड़ें।\nअखबार, धातु, प्लास्टिक और ई-कचरे के सबसे अच्छे दाम पाएं।',
+  onboarding_title_2: 'पिकअप बुक करें',
+  onboarding_subtitle_2: 'बेचना चाहते हैं वो चुनें, समय चुनें, और एक वेरिफाइड कबाड़ीवाला आपके दरवाजे पर आएगा।',
+  onboarding_title_3: 'तुरंत भुगतान पाएं',
+  onboarding_subtitle_3: 'कबाड़ आपके दरवाजे पर तौला जाता है। UPI से तुरंत भुगतान। सब कुछ ऐप में ट्रैक करें।',
+  skip: 'छोड़ें',
+  next: 'अगला',
 };

@@ -220,4 +220,14 @@ export interface TranslationKeys {
   afternoon_slot: string;
   evening_slot: string;
   late_evening_slot: string;
+
+  // Onboarding
+  onboarding_title_1: string;
+  onboarding_subtitle_1: string;
+  onboarding_title_2: string;
+  onboarding_subtitle_2: string;
+  onboarding_title_3: string;
+  onboarding_subtitle_3: string;
+  skip: string;
+  next: string;
 }
