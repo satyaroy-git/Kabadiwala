@@ -151,6 +151,14 @@ export async function getPickupRequests(): Promise<Booking[]> {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return [];
 
+  // Get bookings this kabadiwala has rejected
+  const { data: rejections } = await supabase
+    .from('booking_rejections')
+    .select('booking_id')
+    .eq('kabadiwala_id', user.id);
+
+  const rejectedIds = rejections?.map((r: any) => r.booking_id) || [];
+
   // Get pending bookings
   const { data: bookings, error } = await supabase
     .from('bookings')
@@ -161,8 +169,11 @@ export async function getPickupRequests(): Promise<Booking[]> {
   if (error) throw error;
   if (!bookings || bookings.length === 0) return [];
 
+  // Filter out rejected bookings
+  const filteredBookings = bookings.filter((b: any) => !rejectedIds.includes(b.id));
+
   // Fetch addresses for these bookings
-  const addressIds = bookings.map((b: any) => b.address_id).filter(Boolean);
+  const addressIds = filteredBookings.map((b: any) => b.address_id).filter(Boolean);
   let addressMap: Record<string, any> = {};
   
   if (addressIds.length > 0) {
@@ -177,7 +188,7 @@ export async function getPickupRequests(): Promise<Booking[]> {
   }
 
   // Attach address to each booking
-  return bookings.map((b: any) => ({
+  return filteredBookings.map((b: any) => ({
     ...b,
     address: addressMap[b.address_id] || null,
   }));
@@ -238,10 +249,14 @@ export async function acceptPickup(bookingId: string) {
 }
 
 export async function rejectPickup(bookingId: string, reason: string) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
   const { data, error } = await supabase
     .from('booking_rejections')
     .insert({
       booking_id: bookingId,
+      kabadiwala_id: user.id,
       reason,
     });
 

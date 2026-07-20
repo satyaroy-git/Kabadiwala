@@ -52,7 +52,8 @@ export function RequestsScreen() {
         style: 'destructive',
         onPress: async () => {
           await rejectPickup(bookingId, 'declined');
-          await loadRequests();
+          // Remove from local list immediately
+          setRequests((prev) => prev.filter((r) => r.id !== bookingId));
         },
       },
     ]);
