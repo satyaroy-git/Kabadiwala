@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, RefreshControl } from 'react-native';
 import { Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, RateCard, useTranslation } from '@kabadiwala/shared';
+import { formatCurrency, RateCard, useTranslation, getLanguage, SCRAP_CATEGORIES } from '@kabadiwala/shared';
 import { getRateCards } from '../../services/api';
 
 export function RateCardScreen() {
@@ -9,6 +9,27 @@ export function RateCardScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
+
+  function getTranslatedCategoryName(englishName: string, categoryId?: string): string {
+    const lang = getLanguage();
+    if (lang === 'en') return englishName;
+    
+    // Find category in our local data by matching name or id
+    const category = SCRAP_CATEGORIES.find(
+      (c) => c.name === englishName || c.id === categoryId
+    );
+    if (!category) return englishName;
+
+    switch (lang) {
+      case 'hi': return category.name_hindi || englishName;
+      case 'or': return category.name_odia || englishName;
+      case 'mr': return category.name_marathi || englishName;
+      case 'ta': return category.name_tamil || englishName;
+      case 'te': return category.name_telugu || englishName;
+      case 'kn': return category.name_kannada || englishName;
+      default: return englishName;
+    }
+  }
 
   useEffect(() => {
     loadRates();
@@ -41,7 +62,7 @@ export function RateCardScreen() {
         <View style={styles.rateItem}>
           <Text style={styles.icon}>{item.category_icon}</Text>
           <View style={styles.rateInfo}>
-            <Text style={styles.categoryName}>{item.category_name}</Text>
+            <Text style={styles.categoryName}>{getTranslatedCategoryName(item.category_name, item.category_id)}</Text>
             <Text style={styles.rateValue}>{formatCurrency(item.rate_per_kg)}/kg</Text>
           </View>
           {changePercent !== 0 && (
@@ -65,7 +86,7 @@ export function RateCardScreen() {
 
       <View style={styles.infoCard}>
         <Text style={styles.infoText}>
-          💡 Rates are locked at the time of booking. Book now to secure today's rates!
+          💡 {t('rates_locked_info')}
         </Text>
       </View>
 

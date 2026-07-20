@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, formatDate, RateCard, Booking, useTranslation } from '@kabadiwala/shared';
+import { formatCurrency, formatDate, RateCard, Booking, useTranslation, getLanguage, SCRAP_CATEGORIES } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
 import { getRateCards, getBookings } from '../../services/api';
 import { RootStackParamList } from '../../navigation/RootNavigator';
@@ -14,6 +14,22 @@ export function HomeScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { profile } = useAuth();
   const { t } = useTranslation();
+
+  function getTranslatedCategoryName(englishName: string): string {
+    const lang = getLanguage();
+    if (lang === 'en') return englishName;
+    const category = SCRAP_CATEGORIES.find((c) => c.name === englishName);
+    if (!category) return englishName;
+    switch (lang) {
+      case 'hi': return category.name_hindi || englishName;
+      case 'or': return category.name_odia || englishName;
+      case 'mr': return category.name_marathi || englishName;
+      case 'ta': return category.name_tamil || englishName;
+      case 'te': return category.name_telugu || englishName;
+      case 'kn': return category.name_kannada || englishName;
+      default: return englishName;
+    }
+  }
   const [rates, setRates] = useState<RateCard[]>([]);
   const [activeBookings, setActiveBookings] = useState<Booking[]>([]);
   const [refreshing, setRefreshing] = useState(false);
@@ -132,7 +148,7 @@ export function HomeScreen() {
               style={[styles.rateRow, index < rates.length - 1 && styles.rateRowBorder]}
             >
               <Text style={styles.rateIcon}>{rate.category_icon}</Text>
-              <Text style={styles.rateName}>{rate.category_name}</Text>
+              <Text style={styles.rateName}>{getTranslatedCategoryName(rate.category_name)}</Text>
               <Text style={styles.ratePrice}>{formatCurrency(rate.rate_per_kg)}/kg</Text>
             </View>
           ))}
