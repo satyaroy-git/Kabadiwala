@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, formatDate, useTranslation } from '@kabadiwala/shared';
+import { formatCurrency, formatDate, useTranslation, getLanguage, SCRAP_CATEGORIES } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { createBooking } from '../../services/api';
 
@@ -16,6 +16,32 @@ export function BookingConfirmScreen() {
   const { bookingData } = route.params;
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
+
+  function getTranslatedCategoryName(englishName: string): string {
+    const lang = getLanguage();
+    if (lang === 'en') return englishName;
+    const category = SCRAP_CATEGORIES.find((c) => c.name === englishName);
+    if (!category) return englishName;
+    switch (lang) {
+      case 'hi': return category.name_hindi || englishName;
+      case 'or': return category.name_odia || englishName;
+      case 'mr': return category.name_marathi || englishName;
+      case 'ta': return category.name_tamil || englishName;
+      case 'te': return category.name_telugu || englishName;
+      case 'kn': return category.name_kannada || englishName;
+      default: return englishName;
+    }
+  }
+
+  function getTranslatedTimeSlot(start: string): string {
+    switch (start) {
+      case '09:00': return t('morning_slot');
+      case '12:00': return t('afternoon_slot');
+      case '15:00': return t('evening_slot');
+      case '18:00': return t('late_evening_slot');
+      default: return start;
+    }
+  }
 
   async function handleConfirm() {
     setLoading(true);
@@ -54,7 +80,7 @@ export function BookingConfirmScreen() {
         <Card>
           <Text style={styles.cardTitle}>📅 {t('schedule')}</Text>
           <Text style={styles.cardValue}>{formatDate(bookingData.date)}</Text>
-          <Text style={styles.cardSubvalue}>{bookingData.timeSlot?.label}</Text>
+          <Text style={styles.cardSubvalue}>{getTranslatedTimeSlot(bookingData.timeSlot?.start)}</Text>
         </Card>
 
         {/* Items */}
@@ -62,7 +88,7 @@ export function BookingConfirmScreen() {
           <Text style={styles.cardTitle}>📦 {t('scrap_items')}</Text>
           {bookingData.selectedItems.map((item: any) => (
             <View key={item.category_id} style={styles.itemRow}>
-              <Text style={styles.itemName}>{item.category_name}</Text>
+              <Text style={styles.itemName}>{getTranslatedCategoryName(item.category_name)}</Text>
               <Text style={styles.itemWeight}>~{item.estimated_weight_kg} kg</Text>
             </View>
           ))}

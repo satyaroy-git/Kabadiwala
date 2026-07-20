@@ -111,11 +111,11 @@ export function HomeScreen() {
                     {formatDate(booking.scheduled_date)}
                   </Text>
                   <Text style={styles.bookingItems}>
-                    {booking.scrap_items.map((i) => i.category_name).join(', ')}
+                    {booking.scrap_items.map((i) => getTranslatedCategoryName(i.category_name)).join(', ')}
                   </Text>
                 </View>
                 <Badge
-                  text={booking.status.replace('_', ' ')}
+                  text={({pending: t('pending'), accepted: t('accepted'), en_route: t('en_route'), arrived: t('arrived'), payment_pending: t('payment_pending'), completed: t('completed'), cancelled: t('cancelled')} as any)[booking.status] || booking.status}
                   variant={
                     booking.status === 'en_route'
                       ? 'info'
