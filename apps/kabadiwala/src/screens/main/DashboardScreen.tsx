@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Switch } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, Booking, EarningsSummary, useTranslation } from '@kabadiwala/shared';
+import { formatCurrency, Booking, EarningsSummary, useTranslation, useTheme } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
 import { setOnlineStatus, getMyActivePickups, getTransactionHistory } from '../../services/api';
 import { RootStackParamList } from '../../navigation/RootNavigator';
@@ -14,6 +14,7 @@ export function DashboardScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { profile } = useAuth();
   const { t } = useTranslation();
+  const { colors: themeColors } = useTheme();
   const [isOnline, setIsOnline] = useState(profile?.is_online || false);
   const [activePickups, setActivePickups] = useState<Booking[]>([]);
   const [earnings, setEarnings] = useState<any>({ today: 0, this_week: 0, this_month: 0, total: 0 });
@@ -71,11 +72,11 @@ export function DashboardScreen() {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={[styles.container, { backgroundColor: themeColors.backgroundSecondary }]} contentContainerStyle={styles.content}>
       {/* Header with online toggle */}
       <View style={styles.header}>
         <View>
-          <Text style={styles.greeting}>Hi, {profile?.name || 'Partner'}!</Text>
+          <Text style={[styles.greeting, { color: themeColors.text }]}>Hi, {profile?.name || 'Partner'}!</Text>
           <Text style={styles.ratingText}>
             ★ {profile?.rating?.toFixed(1) || 'New'} • {profile?.total_pickups || 0} pickups
           </Text>

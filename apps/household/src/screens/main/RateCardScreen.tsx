@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, RefreshControl } from 'react-native';
 import { Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, RateCard, useTranslation, getLanguage, SCRAP_CATEGORIES } from '@kabadiwala/shared';
+import { formatCurrency, RateCard, useTranslation, getLanguage, SCRAP_CATEGORIES, useTheme } from '@kabadiwala/shared';
 import { getRateCards } from '../../services/api';
 
 export function RateCardScreen() {
@@ -9,6 +9,7 @@ export function RateCardScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
+  const { colors: themeColors } = useTheme();
 
   function getTranslatedCategoryName(englishName: string, categoryId?: string): string {
     const lang = getLanguage();
@@ -78,9 +79,9 @@ export function RateCardScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>{t('live_rate_card')}</Text>
+    <View style={[styles.container, { backgroundColor: themeColors.backgroundSecondary }]}>
+      <View style={[styles.header, { backgroundColor: themeColors.background }]}>
+        <Text style={[styles.title, { color: themeColors.text }]}>{t('live_rate_card')}</Text>
         <Text style={styles.subtitle}>{t('rates_per_kg')}</Text>
       </View>
 

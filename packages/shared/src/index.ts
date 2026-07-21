@@ -30,3 +30,6 @@ export type { PaymentOrder, PaymentResult } from './services/payment';
 // Theme
 export { getThemeMode, isDarkMode, loadTheme, setThemeMode, onThemeChange, darkColors } from './theme/darkMode';
 export type { ThemeMode } from './theme/darkMode';
+
+// Theme Context
+export { ThemeProvider, useTheme } from './theme/ThemeContext';

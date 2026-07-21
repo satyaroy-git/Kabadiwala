@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Card, Button, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatWeight, useTranslation } from '@kabadiwala/shared';
+import { formatWeight, useTranslation, useTheme } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
 import { signOut } from '../../services/api';
 
@@ -10,6 +10,7 @@ export function ProfileScreen() {
   const navigation = useNavigation();
   const { profile, user } = useAuth();
   const { t } = useTranslation();
+  const { toggleTheme, isDark, colors: themeColors } = useTheme();
 
   async function handleSignOut() {
     Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
@@ -33,15 +34,11 @@ export function ProfileScreen() {
   }
 
   async function handleToggleDarkMode() {
-    Alert.alert(
-      '🌙 Dark Mode',
-      'Dark mode is coming soon! We are working on it for the next update.',
-      [{ text: t('ok') }]
-    );
+    toggleTheme();
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={[styles.container, { backgroundColor: themeColors.backgroundSecondary }]} contentContainerStyle={styles.content}>
       {/* Profile Header */}
       <View style={styles.header}>
         <View style={styles.avatar}>
@@ -73,7 +70,7 @@ export function ProfileScreen() {
       {/* Menu Items */}
       <Card>
         <MenuItem icon="🌐" title="Language / भाषा" onPress={() => navigation.navigate('LanguageSelect' as never)} />
-        <MenuItem icon="🌙" title="Dark Mode (Coming Soon)" onPress={handleToggleDarkMode} />
+        <MenuItem icon={isDark ? "☀️" : "🌙"} title={isDark ? "Light Mode" : "Dark Mode"} onPress={handleToggleDarkMode} />
         <MenuItem icon="🔄" title={t('recurring_pickups')} onPress={() => navigation.navigate('Recurring' as never)} />
         <MenuItem icon="🌍" title={t('my_impact')} onPress={() => navigation.navigate('Impact' as never)} />
         <MenuItem icon="🎮" title={t('rewards_badges')} onPress={() => navigation.navigate('Gamification' as never)} />

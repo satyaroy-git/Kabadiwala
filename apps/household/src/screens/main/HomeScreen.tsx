@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatCurrency, formatDate, RateCard, Booking, useTranslation, getLanguage, SCRAP_CATEGORIES } from '@kabadiwala/shared';
+import { formatCurrency, formatDate, RateCard, Booking, useTranslation, getLanguage, SCRAP_CATEGORIES, useTheme } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
 import { getRateCards, getBookings } from '../../services/api';
 import { RootStackParamList } from '../../navigation/RootNavigator';
@@ -14,6 +14,7 @@ export function HomeScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { profile } = useAuth();
   const { t } = useTranslation();
+  const { colors: themeColors } = useTheme();
 
   function getTranslatedCategoryName(englishName: string): string {
     const lang = getLanguage();
@@ -70,15 +71,15 @@ export function HomeScreen() {
 
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: themeColors.backgroundSecondary }]}
       contentContainerStyle={styles.content}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
       {/* Header */}
       <View style={styles.header}>
         <View>
-          <Text style={styles.greeting}>{t('hello')}, {profile?.name || 'there'}! 👋</Text>
-          <Text style={styles.tagline}>{t('sell_scrap_best_rates')}</Text>
+          <Text style={[styles.greeting, { color: themeColors.text }]}>{t('hello')}, {profile?.name || 'there'}! 👋</Text>
+          <Text style={[styles.tagline, { color: themeColors.textSecondary }]}>{t('sell_scrap_best_rates')}</Text>
         </View>
       </View>
 

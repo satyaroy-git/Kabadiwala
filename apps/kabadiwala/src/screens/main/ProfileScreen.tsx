@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Card, Button, Rating, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { VEHICLE_TYPE_LABELS, useTranslation } from '@kabadiwala/shared';
+import { VEHICLE_TYPE_LABELS, useTranslation, useTheme } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
 import { signOut } from '../../services/api';
 
@@ -10,6 +10,7 @@ export function ProfileScreen() {
   const navigation = useNavigation();
   const { profile } = useAuth();
   const { t } = useTranslation();
+  const { toggleTheme, isDark, colors: themeColors } = useTheme();
 
   function handleSignOut() {
     Alert.alert(t('sign_out'), t('are_you_sure'), [
@@ -19,7 +20,7 @@ export function ProfileScreen() {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={[styles.container, { backgroundColor: themeColors.backgroundSecondary }]} contentContainerStyle={styles.content}>
       {/* Profile Card */}
       <Card>
         <View style={styles.profileHeader}>
@@ -59,6 +60,8 @@ export function ProfileScreen() {
       </Card>
 
       <Button title={`🌐 ${t('change_language')}`} onPress={() => navigation.navigate('LanguageSelect' as never)} variant="outline" fullWidth />
+
+      <Button title={isDark ? "☀️ Light Mode" : "🌙 Dark Mode"} onPress={toggleTheme} variant="outline" fullWidth />
 
       <Button title={t('sign_out')} onPress={handleSignOut} variant="outline" fullWidth />
       <Text style={styles.version}>Kabadiwala Partner v1.0.0</Text>

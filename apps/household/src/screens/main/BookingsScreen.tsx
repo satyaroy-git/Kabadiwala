@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, RefreshControl, TouchableOpacity } fr
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatDate, formatCurrency, formatBookingStatus, Booking, useTranslation } from '@kabadiwala/shared';
+import { formatDate, formatCurrency, formatBookingStatus, Booking, useTranslation, useTheme } from '@kabadiwala/shared';
 import { getBookings } from '../../services/api';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 
@@ -18,6 +18,7 @@ export function BookingsScreen() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<FilterTab>('active');
   const { t } = useTranslation();
+  const { colors: themeColors } = useTheme();
 
   useEffect(() => {
     loadBookings();
@@ -97,9 +98,9 @@ export function BookingsScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>{t('active_pickups')}</Text>
+    <View style={[styles.container, { backgroundColor: themeColors.backgroundSecondary }]}>
+      <View style={[styles.header, { backgroundColor: themeColors.background }]}>
+        <Text style={[styles.title, { color: themeColors.text }]}>{t('active_pickups')}</Text>
       </View>
 
       {/* Filter Tabs */}
