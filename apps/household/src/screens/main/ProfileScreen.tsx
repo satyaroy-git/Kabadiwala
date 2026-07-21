@@ -46,29 +46,29 @@ export function ProfileScreen() {
             {profile?.name?.charAt(0)?.toUpperCase() || '?'}
           </Text>
         </View>
-        <Text style={styles.name}>{profile?.name || 'User'}</Text>
-        <Text style={styles.email}>{user?.email || ''}</Text>
+        <Text style={[styles.name, { color: themeColors.text }]}>{profile?.name || 'User'}</Text>
+        <Text style={[styles.email, { color: themeColors.textSecondary }]}>{user?.email || ''}</Text>
       </View>
 
       {/* Stats */}
-      <Card>
+      <Card style={{ backgroundColor: themeColors.card }}>
         <View style={styles.statsRow}>
           <View style={styles.stat}>
-            <Text style={styles.statValue}>{profile?.total_pickups || 0}</Text>
-            <Text style={styles.statLabel}>Pickups</Text>
+            <Text style={[styles.statValue, { color: themeColors.text }]}>{profile?.total_pickups || 0}</Text>
+            <Text style={[styles.statLabel, { color: themeColors.textSecondary }]}>Pickups</Text>
           </View>
-          <View style={styles.statDivider} />
+          <View style={[styles.statDivider, { backgroundColor: themeColors.border }]} />
           <View style={styles.stat}>
-            <Text style={styles.statValue}>
+            <Text style={[styles.statValue, { color: themeColors.text }]}>
               {formatWeight(profile?.total_recycled_kg || 0)}
             </Text>
-            <Text style={styles.statLabel}>Recycled</Text>
+            <Text style={[styles.statLabel, { color: themeColors.textSecondary }]}>Recycled</Text>
           </View>
         </View>
       </Card>
 
       {/* Menu Items */}
-      <Card>
+      <Card style={{ backgroundColor: themeColors.card }}>
         <MenuItem icon="🌐" title="Language / भाषा" onPress={() => navigation.navigate('LanguageSelect' as never)} />
         <MenuItem icon={isDark ? "☀️" : "🌙"} title={isDark ? "Light Mode" : "Dark Mode"} onPress={handleToggleDarkMode} />
         <MenuItem icon="🔄" title={t('recurring_pickups')} onPress={() => navigation.navigate('Recurring' as never)} />
@@ -94,11 +94,12 @@ export function ProfileScreen() {
 }
 
 function MenuItem({ icon, title, onPress }: { icon: string; title: string; onPress: () => void }) {
+  const { colors: tc } = useTheme();
   return (
-    <TouchableOpacity style={menuStyles.item} onPress={onPress} activeOpacity={0.6}>
+    <TouchableOpacity style={[menuStyles.item, { borderBottomColor: tc.border }]} onPress={onPress} activeOpacity={0.6}>
       <Text style={menuStyles.icon}>{icon}</Text>
-      <Text style={menuStyles.title}>{title}</Text>
-      <Text style={menuStyles.arrow}>›</Text>
+      <Text style={[menuStyles.title, { color: tc.text }]}>{title}</Text>
+      <Text style={[menuStyles.arrow, { color: tc.textSecondary }]}>›</Text>
     </TouchableOpacity>
   );
 }

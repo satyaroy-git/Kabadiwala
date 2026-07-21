@@ -22,14 +22,14 @@ export function ProfileScreen() {
   return (
     <ScrollView style={[styles.container, { backgroundColor: themeColors.backgroundSecondary }]} contentContainerStyle={styles.content}>
       {/* Profile Card */}
-      <Card>
+      <Card style={{ backgroundColor: themeColors.card }}>
         <View style={styles.profileHeader}>
           <View style={styles.avatar}>
             <Text style={styles.avatarText}>
               {profile?.name?.charAt(0) || '?'}
             </Text>
           </View>
-          <Text style={styles.name}>{profile?.name}</Text>
+          <Text style={[styles.name, { color: themeColors.text }]}>{profile?.name}</Text>
           <Badge
             text={profile?.status === 'verified' ? `✓ ${t('verified')}` : 'Pending'}
             variant={profile?.status === 'verified' ? 'success' : 'warning'}
@@ -43,7 +43,7 @@ export function ProfileScreen() {
       <Button title="✏️ Edit Profile" onPress={() => navigation.navigate('EditProfile' as never)} variant="outline" fullWidth />
 
       {/* Details */}
-      <Card>
+      <Card style={{ backgroundColor: themeColors.card }}>
         <DetailRow label={t('vehicle')} value={VEHICLE_TYPE_LABELS[profile?.vehicle_type || ''] || 'N/A'} />
         <DetailRow label={t('phone')} value={profile?.phone || ''} />
         <DetailRow label={t('total_pickups')} value={String(profile?.total_pickups || 0)} />
@@ -51,8 +51,8 @@ export function ProfileScreen() {
       </Card>
 
       {/* Settings */}
-      <Card>
-        <Text style={styles.sectionTitle}>{t('settings')}</Text>
+      <Card style={{ backgroundColor: themeColors.card }}>
+        <Text style={[styles.sectionTitle, { color: themeColors.text }]}>{t('settings')}</Text>
         <DetailRow label={`🔔 ${t('notifications')}`} value={t('on')} />
         <DetailRow label={`📍 ${t('location_sharing')}`} value={t('while_online')} />
         <DetailRow label={`🗓️ ${t('availability')}`} value="Mon-Sat, 9am-6pm" />
@@ -70,10 +70,11 @@ export function ProfileScreen() {
 }
 
 function DetailRow({ label, value }: { label: string; value: string }) {
+  const { colors: tc } = useTheme();
   return (
-    <View style={detailStyles.row}>
-      <Text style={detailStyles.label}>{label}</Text>
-      <Text style={detailStyles.value}>{value}</Text>
+    <View style={[detailStyles.row, { borderBottomColor: tc.border }]}>
+      <Text style={[detailStyles.label, { color: tc.textSecondary }]}>{label}</Text>
+      <Text style={[detailStyles.value, { color: tc.text }]}>{value}</Text>
     </View>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text } from 'react-native';
 import { colors } from '@kabadiwala/ui';
-import { useTranslation } from '@kabadiwala/shared';
+import { useTranslation, useTheme } from '@kabadiwala/shared';
 
 import { DashboardScreen } from '../screens/main/DashboardScreen';
 import { RequestsScreen } from '../screens/main/RequestsScreen';
@@ -34,11 +34,12 @@ function TabIcon({ name, focused }: { name: string; focused: boolean }) {
 
 function TranslatedTabLabel({ translationKey, focused }: { translationKey: string; focused: boolean }) {
   const { t } = useTranslation();
+  const { colors: tc } = useTheme();
   return (
     <Text style={{
       fontSize: 11,
       fontWeight: '500',
-      color: focused ? colors.secondary[500] : colors.neutral[500],
+      color: focused ? colors.secondary[500] : tc.textSecondary,
     }}>
       {t(translationKey as any)}
     </Text>
@@ -46,6 +47,7 @@ function TranslatedTabLabel({ translationKey, focused }: { translationKey: strin
 }
 
 export function MainTabNavigator() {
+  const { colors: themeColors } = useTheme();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -58,7 +60,8 @@ export function MainTabNavigator() {
           paddingTop: 8,
           height: 70,
           borderTopWidth: 1,
-          borderTopColor: colors.neutral[200],
+          borderTopColor: themeColors.border,
+          backgroundColor: themeColors.background,
         },
       })}
     >

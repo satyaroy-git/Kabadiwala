@@ -94,10 +94,11 @@ export function HomeScreen() {
       {/* Active Bookings */}
       {activeBookings.length > 0 && (
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('active_pickups')}</Text>
+          <Text style={[styles.sectionTitle, { color: themeColors.text }]}>{t('active_pickups')}</Text>
           {activeBookings.map((booking) => (
             <Card
               key={booking.id}
+              style={{ backgroundColor: themeColors.card }}
               onPress={() => {
                 if (['en_route', 'arrived'].includes(booking.status)) {
                   navigation.navigate('Tracking', { bookingId: booking.id });
@@ -134,7 +135,7 @@ export function HomeScreen() {
       {/* Live Rates Preview */}
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>{t('todays_rates')}</Text>
+          <Text style={[styles.sectionTitle, { color: themeColors.text }]}>{t('todays_rates')}</Text>
           <Button
             title={t('view_all')}
             onPress={() => navigation.navigate('MainTabs', { screen: 'Rates' })}
@@ -142,14 +143,14 @@ export function HomeScreen() {
             size="small"
           />
         </View>
-        <Card>
+        <Card style={{ backgroundColor: themeColors.card }}>
           {rates.map((rate, index) => (
             <View
               key={rate.id}
-              style={[styles.rateRow, index < rates.length - 1 && styles.rateRowBorder]}
+              style={[styles.rateRow, index < rates.length - 1 && styles.rateRowBorder, index < rates.length - 1 && { borderBottomColor: themeColors.border }]}
             >
               <Text style={styles.rateIcon}>{rate.category_icon}</Text>
-              <Text style={styles.rateName}>{getTranslatedCategoryName(rate.category_name)}</Text>
+              <Text style={[styles.rateName, { color: themeColors.text }]}>{getTranslatedCategoryName(rate.category_name)}</Text>
               <Text style={styles.ratePrice}>{formatCurrency(rate.rate_per_kg)}/kg</Text>
             </View>
           ))}
@@ -158,31 +159,31 @@ export function HomeScreen() {
 
       {/* Phase 2: Quick Access */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{t('explore')}</Text>
+        <Text style={[styles.sectionTitle, { color: themeColors.text }]}>{t('explore')}</Text>
         <View style={styles.quickGrid}>
-          <Card style={styles.quickCard} onPress={() => navigation.navigate('Impact')}>
+          <Card style={{ ...styles.quickCard, backgroundColor: themeColors.card }} onPress={() => navigation.navigate('Impact')}>
             <Text style={styles.quickEmoji}>🌍</Text>
-            <Text style={styles.quickLabel}>{t('my_impact')}</Text>
+            <Text style={[styles.quickLabel, { color: themeColors.text }]}>{t('my_impact')}</Text>
           </Card>
-          <Card style={styles.quickCard} onPress={() => navigation.navigate('Gamification')}>
+          <Card style={{ ...styles.quickCard, backgroundColor: themeColors.card }} onPress={() => navigation.navigate('Gamification')}>
             <Text style={styles.quickEmoji}>🎮</Text>
-            <Text style={styles.quickLabel}>{t('rewards_badges')}</Text>
+            <Text style={[styles.quickLabel, { color: themeColors.text }]}>{t('rewards_badges')}</Text>
           </Card>
-          <Card style={styles.quickCard} onPress={() => navigation.navigate('Referral')}>
+          <Card style={{ ...styles.quickCard, backgroundColor: themeColors.card }} onPress={() => navigation.navigate('Referral')}>
             <Text style={styles.quickEmoji}>🎁</Text>
-            <Text style={styles.quickLabel}>{t('refer_earn')}</Text>
+            <Text style={[styles.quickLabel, { color: themeColors.text }]}>{t('refer_earn')}</Text>
           </Card>
-          <Card style={styles.quickCard} onPress={() => navigation.navigate('Recurring')}>
+          <Card style={{ ...styles.quickCard, backgroundColor: themeColors.card }} onPress={() => navigation.navigate('Recurring')}>
             <Text style={styles.quickEmoji}>🔄</Text>
-            <Text style={styles.quickLabel}>{t('auto_pickup')}</Text>
+            <Text style={[styles.quickLabel, { color: themeColors.text }]}>{t('auto_pickup')}</Text>
           </Card>
         </View>
       </View>
 
       {/* Info Section */}
-      <Card variant="filled">
-        <Text style={styles.infoTitle}>🌱 {t('why_kabadiwala')}</Text>
-        <Text style={styles.infoText}>
+      <Card variant="filled" style={{ backgroundColor: themeColors.backgroundSecondary }}>
+        <Text style={[styles.infoTitle, { color: themeColors.text }]}>🌱 {t('why_kabadiwala')}</Text>
+        <Text style={[styles.infoText, { color: themeColors.textSecondary }]}>
           {t('why_kabadiwala_points')}
         </Text>
       </Card>
