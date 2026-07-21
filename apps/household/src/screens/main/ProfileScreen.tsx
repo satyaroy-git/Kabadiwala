@@ -78,9 +78,9 @@ export function ProfileScreen() {
         <MenuItem icon="🌍" title={t('my_impact')} onPress={() => navigation.navigate('Impact' as never)} />
         <MenuItem icon="🎮" title={t('rewards_badges')} onPress={() => navigation.navigate('Gamification' as never)} />
         <MenuItem icon="🎁" title={t('refer_earn')} onPress={() => navigation.navigate('Referral' as never)} />
-        <MenuItem icon="📍" title={t('saved_addresses')} onPress={() => handleMenuPress(t('saved_addresses'))} />
-        <MenuItem icon="📄" title={t('transaction_history')} onPress={() => handleMenuPress(t('transaction_history'))} />
-        <MenuItem icon="❓" title={t('help_support')} onPress={() => handleMenuPress(t('help_support'))} />
+        <MenuItem icon="📍" title={t('saved_addresses')} onPress={() => navigation.navigate('SavedAddresses' as never)} />
+        <MenuItem icon="📄" title={t('transaction_history')} onPress={() => navigation.navigate('TransactionHistory' as never)} />
+        <MenuItem icon="❓" title={t('help_support')} onPress={() => navigation.navigate('HelpSupport' as never)} />
       </Card>
 
       {/* Sign Out */}

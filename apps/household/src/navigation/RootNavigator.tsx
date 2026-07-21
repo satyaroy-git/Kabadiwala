@@ -32,6 +32,9 @@ import { RecurringScreen } from '../screens/main/RecurringScreen';
 import { GamificationScreen } from '../screens/main/GamificationScreen';
 import { LanguageScreen } from '../screens/main/LanguageScreen';
 import { ChatScreen } from '../screens/chat/ChatScreen';
+import { SavedAddressesScreen } from '../screens/main/SavedAddressesScreen';
+import { TransactionHistoryScreen } from '../screens/main/TransactionHistoryScreen';
+import { HelpSupportScreen } from '../screens/main/HelpSupportScreen';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -50,6 +53,9 @@ export type RootStackParamList = {
   Gamification: undefined;
   LanguageSelect: undefined;
   Chat: { bookingId: string };
+  SavedAddresses: undefined;
+  TransactionHistory: undefined;
+  HelpSupport: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -95,6 +101,9 @@ export function RootNavigator() {
           <Stack.Screen name="Gamification" component={GamificationScreen} />
           <Stack.Screen name="LanguageSelect" component={LanguageScreen} />
           <Stack.Screen name="Chat" component={ChatScreen} />
+          <Stack.Screen name="SavedAddresses" component={SavedAddressesScreen} />
+          <Stack.Screen name="TransactionHistory" component={TransactionHistoryScreen} />
+          <Stack.Screen name="HelpSupport" component={HelpSupportScreen} />
         </>
       )}
     </Stack.Navigator>
