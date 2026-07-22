@@ -43,6 +43,7 @@ export const te: TranslationKeys = {
   cancel_pickup: 'పికప్ రద్దు',
   saved_addresses: 'సేవ్ చేసిన చిరునామాలు',
   transaction_history: 'లావాదేవీ చరిత్ర',
+  transactions: 'లావాదేవీలు',
   help_support: 'సహాయం & మద్దతు',
   recurring_pickups: 'నియమిత పికప్‌లు',
   my_impact: 'నా హరిత ప్రభావం',

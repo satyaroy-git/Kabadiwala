@@ -43,6 +43,7 @@ export const ta: TranslationKeys = {
   cancel_pickup: 'பிக்கப் ரத்து',
   saved_addresses: 'சேமித்த முகவரிகள்',
   transaction_history: 'பரிவர்த்தனை வரலாறு',
+  transactions: 'பரிவர்த்தனை',
   help_support: 'உதவி & ஆதரவு',
   recurring_pickups: 'தொடர் பிக்கப்',
   my_impact: 'எனது பசுமை தாக்கம்',

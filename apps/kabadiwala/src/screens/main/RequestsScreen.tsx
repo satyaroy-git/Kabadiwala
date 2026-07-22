@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, RefreshControl, Alert } from 'react-n
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
-import { formatDate, formatCurrency, formatDistance, Booking, useTranslation } from '@kabadiwala/shared';
+import { formatDate, formatCurrency, formatDistance, Booking, useTranslation, useTheme } from '@kabadiwala/shared';
 import { getPickupRequests, acceptPickup, rejectPickup } from '../../services/api';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 
@@ -12,6 +12,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 export function RequestsScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { t } = useTranslation();
+  const { colors: themeColors, isDark } = useTheme();
   const [requests, setRequests] = useState<Booking[]>([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -61,17 +62,17 @@ export function RequestsScreen() {
 
   function renderRequest({ item }: { item: Booking }) {
     return (
-      <Card>
+      <Card style={{ backgroundColor: themeColors.card }}>
         <View style={styles.requestHeader}>
-          <Text style={styles.householdName}>{(item as any).household?.name || 'Household'}</Text>
+          <Text style={[styles.householdName, { color: themeColors.text }]}>{(item as any).household?.name || 'Household'}</Text>
           <Badge text={formatDate(item.scheduled_date)} variant="neutral" size="small" />
         </View>
 
-        <Text style={styles.items}>
+        <Text style={[styles.items, { color: themeColors.textSecondary }]}>
           📦 {item.scrap_items.map((i) => `${i.category_name} (~${i.estimated_weight_kg}kg)`).join(', ')}
         </Text>
 
-        <Text style={styles.address}>
+        <Text style={[styles.address, { color: themeColors.textSecondary }]}>
           📍 {item.address?.full_address || 'Address pending'}
         </Text>
 
@@ -88,10 +89,10 @@ export function RequestsScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>{t('active_pickups')}</Text>
-        <Text style={styles.subtitle}>{t('nearby_requests')}</Text>
+    <View style={[styles.container, { backgroundColor: themeColors.backgroundSecondary }]}>
+      <View style={[styles.header, { backgroundColor: themeColors.background }]}>
+        <Text style={[styles.title, { color: themeColors.text }]}>{t('active_pickups')}</Text>
+        <Text style={[styles.subtitle, { color: themeColors.textSecondary }]}>{t('nearby_requests')}</Text>
       </View>
 
       <FlatList
@@ -103,8 +104,8 @@ export function RequestsScreen() {
         ListEmptyComponent={
           <View style={styles.empty}>
             <Text style={styles.emptyEmoji}>📭</Text>
-            <Text style={styles.emptyText}>No requests right now</Text>
-            <Text style={styles.emptySubtext}>New requests will appear here</Text>
+            <Text style={[styles.emptyText, { color: themeColors.text }]}>No requests right now</Text>
+            <Text style={[styles.emptySubtext, { color: themeColors.textSecondary }]}>New requests will appear here</Text>
           </View>
         }
       />

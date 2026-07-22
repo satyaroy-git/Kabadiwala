@@ -43,6 +43,7 @@ export const mr: TranslationKeys = {
   cancel_pickup: 'पिकअप रद्द करा',
   saved_addresses: 'सेव्ह केलेले पत्ते',
   transaction_history: 'व्यवहार इतिहास',
+  transactions: 'व्यवहार',
   help_support: 'मदत आणि सहाय्य',
   recurring_pickups: 'नियमित पिकअप',
   my_impact: 'माझा हरित प्रभाव',

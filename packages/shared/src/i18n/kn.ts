@@ -43,6 +43,7 @@ export const kn: TranslationKeys = {
   cancel_pickup: 'ಪಿಕಪ್ ರದ್ದು',
   saved_addresses: 'ಉಳಿಸಿದ ವಿಳಾಸಗಳು',
   transaction_history: 'ವಹಿವಾಟು ಇತಿಹಾಸ',
+  transactions: 'ವಹಿವಾಟು',
   help_support: 'ಸಹಾಯ & ಬೆಂಬಲ',
   recurring_pickups: 'ನಿಯಮಿತ ಪಿಕಪ್',
   my_impact: 'ನನ್ನ ಹಸಿರು ಪ್ರಭಾವ',

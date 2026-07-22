@@ -43,6 +43,7 @@ export const en: TranslationKeys = {
   cancel_pickup: 'Cancel Pickup',
   saved_addresses: 'Saved Addresses',
   transaction_history: 'Transaction History',
+  transactions: 'Transactions',
   help_support: 'Help & Support',
   recurring_pickups: 'Recurring Pickups',
   my_impact: 'My Green Impact',

@@ -43,6 +43,7 @@ export const or: TranslationKeys = {
   cancel_pickup: 'ପିକଅପ ବାତିଲ',
   saved_addresses: 'ସେଭ ଥିବା ଠିକଣା',
   transaction_history: 'ଲେଣଦେଣ ଇତିହାସ',
+  transactions: 'ଲେଣଦେଣ',
   help_support: 'ସାହାଯ୍ୟ ଓ ସହାୟତା',
   recurring_pickups: 'ନିୟମିତ ପିକଅପ',
   my_impact: 'ମୋର ସବୁଜ ପ୍ରଭାବ',

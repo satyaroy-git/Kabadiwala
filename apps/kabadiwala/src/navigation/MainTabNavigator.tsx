@@ -78,7 +78,7 @@ export function MainTabNavigator() {
       <Tab.Screen
         name="Earnings"
         component={EarningsScreen}
-        options={{ tabBarLabel: ({ focused }) => <TranslatedTabLabel translationKey="transaction_history" focused={focused} /> }}
+        options={{ tabBarLabel: ({ focused }) => <TranslatedTabLabel translationKey="transactions" focused={focused} /> }}
       />
       <Tab.Screen
         name="Profile"

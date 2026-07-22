@@ -64,6 +64,7 @@ export interface TranslationKeys {
   // Profile
   saved_addresses: string;
   transaction_history: string;
+  transactions: string;
   help_support: string;
   recurring_pickups: string;
   my_impact: string;
