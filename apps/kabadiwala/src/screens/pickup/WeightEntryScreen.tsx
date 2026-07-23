@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Input, colors, spacing, typography } from '@kabadiwala/ui';
 import { formatCurrency, calculateTotalAmount, useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
-import { submitWeightEntry } from '../../services/api';
+import { submitWeightEntry, updateBookingStatus } from '../../services/api';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 type RouteType = RouteProp<RootStackParamList, 'WeightEntry'>;
@@ -62,7 +62,15 @@ export function WeightEntryScreen() {
           actual_weight_kg: parseFloat(i.actual_weight_kg),
         })),
       });
-      navigation.navigate('Bill', { bookingId, transaction: result });
+
+      // Update status to weight_verification - household must confirm
+      await updateBookingStatus(bookingId, 'weight_verification');
+
+      Alert.alert(
+        t('weights_submitted'),
+        t('waiting_household_confirmation'),
+        [{ text: t('ok'), onPress: () => navigation.navigate('MainTabs' as never) }]
+      );
     } catch (err: any) {
       Alert.alert('Error', err.message || 'Failed to generate bill');
     } finally {

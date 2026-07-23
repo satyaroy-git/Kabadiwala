@@ -29,9 +29,11 @@ export type BookingStatus =
   | 'en_route'          // Kabadiwala on the way
   | 'arrived'           // Kabadiwala at location
   | 'weighing'          // Weighing in progress
+  | 'weight_verification' // Waiting for household to confirm weights
   | 'payment_pending'   // Bill generated, payment processing
   | 'completed'         // Pickup done, payment received
   | 'cancelled'         // Cancelled by either party
+  | 'disputed'          // Household disputed the weight
   | 'no_show';          // Kabadiwala didn't show up
 
 export interface BookingItem {

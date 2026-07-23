@@ -255,4 +255,37 @@ export interface TranslationKeys {
   resend_failed: string;
   terms_agreement: string;
   create_password: string;
+
+  // Weight Verification
+  verify_weight: string;
+  verify_weight_subtitle: string;
+  weight_comparison: string;
+  estimated: string;
+  actual: string;
+  difference: string;
+  weight_normal: string;
+  weight_much_less: string;
+  weight_much_more: string;
+  weight_different: string;
+  weight_variance_low: string;
+  weight_variance_high: string;
+  confirm_weight_title: string;
+  confirm_weight_msg: string;
+  yes_confirm: string;
+  confirm_weight_btn: string;
+  weight_confirmed: string;
+  weight_confirmed_msg: string;
+  dispute_weight: string;
+  submit_dispute: string;
+  dispute_reason: string;
+  dispute_reason_placeholder: string;
+  dispute_reason_required: string;
+  dispute_submitted: string;
+  dispute_submitted_msg: string;
+  payment_summary: string;
+  you_will_receive: string;
+  payment_after_confirmation: string;
+  weight_verification_info: string;
+  weights_submitted: string;
+  waiting_household_confirmation: string;
 }

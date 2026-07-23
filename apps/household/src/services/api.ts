@@ -256,6 +256,37 @@ export async function cancelBooking(bookingId: string, reason: string) {
   return data;
 }
 
+// ========== Weight Verification ==========
+
+export async function confirmWeight(bookingId: string) {
+  const { data, error } = await supabase
+    .from('bookings')
+    .update({
+      status: 'payment_pending',
+    })
+    .eq('id', bookingId)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
+export async function disputeWeight(bookingId: string, reason: string) {
+  const { data, error } = await supabase
+    .from('bookings')
+    .update({
+      status: 'disputed',
+      cancellation_reason: `Weight dispute: ${reason}`,
+    })
+    .eq('id', bookingId)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+}
+
 // ========== Tracking ==========
 
 export function subscribeToKabadiwalaLocation(

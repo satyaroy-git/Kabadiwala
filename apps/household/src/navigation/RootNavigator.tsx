@@ -36,6 +36,7 @@ import { ChatScreen } from '../screens/chat/ChatScreen';
 import { SavedAddressesScreen } from '../screens/main/SavedAddressesScreen';
 import { TransactionHistoryScreen } from '../screens/main/TransactionHistoryScreen';
 import { HelpSupportScreen } from '../screens/main/HelpSupportScreen';
+import { WeightConfirmationScreen } from '../screens/booking/WeightConfirmationScreen';
 
 export type RootStackParamList = {
   Login: undefined;
@@ -55,6 +56,7 @@ export type RootStackParamList = {
   Gamification: undefined;
   LanguageSelect: undefined;
   Chat: { bookingId: string };
+  WeightConfirmation: { bookingId: string };
   SavedAddresses: undefined;
   TransactionHistory: undefined;
   HelpSupport: undefined;
@@ -104,6 +106,7 @@ export function RootNavigator() {
           <Stack.Screen name="Gamification" component={GamificationScreen} />
           <Stack.Screen name="LanguageSelect" component={LanguageScreen} />
           <Stack.Screen name="Chat" component={ChatScreen} />
+          <Stack.Screen name="WeightConfirmation" component={WeightConfirmationScreen} />
           <Stack.Screen name="SavedAddresses" component={SavedAddressesScreen} />
           <Stack.Screen name="TransactionHistory" component={TransactionHistoryScreen} />
           <Stack.Screen name="HelpSupport" component={HelpSupportScreen} />

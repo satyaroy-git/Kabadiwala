@@ -94,6 +94,15 @@ export function BookingDetailScreen() {
       </Card>
 
       {/* Actions */}
+      {booking.status === 'weight_verification' && (
+        <Button
+          title={`⚖️ ${t('verify_weight')}`}
+          onPress={() => navigation.navigate('WeightConfirmation', { bookingId: booking.id })}
+          fullWidth
+          size="large"
+        />
+      )}
+
       {['en_route', 'arrived'].includes(booking.status) && (
         <Button
           title="Track Kabadiwala"
@@ -103,7 +112,7 @@ export function BookingDetailScreen() {
         />
       )}
 
-      {['accepted', 'en_route', 'arrived', 'weighing'].includes(booking.status) && (
+      {['accepted', 'en_route', 'arrived', 'weighing', 'weight_verification'].includes(booking.status) && (
         <Button
           title="💬 Chat with Kabadiwala"
           onPress={() => navigation.navigate('Chat', { bookingId: booking.id })}

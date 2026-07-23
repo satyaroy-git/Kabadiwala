@@ -55,7 +55,7 @@ export function HomeScreen() {
       setRates(rateData.slice(0, 5)); // Top 5 rates
       setActiveBookings(
         bookingData.filter((b) =>
-          ['pending', 'assigned', 'accepted', 'en_route', 'arrived', 'weighing'].includes(b.status)
+          ['pending', 'assigned', 'accepted', 'en_route', 'arrived', 'weighing', 'weight_verification'].includes(b.status)
         )
       );
     } catch (error) {
@@ -100,7 +100,9 @@ export function HomeScreen() {
               key={booking.id}
               style={{ backgroundColor: themeColors.card }}
               onPress={() => {
-                if (['en_route', 'arrived'].includes(booking.status)) {
+                if (booking.status === 'weight_verification') {
+                  navigation.navigate('WeightConfirmation', { bookingId: booking.id });
+                } else if (['en_route', 'arrived'].includes(booking.status)) {
                   navigation.navigate('Tracking', { bookingId: booking.id });
                 } else {
                   navigation.navigate('BookingDetail', { bookingId: booking.id });
@@ -117,9 +119,11 @@ export function HomeScreen() {
                   </Text>
                 </View>
                 <Badge
-                  text={({pending: t('pending'), accepted: t('accepted'), en_route: t('en_route'), arrived: t('arrived'), payment_pending: t('payment_pending'), completed: t('completed'), cancelled: t('cancelled')} as any)[booking.status] || booking.status}
+                  text={({pending: t('pending'), accepted: t('accepted'), en_route: t('en_route'), arrived: t('arrived'), weighing: t('weighing_progress'), weight_verification: t('verify_weight'), payment_pending: t('payment_pending'), completed: t('completed'), cancelled: t('cancelled')} as any)[booking.status] || booking.status}
                   variant={
-                    booking.status === 'en_route'
+                    booking.status === 'weight_verification'
+                      ? 'warning'
+                      : booking.status === 'en_route'
                       ? 'info'
                       : booking.status === 'accepted'
                       ? 'success'
