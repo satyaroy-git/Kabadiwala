@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
-import { Card, Badge, colors, spacing, typography, MapPlaceholder } from '@kabadiwala/ui';
+import { Card, Badge, colors, spacing, typography, KabadiwalaMapView, MapMarker } from '@kabadiwala/ui';
 import { formatETA, formatDistance, useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { getBookingById, subscribeToKabadiwalaLocation, subscribeToBookingStatus } from '../../services/api';
@@ -59,13 +59,36 @@ export function TrackingScreen() {
     <View style={styles.container}>
       {/* Live Map */}
       <View style={styles.mapContainer}>
-        <MapPlaceholder
+        <KabadiwalaMapView
           latitude={kabadiwalaLocation?.lat || 19.0760}
           longitude={kabadiwalaLocation?.lng || 72.8777}
-          label={t('kabadiwala_on_way')}
-          destLatitude={19.0800}
-          destLongitude={72.8800}
-          destLabel="Your Location"
+          markers={[
+            {
+              id: 'current',
+              latitude: kabadiwalaLocation?.lat || 19.0760,
+              longitude: kabadiwalaLocation?.lng || 72.8777,
+              title: t('kabadiwala_on_way'),
+              color: 'green',
+            },
+            {
+              id: 'destination',
+              latitude: 19.0800,
+              longitude: 72.8800,
+              title: t('pickup_address'),
+              emoji: '🏠',
+              color: 'red',
+            },
+          ]}
+          route={{
+            coordinates: [
+              { latitude: kabadiwalaLocation?.lat || 19.0760, longitude: kabadiwalaLocation?.lng || 72.8777 },
+              { latitude: 19.0800, longitude: 72.8800 },
+            ],
+            color: '#4CAF50',
+            width: 4,
+          }}
+          zoomLevel={14}
+          showsUserLocation={true}
         />
       </View>
 

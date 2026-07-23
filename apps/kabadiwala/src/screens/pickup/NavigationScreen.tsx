@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Button, Card, colors, spacing, typography, MapPlaceholder } from '@kabadiwala/ui';
+import { Button, Card, colors, spacing, typography, KabadiwalaMapView } from '@kabadiwala/ui';
 import { useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { broadcastLocation, updateBookingStatus } from '../../services/api';
@@ -49,15 +49,38 @@ export function NavigationScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Map placeholder */}
+      {/* Map */}
       <View style={styles.mapArea}>
-        <MapPlaceholder
+        <KabadiwalaMapView
           latitude={currentLat}
           longitude={currentLng}
-          label={t('navigation_active')}
-          destLatitude={address?.lat || 19.0800}
-          destLongitude={address?.lng || 72.8800}
-          destLabel={address?.full_address?.slice(0, 20) || 'Destination'}
+          markers={[
+            {
+              id: 'current',
+              latitude: currentLat,
+              longitude: currentLng,
+              title: t('navigation_active'),
+              color: 'green',
+            },
+            {
+              id: 'destination',
+              latitude: address?.lat || 19.0800,
+              longitude: address?.lng || 72.8800,
+              title: address?.full_address?.slice(0, 20) || 'Destination',
+              emoji: '🏠',
+              color: 'red',
+            },
+          ]}
+          route={{
+            coordinates: [
+              { latitude: currentLat, longitude: currentLng },
+              { latitude: address?.lat || 19.0800, longitude: address?.lng || 72.8800 },
+            ],
+            color: '#FF9800',
+            width: 4,
+          }}
+          zoomLevel={14}
+          showsUserLocation={true}
         />
       </View>
 

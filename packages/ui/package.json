@@ -14,10 +14,12 @@
   },
   "peerDependencies": {
     "react": ">=18.0.0",
-    "react-native": ">=0.73.0"
+    "react-native": ">=0.73.0",
+    "react-native-maps": "^1.29.0"
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
+    "react-native-maps": "^1.29.0",
     "typescript": "^5.4.0"
   }
 }
