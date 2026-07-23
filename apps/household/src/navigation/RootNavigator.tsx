@@ -5,6 +5,7 @@ import { LoadingScreen } from '@kabadiwala/ui';
 
 // Auth screens
 import { LoginScreen } from '../screens/auth/LoginScreen';
+import { OTPScreen } from '../screens/auth/OTPScreen';
 import { ProfileSetupScreen } from '../screens/auth/ProfileSetupScreen';
 
 // Main screens
@@ -38,6 +39,7 @@ import { HelpSupportScreen } from '../screens/main/HelpSupportScreen';
 
 export type RootStackParamList = {
   Login: undefined;
+  OTP: { phone: string };
   ProfileSetup: undefined;
   MainTabs: undefined;
   Booking: undefined;
@@ -76,6 +78,7 @@ export function RootNavigator() {
         // Auth flow
         <>
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="OTP" component={OTPScreen} />
         </>
       ) : !profile ? (
         // Profile setup

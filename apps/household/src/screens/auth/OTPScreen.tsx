@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button, Input, colors, spacing, typography } from '@kabadiwala/ui';
+import { useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
-import { verifyOTP, signInWithEmail } from '../../services/api';
+import { verifyOTP, signInWithPhone } from '../../services/api';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'OTP'>;
 
 export function OTPScreen({ route, navigation }: Props) {
-  const { phone: email } = route.params; // Using 'phone' param to pass email
+  const { phone } = route.params;
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [resendTimer, setResendTimer] = useState(30);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,16 +26,16 @@ export function OTPScreen({ route, navigation }: Props) {
   async function handleVerifyOTP() {
     setError('');
     if (otp.length !== 6) {
-      setError('Please enter the 6-digit OTP');
+      setError(t('enter_valid_otp'));
       return;
     }
 
     setLoading(true);
     try {
-      await verifyOTP(email, otp);
-      // Auth state change will handle navigation
+      await verifyOTP(phone, otp);
+      // Auth state change will handle navigation automatically
     } catch (err: any) {
-      setError(err.message || 'Invalid OTP. Please try again.');
+      setError(err.message || t('invalid_otp'));
     } finally {
       setLoading(false);
     }
@@ -42,27 +44,29 @@ export function OTPScreen({ route, navigation }: Props) {
   async function handleResendOTP() {
     setResendTimer(30);
     try {
-      await signInWithEmail(email);
-    } catch (err) {
-      setError('Failed to resend OTP. Please try again.');
+      await signInWithPhone(phone);
+    } catch (err: any) {
+      setError(t('resend_failed'));
     }
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>Verify OTP</Text>
+        <Text style={styles.title}>{t('verify_otp')}</Text>
         <Text style={styles.subtitle}>
-          Enter the 6-digit code sent to{'\n'}
-          <Text style={styles.email}>{email}</Text>
+          {t('otp_sent_to')}{'\n'}
+          <Text style={styles.phone}>{phone}</Text>
         </Text>
 
-        <Text style={styles.checkSpam}>
-          💡 Check your spam/junk folder if you don't see the email
-        </Text>
+        <View style={styles.infoBox}>
+          <Text style={styles.infoText}>
+            💡 {t('otp_sms_hint')}
+          </Text>
+        </View>
 
         <Input
-          placeholder="Enter 6-digit OTP"
+          placeholder={t('enter_otp_placeholder')}
           keyboardType="number-pad"
           maxLength={6}
           value={otp}
@@ -74,7 +78,7 @@ export function OTPScreen({ route, navigation }: Props) {
         />
 
         <Button
-          title="Verify & Continue"
+          title={t('verify_continue')}
           onPress={handleVerifyOTP}
           loading={loading}
           disabled={otp.length !== 6}
@@ -85,17 +89,17 @@ export function OTPScreen({ route, navigation }: Props) {
         <View style={styles.resendContainer}>
           {resendTimer > 0 ? (
             <Text style={styles.resendText}>
-              Resend OTP in {resendTimer}s
+              {t('resend_in')} {resendTimer}s
             </Text>
           ) : (
             <TouchableOpacity onPress={handleResendOTP}>
-              <Text style={styles.resendLink}>Resend OTP</Text>
+              <Text style={styles.resendLink}>{t('resend_otp')}</Text>
             </TouchableOpacity>
           )}
         </View>
 
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.changeEmail}>Change email address</Text>
+          <Text style={styles.changePhone}>{t('change_phone_number')}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -122,17 +126,19 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     marginBottom: spacing.lg,
   },
-  email: {
+  phone: {
     fontWeight: '600',
     color: colors.text.primary,
   },
-  checkSpam: {
-    ...typography.bodySmall,
-    color: colors.secondary[700],
-    backgroundColor: colors.secondary[50],
+  infoBox: {
+    backgroundColor: colors.primary[50],
     padding: spacing.md,
     borderRadius: 8,
     marginBottom: spacing['3xl'],
+  },
+  infoText: {
+    ...typography.bodySmall,
+    color: colors.primary[700],
     textAlign: 'center',
   },
   resendContainer: {
@@ -147,7 +153,7 @@ const styles = StyleSheet.create({
     ...typography.label,
     color: colors.primary[500],
   },
-  changeEmail: {
+  changePhone: {
     ...typography.body,
     color: colors.text.link,
     textAlign: 'center',

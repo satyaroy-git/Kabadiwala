@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button, Input, colors, spacing, typography } from '@kabadiwala/ui';
+import { useTranslation } from '@kabadiwala/shared';
 import { RootStackParamList } from '../../navigation/RootNavigator';
-import { verifyOTP, signInWithEmail } from '../../services/api';
+import { verifyOTP, signInWithPhone } from '../../services/api';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'OTP'>;
 
 export function OTPScreen({ route, navigation }: Props) {
-  const { phone: email } = route.params; // Using 'phone' param to pass email
+  const { phone } = route.params;
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [resendTimer, setResendTimer] = useState(30);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,54 +25,81 @@ export function OTPScreen({ route, navigation }: Props) {
 
   async function handleVerifyOTP() {
     setError('');
-    if (otp.length !== 6) { setError('Please enter the 6-digit OTP'); return; }
+    if (otp.length !== 6) {
+      setError(t('enter_valid_otp'));
+      return;
+    }
+
     setLoading(true);
     try {
-      await verifyOTP(email, otp);
+      await verifyOTP(phone, otp);
+      // Auth state change will handle navigation automatically
     } catch (err: any) {
-      setError(err.message || 'Invalid OTP');
+      setError(err.message || t('invalid_otp'));
     } finally {
       setLoading(false);
     }
   }
 
-  async function handleResend() {
+  async function handleResendOTP() {
     setResendTimer(30);
-    try { await signInWithEmail(email); } catch {}
+    try {
+      await signInWithPhone(phone);
+    } catch (err: any) {
+      setError(t('resend_failed'));
+    }
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>Verify OTP</Text>
+        <Text style={styles.title}>{t('verify_otp')}</Text>
         <Text style={styles.subtitle}>
-          Code sent to <Text style={styles.email}>{email}</Text>
+          {t('otp_sent_to')}{'\n'}
+          <Text style={styles.phone}>{phone}</Text>
         </Text>
 
-        <Text style={styles.checkSpam}>
-          💡 Check your spam/junk folder if you don't see the email
-        </Text>
+        <View style={styles.infoBox}>
+          <Text style={styles.infoText}>
+            💡 {t('otp_sms_hint')}
+          </Text>
+        </View>
 
         <Input
-          placeholder="Enter 6-digit OTP"
+          placeholder={t('enter_otp_placeholder')}
           keyboardType="number-pad"
           maxLength={6}
           value={otp}
-          onChangeText={(t) => { setOtp(t.replace(/\D/g, '')); setError(''); }}
+          onChangeText={(text) => {
+            setOtp(text.replace(/\D/g, ''));
+            setError('');
+          }}
           error={error}
         />
-        <Button title="Verify" onPress={handleVerifyOTP} loading={loading} disabled={otp.length !== 6} fullWidth size="large" />
-        <View style={styles.resend}>
+
+        <Button
+          title={t('verify_continue')}
+          onPress={handleVerifyOTP}
+          loading={loading}
+          disabled={otp.length !== 6}
+          fullWidth
+          size="large"
+        />
+
+        <View style={styles.resendContainer}>
           {resendTimer > 0 ? (
-            <Text style={styles.timer}>Resend in {resendTimer}s</Text>
+            <Text style={styles.resendText}>
+              {t('resend_in')} {resendTimer}s
+            </Text>
           ) : (
-            <TouchableOpacity onPress={handleResend}>
-              <Text style={styles.resendLink}>Resend OTP</Text>
+            <TouchableOpacity onPress={handleResendOTP}>
+              <Text style={styles.resendLink}>{t('resend_otp')}</Text>
             </TouchableOpacity>
           )}
         </View>
+
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.changeEmail}>Change email address</Text>
+          <Text style={styles.changePhone}>{t('change_phone_number')}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -78,14 +107,56 @@ export function OTPScreen({ route, navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.background.primary },
-  content: { flex: 1, justifyContent: 'center', paddingHorizontal: spacing['3xl'] },
-  title: { ...typography.h2, color: colors.text.primary, marginBottom: spacing.sm },
-  subtitle: { ...typography.body, color: colors.text.secondary, marginBottom: spacing.lg },
-  email: { fontWeight: '600', color: colors.text.primary },
-  checkSpam: { ...typography.bodySmall, color: colors.secondary[700], backgroundColor: colors.secondary[50], padding: spacing.md, borderRadius: 8, marginBottom: spacing['3xl'], textAlign: 'center' },
-  resend: { alignItems: 'center', marginTop: spacing.xl },
-  timer: { ...typography.body, color: colors.text.tertiary },
-  resendLink: { ...typography.label, color: colors.secondary[500] },
-  changeEmail: { ...typography.body, color: colors.text.link, textAlign: 'center', marginTop: spacing.lg },
+  container: {
+    flex: 1,
+    backgroundColor: colors.background.primary,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: spacing['3xl'],
+  },
+  title: {
+    ...typography.h2,
+    color: colors.text.primary,
+    marginBottom: spacing.sm,
+  },
+  subtitle: {
+    ...typography.body,
+    color: colors.text.secondary,
+    marginBottom: spacing.lg,
+  },
+  phone: {
+    fontWeight: '600',
+    color: colors.text.primary,
+  },
+  infoBox: {
+    backgroundColor: colors.secondary[50],
+    padding: spacing.md,
+    borderRadius: 8,
+    marginBottom: spacing['3xl'],
+  },
+  infoText: {
+    ...typography.bodySmall,
+    color: colors.secondary[700],
+    textAlign: 'center',
+  },
+  resendContainer: {
+    alignItems: 'center',
+    marginTop: spacing.xl,
+  },
+  resendText: {
+    ...typography.body,
+    color: colors.text.tertiary,
+  },
+  resendLink: {
+    ...typography.label,
+    color: colors.secondary[500],
+  },
+  changePhone: {
+    ...typography.body,
+    color: colors.text.link,
+    textAlign: 'center',
+    marginTop: spacing.lg,
+  },
 });

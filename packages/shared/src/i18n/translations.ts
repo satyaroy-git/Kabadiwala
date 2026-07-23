@@ -231,4 +231,28 @@ export interface TranslationKeys {
   onboarding_subtitle_3: string;
   skip: string;
   next: string;
+
+  // Phone OTP Auth
+  phone_number: string;
+  enter_phone: string;
+  send_otp: string;
+  verify_otp: string;
+  otp_sent_to: string;
+  otp_sms_hint: string;
+  enter_otp_placeholder: string;
+  verify_continue: string;
+  resend_in: string;
+  resend_otp: string;
+  change_phone_number: string;
+  invalid_email: string;
+  invalid_phone: string;
+  invalid_otp: string;
+  enter_valid_otp: string;
+  password_min_length: string;
+  invalid_credentials: string;
+  email_already_registered: string;
+  something_went_wrong: string;
+  resend_failed: string;
+  terms_agreement: string;
+  create_password: string;
 }
