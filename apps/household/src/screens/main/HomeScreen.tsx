@@ -109,10 +109,10 @@ export function HomeScreen() {
             >
               <View style={styles.bookingCard}>
                 <View style={styles.bookingInfo}>
-                  <Text style={styles.bookingDate}>
+                  <Text style={[styles.bookingDate, { color: themeColors.text }]}>
                     {formatDate(booking.scheduled_date)}
                   </Text>
-                  <Text style={styles.bookingItems}>
+                  <Text style={[styles.bookingItems, { color: themeColors.textSecondary }]}>
                     {booking.scrap_items.map((i) => getTranslatedCategoryName(i.category_name)).join(', ')}
                   </Text>
                 </View>
