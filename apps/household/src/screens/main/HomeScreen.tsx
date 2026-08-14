@@ -5,7 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Button, Card, Badge, colors, spacing, typography } from '@kabadiwala/ui';
 import { formatCurrency, formatDate, RateCard, Booking, useTranslation, getLanguage, SCRAP_CATEGORIES, useTheme } from '@kabadiwala/shared';
 import { useAuth } from '../../contexts/AuthContext';
-import { getRateCards, getBookings } from '../../services/api';
+import { getRateCards, getBookings, cancelBooking } from '../../services/api';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -52,16 +52,43 @@ export function HomeScreen() {
         getRateCards(),
         getBookings(),
       ]);
-      setRates(rateData.slice(0, 5)); // Top 5 rates
+      setRates(rateData.slice(0, 5));
+
+      // Auto-cancel expired pickups (past scheduled date and still pending/assigned)
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const expiredBookings = bookingData.filter((b) => {
+        if (!['pending', 'assigned'].includes(b.status)) return false;
+        const scheduledDate = new Date(b.scheduled_date);
+        scheduledDate.setHours(0, 0, 0, 0);
+        return scheduledDate < today;
+      });
+
+      // Cancel expired bookings in background
+      if (expiredBookings.length > 0) {
+        for (const booking of expiredBookings) {
+          try {
+            await cancelBooking(booking.id, 'Auto-cancelled: scheduled date has passed');
+          } catch (err) {
+            console.error('Error auto-cancelling booking:', err);
+          }
+        }
+      }
+
+      // Filter active bookings (exclude expired ones we just cancelled)
+      const expiredIds = new Set(expiredBookings.map((b) => b.id));
       setActiveBookings(
         bookingData.filter((b) =>
           ['pending', 'assigned', 'accepted', 'en_route', 'arrived', 'weighing', 'weight_verification'].includes(b.status)
+          && !expiredIds.has(b.id)
         )
       );
     } catch (error) {
       console.error('Error loading home data:', error);
     }
   }
+
 
   async function onRefresh() {
     setRefreshing(true);
